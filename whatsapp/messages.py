@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Literal, List, Optional
 
-from .types import *  # NOQA
+from .enums import *  # NOQA
 
 __all__ = (
     "Text",
@@ -47,7 +47,7 @@ __all__ = (
 class Text:
     """Text object.
 
-    Attributes
+    Parameters
     ----------
     body: :class:`str`
         The text of the text message that can contain URLs and supports formatting. Max: 4096 chars.
@@ -73,7 +73,7 @@ class Text:
 class Media:
     """Media object.
 
-    Attributes
+    Parameters
     ----------
     id: Optional[:class:`str`]
         The media object ID. Required when you are not using a link.
@@ -89,7 +89,7 @@ class Media:
 class MediaWithCaption(Media):
     """Media with caption object.
 
-    Attributes
+    Parameters
     ----------
     caption: Optional[:class:`str`]
         Describes the specified media. Max: 4096 chars.
@@ -107,7 +107,7 @@ class Audio(Media):
 class Document(MediaWithCaption):
     """Document object.
 
-    Attributes
+    Parameters
     ----------
     filename: Optional[:class:`str`]
         Describes the filename for the specific document.
@@ -135,7 +135,7 @@ class Video(MediaWithCaption):
 class Reaction:
     """Reaction object.
 
-    Attributes
+    Parameters
     ----------
     emoji: :class:`str`
         The emoji used for the reaction. Set this value to "" (empty string) to remove the reaction.
@@ -151,7 +151,7 @@ class Reaction:
 class Location:
     """Location object.
 
-    Attributes
+    Parameters
     ----------
     longitude: :class:`float`
         The longitude of the location.
@@ -173,7 +173,7 @@ class Location:
 class Address:
     """Address object.
 
-    Attributes
+    Parameters
     ----------
     city: Optional[:class:`str`]
         The name of the city.
@@ -204,7 +204,7 @@ class Address:
 class Email:
     """Email object.
 
-    Attributes
+    Parameters
     ----------
     email: Optional[:class:`str`]
         Email address.
@@ -224,7 +224,7 @@ class Name:
 
         At least one of the optional parameters needs to be included along with the `formatted_name` parameter.
 
-    Attributes
+    Parameters
     ----------
     formatted_name: :class:`str`
         Full name, as it normally appears.
@@ -252,7 +252,7 @@ class Name:
 class Org:
     """Org object.
 
-    Attributes
+    Parameters
     ----------
     company: Optional[:class:`str`]
         Name of the contact's company.
@@ -271,7 +271,7 @@ class Org:
 class Phone:
     """Phone object.
 
-    Attributes
+    Parameters
     ----------
     phone: Optional[:class:`str`]
         Automatically populated with the `wa_id` value as a formatted phone number.
@@ -290,7 +290,7 @@ class Phone:
 class URL:
     """URL object.
 
-    Attributes
+    Parameters
     ----------
     type: Optional[:class:`.InfoType`]
         URL type.
@@ -306,7 +306,7 @@ class URL:
 class Contact:
     """Contact object.
 
-    Attributes
+    Parameters
     ----------
     name: :class:`.Name`
         Specifies the name object.
@@ -337,7 +337,7 @@ class Contact:
 class Row:
     """Row object.
 
-    Attributes
+    Parameters
     ----------
     id: :class`str`:
         Unique identifier row. Min: 1 char. Max: 200 chars.
@@ -356,7 +356,7 @@ class Row:
 class Product:
     """Product object.
 
-    Attributes
+    Parameters
     ----------
     product_retailer_id: :class`str`:
         Unique identifier of the product in a catalog.
@@ -369,7 +369,7 @@ class Product:
 class Section:
     """Section object.
 
-    Attributes
+    Parameters
     ----------
     product_items: Optional[List[:class`.Product`:]]
         A list of product object. Min: 1 item. Max: 30 items.
@@ -402,7 +402,7 @@ class Section:
 class Reply:
     """Reply object.
 
-    Attributes
+    Parameters
     ----------
     id: :class`str`:
         Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.
@@ -423,7 +423,7 @@ class Reply:
 class Button:
     """Button object.
 
-    Attributes
+    Parameters
     ----------
     id: :class`str`:
         Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.
@@ -447,7 +447,7 @@ class Button:
 class Action:
     """Action object.
 
-    Attributes
+    Parameters
     ----------
     button: Optional[:class:`str`]
         The button content. Min: 1 char. Max: 20 chars.
@@ -498,7 +498,7 @@ class Action:
 class Body:
     """Body object.
 
-    Attributes
+    Parameters
     ----------
     text: :class:`str`
         The text field for the body object, supports Emojis and markdown. Max: 1024 chars.
@@ -511,7 +511,7 @@ class Body:
 class Footer:
     """Footer object.
 
-    Attributes
+    Parameters
     ----------
     text: :class:`str`
         The text field for the footer object, supports Emojis and markdown. Max: 60 chars.
@@ -524,7 +524,7 @@ class Footer:
 class Header:
     """Header object.
 
-    Attributes
+    Parameters
     ----------
     type: :class:`.HeaderType`
         The header type.
@@ -549,7 +549,7 @@ class Header:
 class Interactive:
     """Interactive object.
 
-    Attributes
+    Parameters
     ----------
     type: :class:`.InteractiveType`
         The type of interactive message.
@@ -586,9 +586,8 @@ class Interactive:
 class Currency:
     """Currency object.
 
-    Attributes
+    Parameters
     ----------
-
     amount_1000: :class:`int`
         Amount multiplied by 1000.
     code: :class:`str`
@@ -605,9 +604,8 @@ class Currency:
 class DateTime:
     """DateTime object.
 
-    Attributes
+    Parameters
     ----------
-
     fallback_value: :class:`str`
         Default text.
     """
@@ -618,9 +616,8 @@ class DateTime:
 class Parameter:
     """Parameter object.
 
-    Attributes
+    Parameters
     ----------
-
     type: :class:`.ParameterType`
         Indicates the type of parameter for the button.
     currency: Optional[:class:`.Currency`]
@@ -674,7 +671,7 @@ class Parameter:
 class Component:
     """Component object.
 
-    Attributes
+    Parameters
     ----------
     type: :class:`.ComponentType`
         Describes the component type.
@@ -711,7 +708,7 @@ class Component:
 class Language:
     """Language object.
 
-    Attributes
+    Parameters
     ----------
     code: :class:`str`
         The code of the language or locale to use.
@@ -736,7 +733,7 @@ class Language:
 class Template:
     """Template object.
 
-    Attributes
+    Parameters
     ----------
     name: :class:`str`
         The name of the template.
@@ -760,7 +757,7 @@ class Template:
 class Context:
     """Context object.
 
-    Attributes
+    Parameters
     ----------
     message_id: :class:`str`
         The WhatsApp Business Account ID for the message you want to reply.
@@ -773,7 +770,7 @@ class Context:
 class Message:
     """Message object to send a message.
 
-    Attributes
+    Parameters
     ----------
     to: :class:`str`
         WhatsApp ID or phone number for the person you want to send a message to.

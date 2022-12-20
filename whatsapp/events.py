@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Literal, List, Optional
 
-from .types import *  # NOQA
+from .enums import *  # NOQA
 
 __all__ = (
     "Text",
@@ -55,7 +55,7 @@ __all__ = (
 class Text:
     """Text object.
 
-    Attributes
+    Parameters
     ----------
     body: :class:`str`
         The text of the message.
@@ -68,7 +68,7 @@ class Text:
 class Button:
     """Button object.
 
-    Attributes
+    Parameters
     ----------
     payload: :class:`str`
         The payload for a button set up by the business that a customer clicked as part of an interactive message.
@@ -84,7 +84,7 @@ class Button:
 class Media:
     """Media with caption object.
 
-    Attributes
+    Parameters
     ----------
     caption: :class:`str`
         ID for the media file.
@@ -100,7 +100,7 @@ class Media:
 class MediaWithCaption(Media):
     """Media object.
 
-    Attributes
+    Parameters
     ----------
     caption: Optional[:class:`str`]
         Caption for the media.
@@ -118,7 +118,7 @@ class Audio(Media):
 class Document(MediaWithCaption):
     """Document object.
 
-    Attributes
+    Parameters
     ----------
     filename: :class:`str`
         Name for the file on the sender's device
@@ -134,7 +134,7 @@ class Document(MediaWithCaption):
 class Image(MediaWithCaption):
     """Image object.
 
-    Attributes
+    Parameters
     ----------
     sha256: :class:`str`
         Hash for the image.
@@ -147,7 +147,7 @@ class Image(MediaWithCaption):
 class Sticker(Media):
     """Image object.
 
-    Attributes
+    Parameters
     ----------
     animated: :class:`bool`
         Set to `true` if the sticker is animated; `false` otherwise.
@@ -163,7 +163,7 @@ class Sticker(Media):
 class Video(MediaWithCaption):
     """Document object.
 
-    Attributes
+    Parameters
     ----------
     filename: :class:`str`
         Name for the video on the sender's device
@@ -179,7 +179,7 @@ class Video(MediaWithCaption):
 class Reaction:
     """Document object.
 
-    Attributes
+    Parameters
     ----------
     emoji: :class:`str`
         The emoji used for the reaction.
@@ -195,7 +195,7 @@ class Reaction:
 class Location:
     """Location object.
 
-    Attributes
+    Parameters
     ----------
     longitude: :class:`float`
         The longitude of the location.
@@ -217,7 +217,7 @@ class Location:
 class Address:
     """Address object.
 
-    Attributes
+    Parameters
     ----------
     city: Optional[:class:`str`]
         The name of the city.
@@ -248,7 +248,7 @@ class Address:
 class Email:
     """Email object.
 
-    Attributes
+    Parameters
     ----------
     email: Optional[:class:`str`]
         Email address.
@@ -264,7 +264,7 @@ class Email:
 class Name:
     """Name object.
 
-    Attributes
+    Parameters
     ----------
     formatted_name: :class:`str`
         Full name, as it normally appears.
@@ -292,7 +292,7 @@ class Name:
 class Org:
     """Org object.
 
-    Attributes
+    Parameters
     ----------
     company: Optional[:class:`str`]
         Name of the contact's company.
@@ -311,7 +311,7 @@ class Org:
 class Phone:
     """Phone object.
 
-    Attributes
+    Parameters
     ----------
     phone: Optional[:class:`str`]
         Contact phone number.
@@ -330,7 +330,7 @@ class Phone:
 class URL:
     """URL object.
 
-    Attributes
+    Parameters
     ----------
     type: Optional[:class:`.InfoType`]
         URL type.
@@ -346,7 +346,7 @@ class URL:
 class Contact:
     """Contact object.
 
-    Attributes
+    Parameters
     ----------
     name: :class:`.Name`
         Specifies the name object.
@@ -377,7 +377,7 @@ class Contact:
 class Error:
     """Error object.
 
-    Attributes
+    Parameters
     ----------
     code: :class:`int`
         Error code.
@@ -396,7 +396,7 @@ class Error:
 class Pricing:
     """Pricing object.
     
-    Attributes
+    Parameters
     ----------
     category: Optional[:class:`.OriginType`]
         Indicates the conversation pricing category.
@@ -412,7 +412,7 @@ class Pricing:
 class Origin:
     """Origin object.
     
-    Attributes
+    Parameters
     ----------
     type: :class:`.OriginType`
         Indicates where a conversation has started. This can also be referred to as a conversation entry point.
@@ -439,7 +439,7 @@ class Conversation:
         Any business-initiated message sent more than 24 hours after the last customer message must be
         a template message.
 
-    Attributes
+    Parameters
     ----------
     id: :class:`str`
         Represents the ID of the conversation the given status notification belongs to.
@@ -491,7 +491,7 @@ class Status:
 class Product:
     """Product object.
 
-    Attributes
+    Parameters
     ----------
     currency: :class:`str`
         Price currency.
@@ -513,7 +513,7 @@ class Product:
 class Order:
     """Order object.
 
-    Attributes
+    Parameters
     ----------
     catalog_id: :class:`str`
         ID for the catalog the ordered item belongs to.
@@ -532,7 +532,7 @@ class Order:
 class Reply:
     """Reply object for "list_reply".
 
-    Attributes
+    Parameters
     ----------
     id: :class:`str`
         Unique ID of a selected button or list item.
@@ -553,7 +553,7 @@ class ButtonReply(Reply):
 class ListReply(Reply):
     """Reply object for "list_reply".
 
-    Attributes
+    Parameters
     ----------
     description: Optional[:class:`str`]
         Description of the selected row (only for list items).
@@ -565,7 +565,7 @@ class ListReply(Reply):
 class Interactive:
     """Interactive object.
 
-    Attributes
+    Parameters
     ----------
     type: :class:`.InteractiveType`
         The type of the interactive message.
@@ -584,7 +584,7 @@ class Interactive:
 class System:
     """System object.
 
-    Attributes
+    Parameters
     ----------
     body: :class:`str`
         Describes the change to the customer's identity or phone number.
@@ -612,7 +612,7 @@ class System:
 class Referral:
     """Referral object.
 
-    Attributes
+    Parameters
     ----------
     body: :class:`str`
         Body for the ad or post.
@@ -649,7 +649,7 @@ class Referral:
 class Identity:
     """Identity object.
 
-    Attributes
+    Parameters
     ----------
     acknowledged: :class:`bool`
         State of acknowledgment for the messages system "customer_identity_changed".
@@ -668,7 +668,7 @@ class Identity:
 class ReferredProduct:
     """ReferredProduct object.
 
-    Attributes
+    Parameters
     ----------
     catalog_id: :class:`str`
         Unique identifier of the Meta catalog linked to the WhatsApp Business Account.
@@ -684,7 +684,7 @@ class ReferredProduct:
 class Context:
     """Context object.
 
-    Attributes
+    Parameters
     ----------
     id: :class:`str`
         The message ID for the sent message for an inbound reply.
@@ -714,7 +714,7 @@ class Context:
 class Message:
     """Message .
 
-    Attributes
+    Parameters
     ----------
     id: :class:`str`
         The ID for the message that was received by the business.
@@ -787,7 +787,7 @@ class Message:
 class Profile:
     """Metadata for the business that is subscribed to the webhook.
 
-    Attributes
+    Parameters
     ----------
     name: :class:`str`
         The customer’s name.
@@ -800,7 +800,7 @@ class Profile:
 class Customer:
     """Customer object.
 
-    Attributes
+    Parameters
     ----------
     profile: :class:`.Profile`
         An object containing customer profile information
@@ -816,7 +816,7 @@ class Customer:
 class Metadata:
     """Metadata for the business that is subscribed to the webhook.
 
-    Attributes
+    Parameters
     ----------
     display_phone_number: :class:`str`
         The phone number that is displayed for a business.
@@ -832,7 +832,7 @@ class Metadata:
 class Value:
     """The value object contains details for the change that triggered the webhook.
 
-    Attributes
+    Parameters
     ----------
     messaging_product: :class:`str`
         The value is always "whatsapp".
@@ -863,7 +863,7 @@ class Change:
     Webhooks are triggered when a customer performs an action
     or the status for a message a business sends a customer changes.
 
-    Attributes
+    Parameters
     ----------
     field: :class:`str`
         The type of notification. The only option for this API is "messages".
@@ -882,7 +882,7 @@ class Entry:
     Webhooks are triggered when a customer performs an action
     or the status for a message a business sends a customer changes.
 
-    Attributes
+    Parameters
     ----------
     id: :class:`str`
         The WhatsApp Business Account ID for the business that is subscribed to the webhook.
@@ -901,7 +901,7 @@ class Event:
     Webhooks are triggered when a customer performs an action
     or the status for a message a business sends a customer changes.
 
-    Attributes
+    Parameters
     ----------
     object: :class:`str`
         The specific webhook a business is subscribed to. The webhook is "whatsapp_business_account".

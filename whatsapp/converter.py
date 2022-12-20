@@ -14,11 +14,15 @@ T = TypeVar("T")
 def as_dict(data: T) -> Dict[str, Any]:
     """Create a dictionary from a data class instance.
 
-    Args:
-        data (T): an instance of a data class
+    Parameters
+    ----------
+    data: :class:`Type[T]`
+        An instance of a data class.
 
-    Returns:
-        Dict[str, Any]: a dictionary mapping field names to field values of a input dataclass instance
+    Returns
+    -------
+    Dict[:class:`str`, Any]
+        A dictionary mapping field names to field values of a input dataclass instance.
     """
 
     def _as_dict(_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -44,12 +48,17 @@ def as_dict(data: T) -> Dict[str, Any]:
 def from_dict(data_class: Type[T], data: Dict[str, Any]) -> T:
     """Create a data class instance from a dictionary.
 
-    Args:
-        data_class (Type[T]): a data class type
-        data (Dict[str, Any]): a dictionary of a input data
+    Parameters
+    ----------
+    data_class: :class:`Type[T]`
+        A data class type.
+    data: Dict[:class:`str`, Any]
+        A dictionary of a input data.
 
-    Returns:
-        T: an instance of a data class
+    Returns
+    -------
+    :class:`T`
+        An instance of a data class.
     """
 
     def _from_dict(_data: Dict[str, Any]) -> Dict[str, Any]:

@@ -2,8 +2,7 @@
 
 from typing import TYPE_CHECKING, Any, Dict, Optional, Union
 
-if TYPE_CHECKING:
-    from requests import Response
+from requests import Response
 
 __all__ = (
     "WhatsappException",
@@ -23,10 +22,15 @@ class WhatsappException(Exception):
 class HTTPException(WhatsappException):
     """Exception that's raised when an HTTP request operation fails.
 
-    Attributes
+    Parameters
     ----------
     response: :class:`requests.Response`
         The response of the failed HTTP request. This is an instance of :class:`requests.Response`.
+    content: Optional[Union[:class:`str`, Dict[:class:`str`, Any]]]
+        The content response of the failed HTTP request.
+
+    Attributes
+    ----------
     status: :class:`int`
         The status code of the HTTP request.
     code: :class:`int`
@@ -39,19 +43,19 @@ class HTTPException(WhatsappException):
         The type of the error. Could be an empty string.
     """
 
-    def __init__(self, response: Response, message: Optional[Union[str, Dict[str, Any]]]) -> None:
+    def __init__(self, response: Response, content: Optional[Union[str, Dict[str, Any]]]) -> None:
         self.response: Response = response
         self.status: int = response.status_code
         self.code: int
         self.subcode: int
         self.text: Optional[str]
         self.type: Optional[str]
-        if isinstance(message, dict):
-            self.code = message.get("code", 0)
-            self.subcode = message.get("error_subcode", 0)
-            self.type = message.get("type", 0)
-            base = message.get("message", "")
-            error_data: Optional[Dict[str, str]] = message.get("error_data")
+        if isinstance(content, dict):
+            self.code = content.get("code", 0)
+            self.subcode = content.get("error_subcode", 0)
+            self.type = content.get("type", 0)
+            base = content.get("message", "")
+            error_data: Optional[Dict[str, str]] = content.get("error_data")
             if error_data:
                 details = error_data.get("details")
                 self.text = f"{base}\n{details}"
@@ -60,7 +64,7 @@ class HTTPException(WhatsappException):
         else:
             self.code = 0
             self.subcode = 0
-            self.text = message or ""
+            self.text = content or ""
             self.type = ""
         e = f"{self.response.status} {self.response.reason} (error code: {self.code} subcode: {self.subcode})"
         if len(self.text):
