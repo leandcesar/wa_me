@@ -6,6 +6,7 @@ from requests import Response
 
 __all__ = (
     "WhatsappException",
+    "ValidationError",
     "HTTPException",
     "BadRequest",
     "Unauthorized",
@@ -17,6 +18,10 @@ __all__ = (
 
 class WhatsappException(Exception):
     """Base exception class for whatsapp-py."""
+
+
+class ValidationError(WhatsappException):
+    """An Exception that is raised when there is a Validation Error."""
 
 
 class HTTPException(WhatsappException):

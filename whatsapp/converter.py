@@ -6,9 +6,12 @@ from typing import Any, Dict, TypeVar, Type
 
 import dacite
 
+from .errors import ValidationError
+
 __all__ = ("as_dict", "from_dict")
 
 T = TypeVar("T")
+config = dacite.Config(cast=[Enum])
 
 
 def as_dict(data: T) -> Dict[str, Any]:
@@ -76,8 +79,7 @@ def from_dict(data_class: Type[T], data: Dict[str, Any]) -> T:
             if v is not None
         }
 
-    return dacite.from_dict(
-        data_class=data_class,
-        data=_from_dict(data),
-        config=dacite.Config(cast=[Enum]),
-    )
+    try:
+        return dacite.from_dict(data_class=data_class, data=_from_dict(data), config=config)
+    except Exception as e:
+        raise ValidationError(e)
