@@ -8,7 +8,6 @@ from urllib.parse import quote as _uriquote
 
 import requests
 
-from . import __version__
 from .errors import (
     BadRequest,
     Forbidden,
@@ -63,12 +62,6 @@ class HTTPClient:
         self.token: Optional[str] = None
         self.proxy: Optional[str] = proxy
         self.proxy_auth: Optional[requests.auth.HTTPProxyAuth] = proxy_auth
-        user_agent = (
-            "WhatsappBot (https://github.com/leandcesar/whatsapp., {0}) Python/{1[0]}.{1[1]} requests/{2}"
-        )
-        self.user_agent: str = user_agent.format(
-            __version__, sys.version_info, requests.__version__
-        )
 
     def start(self, phone_id: str, token: str) -> Dict[str, Any]:
         self.__session = requests.Session()
@@ -98,7 +91,7 @@ class HTTPClient:
     ) -> Any:
         method = route.method
         url = route.url
-        headers: dict[str, str] = {"User-Agent": self.user_agent}
+        headers: dict[str, str] = {}
         if self.token is not None:
             headers["Authorization"] = f"Bearer {self.token}"
         if "json" in kwargs:
@@ -132,17 +125,17 @@ class HTTPClient:
                 _log.debug(f"{method} {url} with {data!r} has returned {response.status_code}")
                 if 200 <= response.status_code < 300:
                     return data
-                elif response.status == 400:
+                elif response.status_code == 400:
                     raise BadRequest(response, data)
-                elif response.status == 401:
+                elif response.status_code == 401:
                     raise Unauthorized(response, data)
-                elif response.status == 403:
+                elif response.status_code == 403:
                     raise Forbidden(response, data)
-                elif response.status == 404:
+                elif response.status_code == 404:
                     raise NotFound(response, data)
                 elif response.status_code == 429:
                     raise HTTPException(response, data)
-                elif response.status >= 500:
+                elif response.status_code >= 500:
                     raise WhatsappServerError(response, data)
                 else:
                     raise HTTPException(response, data)
@@ -150,7 +143,7 @@ class HTTPClient:
             raise e
 
         if response is not None:
-            if response.status >= 500:
+            if response.status_code >= 500:
                 raise WhatsappServerError(response, data)
             raise HTTPException(response, data)
         raise RuntimeError("Unreachable code in HTTP handling")
@@ -183,7 +176,7 @@ class HTTPClient:
         return self.request(route)
 
     def download_media(self, media_url: str) -> Dict[str, Any]:
-        headers: dict[str, str] = {"User-Agent": self.user_agent}
+        headers: dict[str, str] = {}
         if self.token is not None:
             headers["Authorization"] = f"Bearer {self.token}"
         with self.__session.get(media_url, headers=headers) as response:

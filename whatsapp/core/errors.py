@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from typing import TYPE_CHECKING, Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 from requests import Response
 
