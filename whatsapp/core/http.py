@@ -55,20 +55,20 @@ class HTTPClient:
         self,
         *,
         proxy: Optional[str] = None,
-        proxy_auth: Optional[requests.auth.HTTPProxyAuth] = None,
+        proxy_auth: Optional[requests.auth.HTTPBasicAuth] = None,
     ) -> None:
-        self.__session: requests.Session = None  # filled in start
+        self._session: requests.Session = None  # filled in start
         self.phone_id: Optional[str] = None
         self.token: Optional[str] = None
         self.proxy: Optional[str] = proxy
-        self.proxy_auth: Optional[requests.auth.HTTPProxyAuth] = proxy_auth
+        self.proxy_auth: Optional[requests.auth.HTTPBasicAuth] = proxy_auth
 
-    def start(self, phone_id: str, token: str) -> Dict[str, Any]:
-        self.__session = requests.Session()
+    def start(self, phone_id: str, token: str) -> T[str, Any]:
+        self._session = requests.Session()
         last_phone_id, self.phone_id = self.phone_id, phone_id
         last_token, self.token = self.token, token
         try:
-            data = self.get_business_profile(phone_id)
+            data = self.fetch_business_profile()
         except HTTPException as e:
             self.phone_id = last_phone_id
             self.token = last_token
@@ -76,11 +76,11 @@ class HTTPClient:
         return data
 
     def restart(self) -> None:
-        self.__session = requests.Session()
+        self._session = requests.Session()
 
     def close(self) -> None:
-        if self.__session:
-            self.__session.close()
+        if self._session:
+            self._session.close()
 
     def request(
         self,
@@ -117,7 +117,7 @@ class HTTPClient:
                 kwargs["files"] = [("file", (f["filename"], open(f["file"], "rb"), f["mime_type"]))]
 
         try:
-            with self.__session.request(method, url, **kwargs) as response:
+            with self._session.request(method, url, **kwargs) as response:
                 try:
                     data = response.json()
                 except requests.exceptions.JSONDecodeError:
@@ -179,7 +179,7 @@ class HTTPClient:
         headers: dict[str, str] = {}
         if self.token is not None:
             headers["Authorization"] = f"Bearer {self.token}"
-        with self.__session.get(media_url, headers=headers) as response:
+        with self._session.get(media_url, headers=headers) as response:
             _log.debug(f"GET {media_url} has returned {response.status_code}")
             if response.status_code == 200:
                 return response.content
