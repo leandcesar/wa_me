@@ -455,7 +455,7 @@ class Conversation:
 
     id: str
     origin: Origin
-    expiration_timestamp: Optional[int] = None
+    expiration_timestamp: Optional[str] = None
 
 
 @dataclass
@@ -481,7 +481,7 @@ class Status:
     id: str
     recipient_id: str
     status: StatusType
-    timestamp: int
+    timestamp: str
     conversation: Optional[Conversation] = None
     errors: Optional[List[Error]] = None
     pricing: Optional[Pricing] = None
@@ -660,7 +660,7 @@ class Identity:
     """
 
     acknowledged: bool
-    created_timestamp: int
+    created_timestamp: str
     hash: str
 
 
@@ -762,7 +762,7 @@ class Message:
 
     id: str
     sender: str  # Original: from
-    timestamp: int
+    timestamp: str
     type: MessageType
     audio: Optional[Audio] = None
     button: Optional[Button] = None

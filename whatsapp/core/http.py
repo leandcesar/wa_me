@@ -90,12 +90,8 @@ class HTTPClient:
             headers["Authorization"] = f"Bearer {self.token}"
         if "json" in kwargs:
             headers["Content-Type"] = "application/json"
-            payload = kwargs.pop("json")
-            kwargs["data"] = (
-                payload
-                if isinstance(payload, dict)
-                else json.dumps(payload, separators=(",", ":"), ensure_ascii=True)
-            )
+            if not isinstance(kwargs.get("json"), dict):
+                kwargs["json"] = json.dumps(kwargs.pop("json"), separators=(",", ":"), ensure_ascii=True)
         kwargs["headers"] = headers
 
         if self.proxy is not None:

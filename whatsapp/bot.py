@@ -3,7 +3,7 @@
 import logging
 import traceback
 import sys
-from typing import Dict, Any
+from typing import Any, Dict, Type
 
 from .context import Ctx
 from .core.client import Client
@@ -12,14 +12,16 @@ __all__ = ("Bot",)
 
 _log = logging.getLogger(__name__)
 
+CTX = Type[Ctx]
+
 
 class Bot(Client):
     """Represents a Whatsapp bot."""
 
-    def handle(self, data: Dict[str, Any]) -> None:
+    def handle(self, data: Dict[str, Any], *, cls_ctx: CTX = Ctx) -> None:
         try:
             _log.debug(f"Received event {data}")
-            ctx = Ctx(self, data)
+            ctx = cls_ctx(self, data)
             self.before_event(ctx)
             if ctx.error:
                 self.on_event_error(ctx)

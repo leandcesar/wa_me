@@ -4,17 +4,17 @@ from typing import Any, Dict, List, Optional
 
 from datetime import datetime
 
-from .bot import Bot
 from .classes import enums, events, messages, responses
+from .core.client import Client
 from .core.converter import as_dict, from_dict
 
 __all__ = ("Ctx",)
 
 
 class Ctx:
-    def __init__(self, bot: Bot, data: Dict[str, Any]) -> None:
+    def __init__(self, client: Client, data: Dict[str, Any]) -> None:
         event = from_dict(events.Event, data)
-        self._bot: Bot = bot
+        self._client: Client = client
         self._event: events.Event = event
         self._event_value: events.Value = event.entry[0].changes[0].value
         self._readed: bool = False
@@ -22,8 +22,8 @@ class Ctx:
         self._replies: List[responses.Response] = []
 
     @property
-    def bot(self) -> Bot:
-        return self._bot
+    def client(self) -> Client:
+        return self._client
 
     @property
     def event(self) -> events.Event:
@@ -82,9 +82,9 @@ class Ctx:
     @property
     def timestamp(self) -> Optional[int]:
         if self.message:
-            return self.message.timestamp
+            return int(self.message.timestamp)
         elif self.status:
-            return self.status.timestamp
+            return int(self.status.timestamp)
         return None
 
     @property
@@ -107,7 +107,7 @@ class Ctx:
         media = getattr(self.message, message_type)
         if not hasattr(media, "mime_type"):  # media's check
             return None
-        data = self.bot.http.fetch_media_url(media.id)
+        data = self.client.http.fetch_media_url(media.id)
         response = from_dict(responses.Media, data)
         return response.url
 
@@ -115,7 +115,7 @@ class Ctx:
         media_url = self.media_url()
         if not media_url:
             return None
-        return self.bot.http.download_media(media_url)
+        return self.client.http.download_media(media_url)
 
     def read(self) -> bool:
         if not self.message:
@@ -123,13 +123,13 @@ class Ctx:
         if self.readed:
             return True
         message_id = self.message.id
-        data = self.bot.http.read_message(message_id)
+        data = self.client.http.read_message(message_id)
         response = from_dict(responses.Readed, data)
         self._readed = response.success
         return response.success
 
     def send_message(self, message: messages.Message) -> responses.Response:
-        data = self.bot.http.send_message(as_dict(message))
+        data = self.client.http.send_message(as_dict(message))
         response = from_dict(responses.Response, data)
         return response
 
@@ -161,13 +161,13 @@ class Ctx:
         document_url: Optional[str] = None,
         image_id: Optional[str] = None,
         image_url: Optional[str] = None,
-        interactive_data: Dict[str, Any],
+        interactive_data: Dict[str, Any] = None,
         latitude: Optional[float] = None,
         longitude: Optional[float] = None,
         address: Optional[str] = None,
         name: Optional[str] = None,
         options: Optional[List[Dict[str, Any]]] = None,
-        quick_responses: Optional[List[Dict[str, Any]]] = None,
+        quick_replies: Optional[List[Dict[str, Any]]] = None,
         sticker_id: Optional[str] = None,
         sticker_url: Optional[str] = None,
         video_id: Optional[str] = None,
@@ -184,14 +184,14 @@ class Ctx:
             return None
         if message and isinstance(message, messages.Message):
             pass
-        elif text and not quick_responses and not options:
+        elif text and not quick_replies and not options:
             message = messages.Message(to=self.recipient_id, text=messages.Text(body=text), type=enums.MessageType.text)
-        elif text and quick_responses:
+        elif text and quick_replies:
             message = messages.Message(
                 to=self.recipient_id,
                 interactive=messages.Interactive(
                     action=messages.Action(
-                        buttons=[messages.Button(reply=messages.Reply(**quick_reply)) for quick_reply in quick_responses]
+                        buttons=[messages.Button(reply=messages.Reply(**quick_reply)) for quick_reply in quick_replies]
                     ),
                     body=messages.Body(text=text),
                     type=enums.InteractiveType.button,
