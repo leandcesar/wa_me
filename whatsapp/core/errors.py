@@ -51,28 +51,34 @@ class HTTPException(WhatsappException):
     def __init__(self, response: requests.Response, content: Optional[Union[str, Dict[str, Any]]]) -> None:
         self.response: requests.Response = response
         self.status: int = response.status_code
-        self.code: int
-        self.subcode: int
-        self.text: str
+        self.code: Optional[int]
+        self.subcode: Optional[int]
+        self.text: Optional[str]
         self.type: Optional[str]
         if isinstance(content, dict):
-            self.code = content.get("code", 0)
-            self.subcode = content.get("error_subcode", 0)
-            self.type = content.get("type", 0)
-            base = content.get("message", "")
-            error_data: Optional[Dict[str, str]] = content.get("error_data")
+            error = content.get("error", {})
+            self.code = error.get("code", 0)
+            self.subcode = error.get("error_subcode", 0)
+            self.type = error.get("type", 0)
+            base = error.get("message", "")
+            error_data: Optional[Dict[str, str]] = error.get("error_data")
             if error_data:
                 details = error_data.get("details")
                 self.text = f"{base}\n{details}"
             else:
                 self.text = base
         else:
-            self.code = 0
-            self.subcode = 0
+            self.code = None
+            self.subcode = None
             self.text = content or ""
             self.type = ""
-        e = f"{self.response.status_code} {self.response.reason} (error code: {self.code} subcode: {self.subcode})"
-        if len(self.text):
+        e = f"{self.response.status_code} {self.response.reason}"
+        if self.code is not None:
+            e += f" (error code: {self.code}"
+            if self.subcode is not None:
+                e += f" subcode: {self.subcode}"
+            e += ")"
+        if self.text is not None:
             e += f": {self.text}"
         super().__init__(e)
 
