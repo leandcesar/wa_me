@@ -30,15 +30,15 @@ API_VERSION: int = 15
 class Route:
     """Represents an HTTP route to the WhatsApp Business Cloud API."""
 
-    def __init__(self, method: str, path: str, **parameters: Any) -> None:
+    def __init__(self, method: str, path: str, **kwargs) -> None:
         self.path: str = path
         self.method: str = method
         url = self.base + self.path
-        if parameters:
+        if kwargs:
             url = url.format_map(
                 {
                     k: _uriquote(v) if isinstance(v, str) else v
-                    for k, v in parameters.items()
+                    for k, v in kwargs.items()
                 }
             )
         self.url: str = url
@@ -57,13 +57,13 @@ class HTTPClient:
         proxy: Optional[str] = None,
         proxy_auth: Optional[requests.auth.HTTPBasicAuth] = None,
     ) -> None:
-        self._session: requests.Session = None  # filled in start
+        self._session: requests.Session  # filled in start
         self.phone_id: Optional[str] = None
         self.token: Optional[str] = None
         self.proxy: Optional[str] = proxy
         self.proxy_auth: Optional[requests.auth.HTTPBasicAuth] = proxy_auth
 
-    def start(self, phone_id: str, token: str) -> T[str, Any]:
+    def start(self, phone_id: str, token: str) -> Dict[str, Any]:
         self._session = requests.Session()
         last_phone_id, self.phone_id = self.phone_id, phone_id
         last_token, self.token = self.token, token
@@ -72,7 +72,7 @@ class HTTPClient:
         except HTTPException as e:
             self.phone_id = last_phone_id
             self.token = last_token
-            raise HTTPException("Improper phone_id and/or token has been passed.") from e
+            raise HTTPException(e.response, "Improper phone_id and/or token has been passed.")
         return data
 
     def restart(self) -> None:
@@ -82,13 +82,7 @@ class HTTPClient:
         if self._session:
             self._session.close()
 
-    def request(
-        self,
-        route: Route,
-        *,
-        files: Optional[Sequence[Dict[str, str]]] = None,  
-        **kwargs: Any,
-    ) -> Any:
+    def request(self, route: Route, **kwargs) -> Any:
         method = route.method
         url = route.url
         headers: dict[str, str] = {}
@@ -96,11 +90,11 @@ class HTTPClient:
             headers["Authorization"] = f"Bearer {self.token}"
         if "json" in kwargs:
             headers["Content-Type"] = "application/json"
-            data = kwargs.pop("json")
+            payload = kwargs.pop("json")
             kwargs["data"] = (
-                data
-                if isinstance(data, dict)
-                else json.dumps(data, separators=(",", ":"), ensure_ascii=True)
+                payload
+                if isinstance(payload, dict)
+                else json.dumps(payload, separators=(",", ":"), ensure_ascii=True)
             )
         kwargs["headers"] = headers
 
@@ -111,10 +105,6 @@ class HTTPClient:
 
         response: Optional[requests.Response] = None
         data: Optional[Union[Dict[str, Any], str]] = None
-
-        if files:
-            for f in files:
-                kwargs["files"] = [("file", (f["filename"], open(f["file"], "rb"), f["mime_type"]))]
 
         try:
             with self._session.request(method, url, **kwargs) as response:
@@ -161,21 +151,11 @@ class HTTPClient:
         payload = {"messaging_product": "whatsapp", "status": "read", "message_id": message_id}
         return self.request(route, json=payload)
 
-    def upload_media(self, file: str, filename: str, mime_type: str) -> Dict[str, Any]:
-        route = Route("POST", "/{phone_id}/media", phone_id=self.phone_id)
-        payload = {"messaging_product": "whatsapp"}
-        files = [{"filename": filename, "file": file, "mime_type": mime_type}]
-        return self.request(route, json=payload, files=files)
-
     def fetch_media_url(self, media_id: str) -> Dict[str, Any]:
         route = Route("GET", "/{media_id}", media_id=media_id)
         return self.request(route)
 
-    def delete_media(self, media_id: str) -> Dict[str, Any]:
-        route = Route("DELETE", "/{media_id}", media_id=media_id)
-        return self.request(route)
-
-    def download_media(self, media_url: str) -> Dict[str, Any]:
+    def download_media(self, media_url: str) -> bytes:
         headers: dict[str, str] = {}
         if self.token is not None:
             headers["Authorization"] = f"Bearer {self.token}"

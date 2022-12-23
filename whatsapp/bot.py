@@ -1,20 +1,25 @@
 #!/usr/bin/env python
 
+import logging
 import traceback
 import sys
+from typing import Dict, Any
 
 from .context import Ctx
 from .core.client import Client
 
 __all__ = ("Bot",)
 
+_log = logging.getLogger(__name__)
 
-class BaseBot(Client):
-    """Represents a base bot."""
+
+class Bot(Client):
+    """Represents a Whatsapp bot."""
 
     def handle(self, data: Dict[str, Any]) -> None:
         try:
-            ctx = Ctx(data)
+            _log.debug(f"Received event {data}")
+            ctx = Ctx(self, data)
             self.before_event(ctx)
             if ctx.is_error:
                 self.on_event_error(ctx)
@@ -88,7 +93,3 @@ class BaseBot(Client):
     def on_event_status_failed(self, ctx: Ctx) -> None: ...
     def on_event_status_read(self, ctx: Ctx) -> None: ...
     def on_event_status_sent(self, ctx: Ctx) -> None: ...
-
-
-class Bot(BaseBot):
-    """Represents a Whatsapp bot."""

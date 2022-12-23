@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, Optional, Union
 
-from requests import Response
+import requests
 
 __all__ = (
     "WhatsappException",
@@ -48,12 +48,12 @@ class HTTPException(WhatsappException):
         The type of the error. Could be an empty string.
     """
 
-    def __init__(self, response: Response, content: Optional[Union[str, Dict[str, Any]]]) -> None:
-        self.response: Response = response
+    def __init__(self, response: requests.Response, content: Optional[Union[str, Dict[str, Any]]]) -> None:
+        self.response: requests.Response = response
         self.status: int = response.status_code
         self.code: int
         self.subcode: int
-        self.text: Optional[str]
+        self.text: str
         self.type: Optional[str]
         if isinstance(content, dict):
             self.code = content.get("code", 0)
@@ -71,7 +71,7 @@ class HTTPException(WhatsappException):
             self.subcode = 0
             self.text = content or ""
             self.type = ""
-        e = f"{self.response.status} {self.response.reason} (error code: {self.code} subcode: {self.subcode})"
+        e = f"{self.response.status_code} {self.response.reason} (error code: {self.code} subcode: {self.subcode})"
         if len(self.text):
             e += f": {self.text}"
         super().__init__(e)
