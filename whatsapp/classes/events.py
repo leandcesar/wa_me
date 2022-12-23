@@ -86,8 +86,8 @@ class Media:
 
     Parameters
     ----------
-    caption: :class:`str`
-        ID for the media file.
+    id: :class:`str`
+        The media object ID.
     mime_type: :class:`str`
         Mime type of the media file.
     """
@@ -712,7 +712,7 @@ class Context:
 
 @dataclass
 class Message:
-    """Message .
+    """Message object.
 
     Parameters
     ----------
