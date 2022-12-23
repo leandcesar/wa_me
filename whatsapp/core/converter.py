@@ -6,6 +6,8 @@ from typing import Any, Dict, TypeVar, Type
 
 import dacite
 
+from .errors import ValidationError
+
 __all__ = ("as_dict", "from_dict")
 
 T = TypeVar("T")
@@ -43,7 +45,10 @@ def as_dict(data: T) -> Dict[str, Any]:
             if v is not None
         }
 
-    return _as_dict(asdict(data))
+    try:
+        return _as_dict(asdict(data))
+    except Exception as e:
+        raise ValidationError(e)
 
 
 def from_dict(data_class: Type[T], data: Dict[str, Any]) -> T:
@@ -76,4 +81,7 @@ def from_dict(data_class: Type[T], data: Dict[str, Any]) -> T:
             for k, v in _data.items()
         }
 
-    return dacite.from_dict(data_class=data_class, data=_from_dict(data), config=config)
+    try:
+        return dacite.from_dict(data_class=data_class, data=_from_dict(data), config=config)
+    except Exception as e:
+        raise ValidationError(e)

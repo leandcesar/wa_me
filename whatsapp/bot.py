@@ -21,27 +21,25 @@ class Bot(Client):
             _log.debug(f"Received event {data}")
             ctx = Ctx(self, data)
             self.before_event(ctx)
-            if ctx.is_error:
+            if ctx.error:
                 self.on_event_error(ctx)
-            elif ctx.is_message:
-                message = ctx._event_value.messages[0]
+            elif ctx.message:
                 self.before_event_message(ctx)
-                if message.context:
+                if ctx.message.context:
                     self.on_event_message_context(ctx)
-                if message.referral:
+                if ctx.message.referral:
                     self.on_event_message_referral(ctx)
-                if message.errors:
+                if ctx.message.errors:
                     self.on_event_message_error(ctx)
                 else:
-                    getattr(self, f"on_event_message_{message.type.value}")(ctx)
+                    getattr(self, f"on_event_message_{ctx.message.type.value}")(ctx)
                 self.after_event_message(ctx)
-            elif ctx.is_status:
-                status = ctx._event_value.statuses[0]
+            elif ctx.status:
                 self.before_event_status(ctx)
-                if status.errors:
+                if ctx.status.errors:
                     self.on_event_status_error(ctx)
                 else:
-                    getattr(self, f"on_event_status_{status.status.value}")(ctx)
+                    getattr(self, f"on_event_status_{ctx.status.status.value}")(ctx)
                 self.after_event_status(ctx)
             self.after_event(ctx)
         except Exception as e:

@@ -5,52 +5,28 @@ from typing import Any, Dict, List, Optional
 from datetime import datetime
 
 from .bot import Bot
-from .utils.converter import as_dict, from_dict
-from .classes.enums import HeaderType, InteractiveType, MessageType
-from .classes.events import Event, Value
-from .classes.messages import (
-    Action,
-    Audio,
-    Body,
-    Button,
-    Contact,
-    Context,
-    Document,
-    Footer,
-    Header,
-    Image,
-    Interactive,
-    Location,
-    Message,
-    Reaction,
-    Reply,
-    Row,
-    Section,
-    Sticker,
-    Text,
-    Video,
-)
-from .classes.responses import Media, Readed, Response
+from .classes import enums, events, messages, responses
+from .core.converter import as_dict, from_dict
 
 __all__ = ("Ctx",)
 
 
 class Ctx:
     def __init__(self, bot: Bot, data: Dict[str, Any]) -> None:
-        event = from_dict(Event, data)
+        event = from_dict(events.Event, data)
         self._bot: Bot = bot
-        self._event: Event = event
-        self._event_value: Value = event.entry[0].changes[0].value
+        self._event: events.Event = event
+        self._event_value: events.Value = event.entry[0].changes[0].value
         self._readed: bool = False
         self._reactions: List[str] = []
-        self._responses: List[Response] = []
+        self._replies: List[responses.Response] = []
 
     @property
     def bot(self) -> Bot:
         return self._bot
 
     @property
-    def event(self) -> Event:
+    def event(self) -> events.Event:
         return self._event
 
     @property
@@ -58,12 +34,12 @@ class Ctx:
         return self._readed
 
     @property
-    def reacted(self) -> bool:
-        return bool(self._reactions)
+    def reactions(self) -> List[str]:
+        return self._reactions
 
     @property
-    def replied(self) -> bool:
-        return bool(self._responses)
+    def replies(self) -> List[responses.Response]:
+        return self._replies
 
     @property
     def phone_id(self) -> str:
@@ -86,23 +62,29 @@ class Ctx:
         return None
 
     @property
-    def is_error(self) -> bool:
-        return bool(self._event_value.errors)
+    def error(self) -> Optional[events.Error]:
+        if self._event_value.errors:
+            return self._event_value.errors[0]
+        return None
 
     @property
-    def is_message(self) -> bool:
-        return bool(self._event_value.messages)
+    def message(self) -> Optional[events.Message]:
+        if self._event_value.messages:
+            return self._event_value.messages[0]
+        return None
 
     @property
-    def is_status(self) -> bool:
-        return bool(self._event_value.statuses)
+    def status(self) -> Optional[events.Status]:
+        if self._event_value.statuses:
+            return self._event_value.statuses[0]
+        return None
 
     @property
     def timestamp(self) -> Optional[int]:
-        if self.is_message:
-            return self._event_value.messages[0].timestamp
-        elif self.is_status:
-            return self._event_value.statuses[0].timestamp
+        if self.message:
+            return self.message.timestamp
+        elif self.status:
+            return self.status.timestamp
         return None
 
     @property
@@ -119,14 +101,14 @@ class Ctx:
         return None
 
     def media_url(self) -> Optional[str]:
-        if not self.is_message:
+        if not self.message:
             return None
-        message_type: str = self._event_value.messages[0].type.value
-        media = getattr(self._event_value.messages[0], message_type)
+        message_type: str = self.message.type.value
+        media = getattr(self.message, message_type)
         if not hasattr(media, "mime_type"):  # media's check
             return None
         data = self.bot.http.fetch_media_url(media.id)
-        response = from_dict(Media, data)
+        response = from_dict(responses.Media, data)
         return response.url
 
     def media(self) -> Optional[bytes]:
@@ -136,27 +118,27 @@ class Ctx:
         return self.bot.http.download_media(media_url)
 
     def read(self) -> bool:
-        if not self.is_message:
+        if not self.message:
             return False
         if self.readed:
             return True
-        message_id = self._event_value.messages[0].id
+        message_id = self.message.id
         data = self.bot.http.read_message(message_id)
-        response = from_dict(Readed, data)
+        response = from_dict(responses.Readed, data)
         self._readed = response.success
         return response.success
 
-    def send_message(self, message: Message) -> Response:
+    def send_message(self, message: messages.Message) -> responses.Response:
         data = self.bot.http.send_message(as_dict(message))
-        response = from_dict(Response, data)
+        response = from_dict(responses.Response, data)
         return response
 
-    def react(self, emoji: str) -> Optional[Response]:
-        if not self.is_message or not self.recipient_id:
+    def react(self, emoji: str) -> Optional[responses.Response]:
+        if not self.message or not self.recipient_id:
             return None
-        message_id = self._event_value.messages[0].id
-        reaction = Reaction(emoji=emoji, message_id=message_id)
-        message = Message(to=self.recipient_id, reaction=reaction, type=MessageType.reaction)
+        message_id = self.message.id
+        reaction = messages.Reaction(emoji=emoji, message_id=message_id)
+        message = messages.Message(to=self.recipient_id, reaction=reaction, type=enums.MessageType.reaction)
         response = self.send_message(message)
         if emoji:
             self._reactions.append(emoji)
@@ -164,17 +146,17 @@ class Ctx:
             self._reactions.clear()
         return response
 
-    def unreact(self) -> Optional[Response]:
+    def unreact(self) -> Optional[responses.Response]:
         return self.react("")
 
     def send(
         self,
-        message: Optional[Message] = None,
+        message: Optional[messages.Message] = None,
         *,
         text: Optional[str] = None,
         audio_id: Optional[str] = None,
         audio_url: Optional[str] = None,
-        contacts_data: List[Dict[str, Any]],
+        contacts_data: List[Dict[str, Any]] = None,
         document_id: Optional[str] = None,
         document_url: Optional[str] = None,
         image_id: Optional[str] = None,
@@ -197,66 +179,67 @@ class Ctx:
         header_text: Optional[str] = None,
         footer_text: Optional[str] = None,
         reply_to: Optional[str] = None,
-    ) -> Optional[Response]:
+    ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        if message and isinstance(message, Message):
+        if message and isinstance(message, messages.Message):
             pass
         elif text and not quick_responses and not options:
-            message = Message(to=self.recipient_id, text=Text(body=text), type=MessageType.text)
+            message = messages.Message(to=self.recipient_id, text=messages.Text(body=text), type=enums.MessageType.text)
         elif text and quick_responses:
-            message = Message(
+            message = messages.Message(
                 to=self.recipient_id,
-                interactive=Interactive(
-                    action=Action(
-                        buttons=[Button(reply=Reply(**quick_reply)) for quick_reply in quick_responses]
+                interactive=messages.Interactive(
+                    action=messages.Action(
+                        buttons=[messages.Button(reply=messages.Reply(**quick_reply)) for quick_reply in quick_responses]
                     ),
-                    body=Body(text=text),
-                    type=InteractiveType.button,
+                    body=messages.Body(text=text),
+                    type=enums.InteractiveType.button,
                 ),
-                type=MessageType.interactive,
+                type=enums.MessageType.interactive,
             )
         elif text and options:
-            message = Message(
+            message = messages.Message(
                 to=self.recipient_id,
-                interactive=Interactive(
-                    action=Action(
+                interactive=messages.Interactive(
+                    action=messages.Action(
                         button=button,
-                        sections=[Section(rows=[Row(**option) for option in options], title=title)],
+                        sections=[messages.Section(rows=[messages.Row(**option) for option in options], title=title)],
                     ),
-                    body=Body(text=text),
-                    header=Header(type=HeaderType.text, text=Text(body=header_text)) if header_text else None,
-                    footer=Footer(text=footer_text) if footer_text else None,
-                    type=InteractiveType.list,
+                    body=messages.Body(text=text),
+                    header=messages.Header(type=enums.HeaderType.text, text=messages.Text(body=header_text)) if header_text else None,
+                    footer=messages.Footer(text=footer_text) if footer_text else None,
+                    type=enums.InteractiveType.list,
                 ),
-                type=MessageType.interactive
+                type=enums.MessageType.interactive
             )
         elif audio_id or audio_url:
-            message = Message(to=self.recipient_id, audio=Audio(id=audio_id, link=audio_url), type=MessageType.audio)
+            message = messages.Message(to=self.recipient_id, audio=messages.Audio(id=audio_id, link=audio_url), type=enums.MessageType.audio)
         elif contacts_data:
-            message = Message(to=self.recipient_id, contacts=[Contact(**contact) for contact in contacts_data], type=MessageType.contacts)
+            message = messages.Message(to=self.recipient_id, contacts=[messages.Contact(**contact) for contact in contacts_data], type=enums.MessageType.contacts)
         elif document_id or document_url:
-            message = Message(to=self.recipient_id, document=Document(id=document_id, link=document_url, caption=caption, filename=filename), type=MessageType.document)
+            message = messages.Message(to=self.recipient_id, document=messages.Document(id=document_id, link=document_url, caption=caption, filename=filename), type=enums.MessageType.document)
         elif image_id or image_url:
-            message = Message(to=self.recipient_id, image=Image(id=image_id, link=image_url, caption=caption), type=MessageType.image)
+            message = messages.Message(to=self.recipient_id, image=messages.Image(id=image_id, link=image_url, caption=caption), type=enums.MessageType.image)
         elif interactive_data:
-            message = Message(to=self.recipient_id, interactive=Interactive(**interactive_data), type=MessageType.interactive)
+            message = messages.Message(to=self.recipient_id, interactive=messages.Interactive(**interactive_data), type=enums.MessageType.interactive)
         elif latitude and longitude:
-            message = Message(to=self.recipient_id, location=Location(latitude=latitude, longitude=longitude, address=address, name=name), type=MessageType.location)
+            message = messages.Message(to=self.recipient_id, location=messages.Location(latitude=latitude, longitude=longitude, address=address, name=name), type=enums.MessageType.location)
         elif sticker_id or sticker_url:
-            message = Message(to=self.recipient_id, sticker=Sticker(id=sticker_id, link=sticker_url), type=MessageType.sticker)
+            message = messages.Message(to=self.recipient_id, sticker=messages.Sticker(id=sticker_id, link=sticker_url), type=enums.MessageType.sticker)
         elif video_id or video_url:
-            message = Message(to=self.recipient_id, video=Video(id=video_id, link=video_url, caption=caption), type=MessageType.video)
+            message = messages.Message(to=self.recipient_id, video=messages.Video(id=video_id, link=video_url, caption=caption), type=enums.MessageType.video)
         else:
             raise Exception()
 
         if reply_to:
-            message.context = Context(message_id=reply_to)
+            message.context = messages.Context(message_id=reply_to)
 
         response = self.send_message(message)
-        self._responses.append(response)
+        self._replies.append(response)
         return response
 
-    def reply(self, **kwargs) -> Optional[Response]:
-        message_id = self._event_value.messages[0].id
-        return self.send(reply_to=message_id, **kwargs)
+    def reply(self, **kwargs) -> Optional[responses.Response]:
+        if not self.message:
+            return None
+        return self.send(reply_to=self.message.id, **kwargs)
