@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
-__all__ = ("Context",)
+__all__ = ("Ctx",)
 
 
-class Context:
-    # TODO
+class Ctx:
     ...

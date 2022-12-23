@@ -74,7 +74,6 @@ def from_dict(data_class: Type[T], data: Dict[str, Any]) -> T:
                 else v
             )
             for k, v in _data.items()
-            if v is not None
         }
 
     return dacite.from_dict(data_class=data_class, data=_from_dict(data), config=config)
