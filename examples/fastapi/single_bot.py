@@ -1,6 +1,6 @@
 from os import environ
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Query, Request
 
 from whatsapp import Bot
 
@@ -14,9 +14,12 @@ bot.start(phone_id=PHONE_ID, token=ACCESS_TOKEN)
 
 
 @app.get("/")
-async def ping():
-    if request.args.get("hub.verify_token") == VERIFY_TOKEN:
-        return request.args.get("hub.challenge")
+async def ping(
+    token: str = Query(alias="hub.verify_token"),
+    challenge: str = Query(alias="hub.challenge"),
+):
+    if token == VERIFY_TOKEN:
+        return challenge
     return "Invalid verify token"
 
 
