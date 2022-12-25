@@ -5,8 +5,8 @@ WABC
 .. raw:: html
 
    <h1 align="center">
-     <a href="https://leandcesar.github.io/whatsapp">
-       <img src="https://github.com/leandcesar/whatsapp/blob/master/docs/logo.png?raw=true"  width="200px" alt="whatsapp-py"/>
+     <a href="https://leandcesar.github.io/wabc">
+       <img src="https://github.com/leandcesar/wabc/blob/master/docs/logo.png?raw=true"  width="200px" alt="wabc Logo"/>
      </a>
    </h1>
 
