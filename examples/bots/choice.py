@@ -1,6 +1,6 @@
-from wabc import Bot, Ctx
-from wabc.classes.enums import InteractiveType
-from wabc.classes.events import Interactive, Text
+from wa_me import Bot, Ctx
+from wa_me.classes.enums import InteractiveType
+from wa_me.classes.events import Interactive, Text
 
 __all__ = ("ChoiceBot",)
 

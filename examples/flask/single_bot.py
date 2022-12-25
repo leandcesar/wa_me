@@ -2,7 +2,7 @@ from os import environ
 
 from flask import Flask, request
 
-from wabc import Bot
+from wa_me import Bot
 
 ACCESS_TOKEN = environ["ACCESS_TOKEN"]
 VERIFY_TOKEN = environ["VERIFY_TOKEN"]

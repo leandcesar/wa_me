@@ -1,21 +1,21 @@
-====
-WABC
-====
+=========================
+WhatsApp Messenger Python
+=========================
 
 .. raw:: html
 
    <h1 align="center">
-     <a href="https://leandcesar.github.io/wabc">
-       <img src="https://github.com/leandcesar/wabc/blob/master/docs/logo.png?raw=true"  width="200px" alt="wabc Logo"/>
+     <a href="https://leandcesar.github.io/wa_me">
+       <img src="https://github.com/leandcesar/wa_me/blob/master/docs/logo.png?raw=true"  width="200px" alt="wa_me Logo"/>
      </a>
    </h1>
 
-A modern, easy to use, feature-rich ready API wrapper for `WhatsApp Business Cloud (WABC)`_ written in Python.
+A modern, easy to use, feature-rich ready API wrapper for `WhatsApp Business Cloud`_ written in Python.
 
 
-* Documentation: https://leandcesar.github.io/wabc/
-* GitHub: https://github.com/leandcesar/wabc/
-* PyPI: https://pypi.org/project/wabc/
+* Documentation: https://leandcesar.github.io/wa_me/
+* GitHub: https://github.com/leandcesar/wa_me/
+* PyPI: https://pypi.org/project/wa_me/
 * Free and open source software: MIT license
 
 
@@ -31,13 +31,13 @@ Installing
 Stable release
 ~~~~~~~~~~~~~~
 
-To install wabc, run this command in your terminal:
+To install wa_me, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install wabc
+    $ pip install wa_me
 
-This is the preferred method to install wabc, as it will always install the most recent stable release.
+This is the preferred method to install wa_me, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -45,19 +45,19 @@ you through the process.
 From sources
 ~~~~~~~~~~~~
 
-The sources for wabc can be downloaded from the `Github repo`_.
+The sources for wa_me can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/leandcesar/wabc
+    $ git clone git://github.com/leandcesar/wa_me
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/leandcesar/wabc/tarball/master
+    $ curl -OJL https://github.com/leandcesar/wa_me/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -73,7 +73,7 @@ Mirror Bot
 
 .. code:: py
 
-    from wabc import Bot, Ctx
+    from wa_me import Bot, Ctx
 
     class MirrorBot(Bot):
         def before_event_message(self, ctx: Ctx):
@@ -120,7 +120,7 @@ Run using Flask
 .. code:: py
 
     from flask import Flask, request
-    from wabc import Bot
+    from wa_me import Bot
 
     app = Flask(__name__)
     bot = Bot()
@@ -144,7 +144,7 @@ Run using Fast API
 .. code:: py
 
     from fastapi import FastAPI, Request
-    from wabc import Bot
+    from wa_me import Bot
 
     app = FastAPI()
     bot = Bot()
@@ -176,13 +176,13 @@ Credits
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
 
-.. _`WhatsApp Business Cloud (WABC)`: https://developers.facebook.com/docs/whatsapp/cloud-api
+.. _`WhatsApp Business Cloud`: https://developers.facebook.com/docs/whatsapp/cloud-api
 .. _`Send Messages`: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
 .. _`Webhook Notification`: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components
 .. _`pip`: https://pip.pypa.io
 .. _`Python installation guide`: http://docs.python-guide.org/en/latest/starting/installation/
-.. _`Github repo`: https://github.com/leandcesar/wabc
-.. _`tarball`: https://github.com/leandcesar/wabc/tarball/master
+.. _`Github repo`: https://github.com/leandcesar/wa_me
+.. _`tarball`: https://github.com/leandcesar/wa_me/tarball/master
 .. _`Get Started with the WhatsApp Business Cloud API`: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started
 .. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

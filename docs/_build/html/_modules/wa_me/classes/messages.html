@@ -1,0 +1,937 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wa_me.classes.messages &#8212; wa_me 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for wa_me.classes.messages</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># NOQA</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Text&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Media&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;MediaWithCaption&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Audio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Document&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Image&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Sticker&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Video&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Reaction&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Location&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Address&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Email&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Org&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Phone&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;URL&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Contact&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Row&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Product&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Section&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Button&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Action&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Body&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Footer&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Header&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Interactive&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Currency&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;DateTime&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Parameter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Component&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Language&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Template&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Context&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Message&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="Text"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Text">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Text</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Text object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    body: :class:`str`</span>
+<span class="sd">        The text of the text message that can contain URLs and supports formatting. Max: 4096 chars.</span>
+<span class="sd">    preview_url: Optional[:class:`bool`]</span>
+<span class="sd">        By default, WhatsApp recognizes URLs and makes them clickable,</span>
+<span class="sd">        but you can also include a preview box with more information about the link.</span>
+<span class="sd">        Set this field to true if you want to include a URL preview box.</span>
+
+<span class="sd">        The majority of the time when you send a URL, whether with a preview or not,</span>
+<span class="sd">        the receiver of the message will see a URL that they can click on.</span>
+
+<span class="sd">        URL previews are only rendered after one of the following has occurred:</span>
+<span class="sd">            - The business has sent a message template to the user.</span>
+<span class="sd">            - The user initiates a conversation with a &quot;click to chat&quot; link.</span>
+<span class="sd">            - The user adds the business phone number to their address book and initiates a conversation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">body</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">preview_url</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Media"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Media">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Media</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Media object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id: Optional[:class:`str`]</span>
+<span class="sd">        The media object ID. Required when you are not using a link.</span>
+<span class="sd">    link: Optional[:class:`str`]</span>
+<span class="sd">        The protocol and URL of the media to be sent. Required when you are not using an uploaded media ID.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">link</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="MediaWithCaption"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.MediaWithCaption">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">MediaWithCaption</span><span class="p">(</span><span class="n">Media</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Media with caption object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    caption: Optional[:class:`str`]</span>
+<span class="sd">        Describes the specified media. Max: 4096 chars.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">caption</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Audio"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Audio">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Audio</span><span class="p">(</span><span class="n">Media</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Audio object.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Document"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Document">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Document</span><span class="p">(</span><span class="n">MediaWithCaption</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Document object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename: Optional[:class:`str`]</span>
+<span class="sd">        Describes the filename for the specific document.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Image"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Image">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Image</span><span class="p">(</span><span class="n">MediaWithCaption</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Image object.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Sticker"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Sticker">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Sticker</span><span class="p">(</span><span class="n">Media</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sticker object.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Video"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Video">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Video</span><span class="p">(</span><span class="n">MediaWithCaption</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Video object.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Reaction"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Reaction">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Reaction</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Reaction object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    emoji: :class:`str`</span>
+<span class="sd">        The emoji used for the reaction. Set this value to &quot;&quot; (empty string) to remove the reaction.</span>
+<span class="sd">    message_id: :class:`str`</span>
+<span class="sd">        The WhatsApp Business Account ID that this reaction is being sent to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">emoji</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Location"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Location">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Location</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Location object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    longitude: :class:`float`</span>
+<span class="sd">        The longitude of the location.</span>
+<span class="sd">    latitude: :class:`float`</span>
+<span class="sd">        The latitude of the location.</span>
+<span class="sd">    address: Optional[:class:`str`]</span>
+<span class="sd">        The address of the location. This field is only displayed if `name` is present.</span>
+<span class="sd">    name: Optional[:class:`str`]</span>
+<span class="sd">        The name of the location.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Address"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Address">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Address</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Address object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    city: Optional[:class:`str`]</span>
+<span class="sd">        The name of the city.</span>
+<span class="sd">    country_code: Optional[:class:`str`]</span>
+<span class="sd">        The two-letter country abbreviation.</span>
+<span class="sd">    country: Optional[:class:`str`]</span>
+<span class="sd">        The full name of the country.</span>
+<span class="sd">    state: Optional[:class:`str`]</span>
+<span class="sd">        The abbreviation name of the state.</span>
+<span class="sd">    street: Optional[:class:`str`]</span>
+<span class="sd">        Steet number and name.</span>
+<span class="sd">    type: Optional[:class:`.InfoType`]</span>
+<span class="sd">        Address type.</span>
+<span class="sd">    zip: Optional[:class:`str`]</span>
+<span class="sd">        The ZIP code.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">city</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">country_code</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">country</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">street</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InfoType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">zip</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Email"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Email">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Email</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Email object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    email: Optional[:class:`str`]</span>
+<span class="sd">        Email address.</span>
+<span class="sd">    type: Optional[:class:`.InfoType`]</span>
+<span class="sd">        Email type.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InfoType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Name"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Name">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Name</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Name object.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        At least one of the optional parameters needs to be included along with the `formatted_name` parameter.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    formatted_name: :class:`str`</span>
+<span class="sd">        Full name, as it normally appears.</span>
+<span class="sd">    first_name: Optional[:class:`str`]</span>
+<span class="sd">        First name.</span>
+<span class="sd">    last_name: Optional[:class:`str`]</span>
+<span class="sd">        Last name.</span>
+<span class="sd">    middle_name: Optional[:class:`str`]</span>
+<span class="sd">        Middle name.</span>
+<span class="sd">    prefix: Optional[:class:`str`]</span>
+<span class="sd">        Name prefix.</span>
+<span class="sd">    suffix: Optional[:class:`str`]</span>
+<span class="sd">        Name suffix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">formatted_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">middle_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">prefix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">suffix</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Org"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Org">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Org</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Org object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    company: Optional[:class:`str`]</span>
+<span class="sd">        Name of the contact&#39;s company.</span>
+<span class="sd">    department: Optional[:class:`str`]</span>
+<span class="sd">        Name of the contact&#39;s department.</span>
+<span class="sd">    title: Optional[:class:`str`]</span>
+<span class="sd">        The contact&#39;s business title.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">company</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">department</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Phone"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Phone">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Phone</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Phone object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    phone: Optional[:class:`str`]</span>
+<span class="sd">        Automatically populated with the `wa_id` value as a formatted phone number.</span>
+<span class="sd">    type: Optional[:class:`.PhoneType`]</span>
+<span class="sd">        Phone type.</span>
+<span class="sd">    wa_id: Optional[:class:`str`]</span>
+<span class="sd">        WhatsApp ID.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">phone</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PhoneType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">wa_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="URL"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.URL">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">URL</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;URL object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    type: Optional[:class:`.InfoType`]</span>
+<span class="sd">        URL type.</span>
+<span class="sd">    url: Optional[:class:`str`]</span>
+<span class="sd">        The URL.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">InfoType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Contact"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Contact">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Contact</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Contact object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name: :class:`.Name`</span>
+<span class="sd">        Specifies the name object.</span>
+<span class="sd">    addresses: Optional[List[:class:`.Address`]]</span>
+<span class="sd">        Specifies an array of address objects.</span>
+<span class="sd">    birthday: Optional[:class:`str`]</span>
+<span class="sd">        A `YYYY-MM-DD` formatted string.</span>
+<span class="sd">    emails: Optional[List[:class:`.Email`]]</span>
+<span class="sd">        Specifies an array of email objects.</span>
+<span class="sd">    org: Optional[:class:`.Org`]</span>
+<span class="sd">        Specifies the org object.</span>
+<span class="sd">    phones: Optional[List[:class:`.Phone`]]</span>
+<span class="sd">        Specifies an array of phone objects.</span>
+<span class="sd">    urls: Optional[List[:class:`.URL`]]</span>
+<span class="sd">        Specifies an array of url objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="n">Name</span>
+    <span class="n">addresses</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Address</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">birthday</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># YYYY-MM-DD</span>
+    <span class="n">emails</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Email</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Org</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">phones</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Phone</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">urls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">URL</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Row"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Row">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Row</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Row object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id: :class`str`:</span>
+<span class="sd">        Unique identifier row. Min: 1 char. Max: 200 chars.</span>
+<span class="sd">    title: :class`str`:</span>
+<span class="sd">        Row title. Min: 1 char. Max: 24 chars.</span>
+<span class="sd">    description: Optional[:class`str`:]</span>
+<span class="sd">        Row description. Min: 1 char. Max: 72 chars.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Product"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Product">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Product</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Product object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    product_retailer_id: :class`str`:</span>
+<span class="sd">        Unique identifier of the product in a catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">product_retailer_id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Section"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Section">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Section</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Section object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    product_items: Optional[List[:class`.Product`:]]</span>
+<span class="sd">        A list of product object. Min: 1 item. Max: 30 items.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.product_list`.</span>
+
+<span class="sd">    rows: Optional[List[:class`.Row`:]]</span>
+<span class="sd">        A list of row object. Min: 1 item. Max: 10 items.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.list`.</span>
+
+<span class="sd">    title: Optional[:class`str`:]</span>
+<span class="sd">        Title of the section. Min: 1 char. Max: 24 chars.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required if the message has more than one section.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">product_items</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Product</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">rows</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Row</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">title</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Reply</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Reply object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id: :class`str`:</span>
+<span class="sd">        Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.</span>
+<span class="sd">    title: :class`str`:</span>
+<span class="sd">        Button title.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            It cannot be an empty string and must be unique within the message.</span>
+<span class="sd">            Emojis are supported, markdown is not.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="Button"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Button">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Button</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Button object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id: :class`str`:</span>
+<span class="sd">        Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.</span>
+<span class="sd">    title: :class`str`:</span>
+<span class="sd">        Button title.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            It cannot be an empty string and must be unique within the message.</span>
+<span class="sd">            Emojis are supported, markdown is not.</span>
+
+<span class="sd">    type: :class`str`:</span>
+<span class="sd">        Button type. The only supported option is &quot;reply&quot;. Min: 1 char. Max: 20 chars.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">reply</span><span class="p">:</span> <span class="n">Reply</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;reply&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;reply&quot;</span></div>
+
+
+<div class="viewcode-block" id="Action"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Action">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Action</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Action object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    button: Optional[:class:`str`]</span>
+<span class="sd">        The button content. Min: 1 char. Max: 20 chars.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.list`.</span>
+<span class="sd">            It cannot be an empty string and must be unique within the message.</span>
+<span class="sd">            Does not allow emojis or markdown.</span>
+
+<span class="sd">    buttons: Optional[List[:class:`.Button`]]</span>
+<span class="sd">        A list of button object. Min: 1 item. Max: 3 items.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.button_reply`.</span>
+
+<span class="sd">    catalog_id: Optional[:class:`str`]</span>
+<span class="sd">        Unique identifier of the Facebook catalog linked to your WhatsApp Business Account.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.product` and  :class:`.InteractiveType.product_list`.</span>
+
+<span class="sd">    product_retailer_id: Optional[:class:`str`]</span>
+<span class="sd">        The unique identifier of the product in the catalog.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.product` and  :class:`.InteractiveType.product_list`.</span>
+
+<span class="sd">    sections: Optional[List[:class:`.Section`]]</span>
+<span class="sd">        A list of section object. Min: 1 item. Max: 10 items.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for :class:`.InteractiveType.list` and  :class:`.InteractiveType.product_list`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">button</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">buttons</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Button</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">catalog_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">product_retailer_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sections</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Section</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Body"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Body">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Body</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Body object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text: :class:`str`</span>
+<span class="sd">        The text field for the body object, supports Emojis and markdown. Max: 1024 chars.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Footer"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Footer">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Footer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Footer object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text: :class:`str`</span>
+<span class="sd">        The text field for the footer object, supports Emojis and markdown. Max: 60 chars.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Header"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Header">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Header</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Header object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    type: :class:`.HeaderType`</span>
+<span class="sd">        The header type.</span>
+<span class="sd">    document: Optional[:class:`.Document`]</span>
+<span class="sd">        A media object containing a document. Required if type is set to :class:`.HeaderType.document`</span>
+<span class="sd">    image: Optional[:class:`.Image`]</span>
+<span class="sd">        A media object containing a image. Required if type is set to :class:`.HeaderType.image`</span>
+<span class="sd">    text: Optional[:class:`.Text`]</span>
+<span class="sd">        A media object containing a text. Required if type is set to :class:`.HeaderType.text`</span>
+<span class="sd">    video: Optional[:class:`.Video`]</span>
+<span class="sd">        A media object containing a video. Required if type is set to :class:`.HeaderType.video`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">HeaderType</span>
+    <span class="n">document</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Document</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Image</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Text</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">video</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Video</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Interactive"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Interactive">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Interactive</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Interactive object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    type: :class:`.InteractiveType`</span>
+<span class="sd">        The type of interactive message.</span>
+<span class="sd">    action: :class:`.Action`</span>
+<span class="sd">        The action you want the user to perform after reading the message.</span>
+<span class="sd">    body: Optional[:class:`.Body`]</span>
+<span class="sd">        The body of the message.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Optional for type :class:`.InteractiveType.product`.</span>
+<span class="sd">            Required for all other message types.</span>
+
+<span class="sd">    footer: Optional[:class:`.Footer`]</span>
+<span class="sd">        The footer of the message.</span>
+<span class="sd">    header: Optional[:class:`.Header`]</span>
+<span class="sd">        The header content displayed on top of the message.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required for type :class:`.InteractiveType.product_list`.</span>
+<span class="sd">            Optional for other types.</span>
+<span class="sd">            You cannot set a header if your interactive object is type :class:`.InteractiveType.product`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">InteractiveType</span>
+    <span class="n">action</span><span class="p">:</span> <span class="n">Action</span>
+    <span class="n">body</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Body</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">footer</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Footer</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">header</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Header</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Currency"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Currency">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Currency</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Currency object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    amount_1000: :class:`int`</span>
+<span class="sd">        Amount multiplied by 1000.</span>
+<span class="sd">    code: :class:`str`</span>
+<span class="sd">        Currency code as defined in ISO 4217.</span>
+<span class="sd">    fallback_value: :class:`str`</span>
+<span class="sd">        Default text if localization fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">amount_1000</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fallback_value</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="DateTime"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.DateTime">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">DateTime</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;DateTime object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fallback_value: :class:`str`</span>
+<span class="sd">        Default text.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fallback_value</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Parameter">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Parameter</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Parameter object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    type: :class:`.ParameterType`</span>
+<span class="sd">        Indicates the type of parameter for the button.</span>
+<span class="sd">    currency: Optional[:class:`.Currency`]</span>
+<span class="sd">        A currency object.</span>
+<span class="sd">    date_time: Optional[:class:`.DateTime`]</span>
+<span class="sd">        A date_time object.</span>
+<span class="sd">    document: Optional[:class:`.Document`]</span>
+<span class="sd">        A media object containing a document.</span>
+
+<span class="sd">        .. note:</span>
+
+<span class="sd">            Only PDF documents are supported for media-based message templates.</span>
+<span class="sd">            Captions not supported when used in a media template.</span>
+
+<span class="sd">    image: Optional[:class:`.Image`]</span>
+<span class="sd">        A media object containing a image.</span>
+
+<span class="sd">        .. note:</span>
+
+<span class="sd">            Captions not supported when used in a media template.</span>
+
+<span class="sd">    text: Optional[:class:`str`]</span>
+<span class="sd">        The message’s text.</span>
+
+<span class="sd">        .. note:</span>
+
+<span class="sd">            Character limit varies based on the following included component type.</span>
+
+<span class="sd">            For the &quot;header&quot; component type: 60 characters</span>
+<span class="sd">            For the &quot;body&quot; component type:</span>
+<span class="sd">                - 1024 characters if other component types are included</span>
+<span class="sd">                - 32768 characters if body is the only component type included</span>
+
+<span class="sd">    video: Optional[:class:`.Video`]</span>
+<span class="sd">        A media object containing a video.</span>
+
+<span class="sd">        .. note:</span>
+
+<span class="sd">            Captions not supported when used in a media template.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">ParameterType</span>
+    <span class="n">currency</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Currency</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">date_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DateTime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">document</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Document</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Image</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">video</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Video</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Component"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Component">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Component</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Component object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    type: :class:`.ComponentType`</span>
+<span class="sd">        Describes the component type.</span>
+<span class="sd">    sub_type: Optional[:class:`.ComponentSubType`]</span>
+<span class="sd">        Type of button to create.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required when type is &quot;button&quot;. Not used for the other types.</span>
+
+<span class="sd">    parameters: Optional[List[:class:`.Parameter`]]</span>
+<span class="sd">        List of parameter objects with the content of the message.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required when type is &quot;button&quot;. Not used for the other types.</span>
+
+<span class="sd">    index: Optional[:class:`str`]</span>
+<span class="sd">        Position index of the button.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Required when type is &quot;button&quot;. Not used for the other types.</span>
+<span class="sd">            You can have up to 3 buttons using index values of 0 to 2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">type</span><span class="p">:</span> <span class="n">ComponentType</span>
+    <span class="n">sub_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ComponentSubType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Language"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Language">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Language</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Language object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    code: :class:`str`</span>
+<span class="sd">        The code of the language or locale to use.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            This field accepts both `language` (for example, &quot;en&quot;) and `language_locale` (for example, &quot;en_US&quot;) formats.</span>
+
+<span class="sd">    policy: :class:`str`</span>
+<span class="sd">        Language policy option.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Default (and only supported value): `deterministic`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">policy</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;deterministic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;deterministic&quot;</span></div>
+
+
+<div class="viewcode-block" id="Template"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Template">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Template</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Template object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name: :class:`str`</span>
+<span class="sd">        The name of the template.</span>
+<span class="sd">    language: :class:`.Language`</span>
+<span class="sd">        Specifies a language object. Specifies the language the template may be rendered in.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            Only the `deterministic` language policy works with media template messages.</span>
+
+<span class="sd">    components: Optional[:class:`.Component`]</span>
+<span class="sd">        A list of component object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">language</span><span class="p">:</span> <span class="n">Language</span>
+    <span class="n">components</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Component</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Context"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Context">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Context</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Context object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    message_id: :class:`str`</span>
+<span class="sd">        The WhatsApp Business Account ID for the message you want to reply.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Message"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.messages.Message">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Message object to send a message.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    to: :class:`str`</span>
+<span class="sd">        WhatsApp ID or phone number for the person you want to send a message to.</span>
+<span class="sd">    messaging_product: :class:`str`</span>
+<span class="sd">        Sender service used for the request. Always use &quot;whatsapp&quot;.</span>
+<span class="sd">    recipient_type: :class:`str`</span>
+<span class="sd">        Currently, you can only send messages to individuals. Set this value to &quot;individual&quot;.</span>
+<span class="sd">    context: Optional[:class:`.Context`]</span>
+<span class="sd">        Used to mention a specific message you are replying to.</span>
+<span class="sd">    type: Optional[:class:`.MessageType`]</span>
+<span class="sd">        The type of message you want to send.</span>
+<span class="sd">    audio: :class:`.Audio`</span>
+<span class="sd">        A media object containing audio.</span>
+<span class="sd">    contacts: List[:class:`.Contact`]</span>
+<span class="sd">        A list of contact object.</span>
+<span class="sd">    document: :class:`.Document`</span>
+<span class="sd">        A media object containing a document.</span>
+<span class="sd">    image: :class:`.Image`</span>
+<span class="sd">        A media object containing a image.</span>
+<span class="sd">    interactive: :class:`.Interactive`</span>
+<span class="sd">        A interactive object.</span>
+<span class="sd">    location: :class:`.Location`</span>
+<span class="sd">        A location object.</span>
+<span class="sd">    reaction: :class:`.Reaction`</span>
+<span class="sd">        A reaction object.</span>
+<span class="sd">    sticker: :class:`.Sticker`</span>
+<span class="sd">        A sticker object.</span>
+<span class="sd">    template: :class:`.Template`</span>
+<span class="sd">        A template object.</span>
+<span class="sd">    text: :class:`.Text`</span>
+<span class="sd">        A text object.</span>
+<span class="sd">    video: :class:`.Video`</span>
+<span class="sd">        A media object containing a video.</span>
+<span class="sd">    message_id: :class:`str`</span>
+<span class="sd">        The WhatsApp Business Account ID for the message you want to mark as read.</span>
+<span class="sd">    status: :class:`.StatusType`</span>
+<span class="sd">        Status message. Set this value to &quot;read&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">to</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">messaging_product</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;whatsapp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;whatsapp&quot;</span>
+    <span class="n">recipient_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;individual&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;individual&quot;</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Context</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MessageType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">audio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Audio</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">contacts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Contact</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">document</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Document</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Image</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">interactive</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Interactive</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">location</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Location</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">reaction</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Reaction</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">sticker</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sticker</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">template</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Template</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Text</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">video</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Video</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">message_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">StatusType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">wa_me</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">WhatsApp Messenger Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">wa_me</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Leandro César Cassimiro.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

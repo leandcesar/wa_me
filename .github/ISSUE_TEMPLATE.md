@@ -1,4 +1,4 @@
-* wabc version:
+* wa_me version:
 * Python version:
 * Operating System:
 

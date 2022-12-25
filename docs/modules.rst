@@ -1,7 +1,7 @@
-wabc
-====
+wa_me
+=====
 
 .. toctree::
    :maxdepth: 4
 
-   wabc
+   wa_me

@@ -1,5 +1,5 @@
-Welcome to wabc's documentation!
-=======================================
+Welcome to wa_me's documentation!
+=================================
 
 .. toctree::
    :maxdepth: 2

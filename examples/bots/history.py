@@ -1,6 +1,6 @@
-from wabc import Bot, Ctx
-from wabc.utils.routine import routine
-from wabc.utils.ttl_dict import TTLDict
+from wa_me import Bot, Ctx
+from wa_me.utils.routine import routine
+from wa_me.utils.ttl_dict import TTLDict
 
 __all__ = ("HistoryBot",)
 
