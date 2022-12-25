@@ -2,6 +2,12 @@
 History
 =======
 
+0.3.0 (2022-12-25)
+------------------
+
+* Implement methods for each message type.
+* Implement `Routine`.
+
 0.2.0 (2022-12-24)
 ------------------
 

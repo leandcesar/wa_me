@@ -80,29 +80,37 @@ Mirror Bot
             ctx.read()
 
         def on_event_message_audio(self, ctx: Ctx):
-            ctx.send(audio_id=ctx.message.audio.id)
+            ctx.send_audio(ctx.message.audio.id)
 
         def on_event_message_document(self, ctx: Ctx):
-            ctx.send(
-                document_id=ctx.message.document.id,
+            ctx.send_document(
+                ctx.message.document.id,
                 caption=ctx.message.document.caption,
             )
 
         def on_event_message_image(self, ctx: Ctx):
-            ctx.send(
-                image_id=ctx.message.image.id,
+            ctx.send_image(
+                ctx.message.image.id,
                 caption=ctx.message.image.caption,
             )
 
+        def on_event_message_location(self, ctx: Ctx):
+            ctx.send_location(
+                latitude=ctx.message.location.latitude,
+                longitude=ctx.message.location.longitude,
+                address=ctx.message.location.address,
+                name=ctx.message.location.name,
+            )
+
         def on_event_message_sticker(self, ctx: Ctx):
-            ctx.send(sticker_id=ctx.message.sticker.id)
+            ctx.send_sticker(ctx.message.sticker.id)
 
         def on_event_message_text(self, ctx: Ctx):
-            ctx.send(text=ctx.message.text.body)
+            ctx.send_text(ctx.message.text.body)
 
         def on_event_message_video(self, ctx: Ctx):
-            ctx.send(
-                video_id=ctx.message.video.id,
+            ctx.send_video(
+                ctx.message.video.id,
                 caption=ctx.message.video.caption,
             )
 
