@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from whatsapp import Bot, Ctx
+from wabc import Bot, Ctx
 
 __all__ = ("MirrorBot",)
 

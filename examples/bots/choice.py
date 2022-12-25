@@ -1,6 +1,6 @@
-from whatsapp import Bot, Ctx
-from whatsapp.classes.enums import InteractiveType
-from whatsapp.classes.events import Interactive, Text
+from wabc import Bot, Ctx
+from wabc.classes.enums import InteractiveType
+from wabc.classes.events import Interactive, Text
 
 __all__ = ("ChoiceBot",)
 

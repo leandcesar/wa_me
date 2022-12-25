@@ -1,4 +1,4 @@
-Welcome to whatsapp-py's documentation!
+Welcome to wabc's documentation!
 =======================================
 
 .. toctree::

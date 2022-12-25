@@ -1,4 +1,4 @@
-* whatsapp-py version:
+* wabc version:
 * Python version:
 * Operating System:
 

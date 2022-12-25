@@ -1,7 +1,7 @@
-whatsapp
-========
+wabc
+====
 
 .. toctree::
    :maxdepth: 4
 
-   whatsapp
+   wabc

@@ -2,7 +2,7 @@ from os import environ
 
 from fastapi import FastAPI, Query, Request
 
-from whatsapp import Bot
+from wabc import Bot
 
 ACCESS_TOKEN = environ["ACCESS_TOKEN"]
 VERIFY_TOKEN = environ["VERIFY_TOKEN"]

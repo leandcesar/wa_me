@@ -1,21 +1,6 @@
-===========
-whatsapp-py
-===========
-
-
-.. image:: https://img.shields.io/pypi/v/whatsapp.svg
-    :target: https://pypi.python.org/pypi/whatsapp
-
-.. image:: https://img.shields.io/travis/leandcesar/whatsapp.svg
-    :target: https://travis-ci.com/leandcesar/whatsapp
-
-.. image:: https://readthedocs.org/projects/whatsapp/badge/?version=latest
-    :target: https://whatsapp.readthedocs.io/en/latest/?version=latest
-    :alt: Documentation Status
-
-.. image:: https://pyup.io/repos/github/leandcesar/whatsapp/shield.svg
-     :target: https://pyup.io/repos/github/leandcesar/whatsapp/
-     :alt: Updates
+====
+WABC
+====
 
 .. raw:: html
 
@@ -25,12 +10,12 @@ whatsapp-py
      </a>
    </h1>
 
-A modern, easy to use, feature-rich ready API wrapper for `WhatsApp Business Cloud`_ written in Python.
+A modern, easy to use, feature-rich ready API wrapper for `WhatsApp Business Cloud (WABC)`_ written in Python.
 
 
-* Documentation: https://leandcesar.github.io/whatsapp/
-* GitHub: https://github.com/leandcesar/whatsapp/
-* PyPI: https://pypi.org/project/whatsapp-py/
+* Documentation: https://leandcesar.github.io/wabc/
+* GitHub: https://github.com/leandcesar/wabc/
+* PyPI: https://pypi.org/project/wabc/
 * Free and open source software: MIT license
 
 
@@ -46,13 +31,13 @@ Installing
 Stable release
 ~~~~~~~~~~~~~~
 
-To install whatsapp-py, run this command in your terminal:
+To install wabc, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install whatsapp
+    $ pip install wabc
 
-This is the preferred method to install whatsapp-py, as it will always install the most recent stable release.
+This is the preferred method to install wabc, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -60,19 +45,19 @@ you through the process.
 From sources
 ~~~~~~~~~~~~
 
-The sources for whatsapp-py can be downloaded from the `Github repo`_.
+The sources for wabc can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/leandcesar/whatsapp
+    $ git clone git://github.com/leandcesar/wabc
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/leandcesar/whatsapp/tarball/master
+    $ curl -OJL https://github.com/leandcesar/wabc/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -88,7 +73,7 @@ Mirror Bot
 
 .. code:: py
 
-    from whatsapp import Bot, Ctx
+    from wabc import Bot, Ctx
 
     class MirrorBot(Bot):
         def before_event_message(self, ctx: Ctx):
@@ -127,7 +112,7 @@ Run using Flask
 .. code:: py
 
     from flask import Flask, request
-    from whatsapp import Bot
+    from wabc import Bot
 
     app = Flask(__name__)
     bot = Bot()
@@ -151,7 +136,7 @@ Run using Fast API
 .. code:: py
 
     from fastapi import FastAPI, Request
-    from whatsapp import Bot
+    from wabc import Bot
 
     app = FastAPI()
     bot = Bot()
@@ -183,13 +168,13 @@ Credits
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
 
-.. _WhatsApp Business Cloud: https://developers.facebook.com/docs/whatsapp/cloud-api
-.. _Send Messages: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
-.. _Webhook Notification: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components
-.. _pip: https://pip.pypa.io
-.. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
-.. _Github repo: https://github.com/leandcesar/whatsapp
-.. _tarball: https://github.com/leandcesar/whatsapp/tarball/master
-.. _Get Started with the WhatsApp Business Cloud API: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _audreyr/cookiecutter-pypackage: https://github.com/audreyr/cookiecutter-pypackage
+.. _`WhatsApp Business Cloud (WABC)`: https://developers.facebook.com/docs/whatsapp/cloud-api
+.. _`Send Messages`: https://developers.facebook.com/docs/whatsapp/cloud-api/reference/messages
+.. _`Webhook Notification`: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components
+.. _`pip`: https://pip.pypa.io
+.. _`Python installation guide`: http://docs.python-guide.org/en/latest/starting/installation/
+.. _`Github repo`: https://github.com/leandcesar/wabc
+.. _`tarball`: https://github.com/leandcesar/wabc/tarball/master
+.. _`Get Started with the WhatsApp Business Cloud API`: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started
+.. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage

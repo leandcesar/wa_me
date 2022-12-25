@@ -8,7 +8,10 @@ with open("README.rst") as readme_file:
 with open("HISTORY.rst") as history_file:
     history = history_file.read()
 
-requirements = []
+requirements = [
+    "dacite==1.6.0",
+    "requests==2.28.1",
+]
 
 test_requirements = [
     "pytest>=3",
@@ -33,11 +36,11 @@ setup(
     long_description=readme + "\n\n" + history,
     include_package_data=True,
     keywords="whatsapp",
-    name="whatsapp",
-    packages=find_packages(include=["whatsapp", "whatsapp.*"]),
+    name="wabc",
+    packages=find_packages(include=["wabc", "wabc.*"]),
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/leandcesar/whatsapp",
-    version="0.1.0",
+    url="https://github.com/leandcesar/wabc",
+    version="0.2.0",
     zip_safe=False,
 )

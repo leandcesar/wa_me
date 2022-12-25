@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wabc.classes.responses &#8212; wabc 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for wabc.classes.responses</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># NOQA</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;Readed&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Media&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BusinessProfile&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Data&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Profile&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ErrorData&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ResponseError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Contact&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Message&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Response&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="Readed"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Readed">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Readed</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Readed object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    success: :class:`bool`</span>
+<span class="sd">        Indicates whether a message was successfully read.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+<div class="viewcode-block" id="Media"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Media">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Media</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Business profile object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    messaging_product: :class:`str`</span>
+<span class="sd">        The value is always &quot;whatsapp&quot;.</span>
+<span class="sd">    id: :class:`str`</span>
+<span class="sd">        The media object ID.</span>
+<span class="sd">    mime_type: :class:`str`</span>
+<span class="sd">        Mime type of the media file.</span>
+<span class="sd">    file_size: :class:`int`</span>
+<span class="sd">        The media file size.</span>
+<span class="sd">    sha256: :class:`str`</span>
+<span class="sd">        Hash for the file.</span>
+<span class="sd">    url: :class:`str`</span>
+<span class="sd">        The protocol and URL of the media.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">messaging_product</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;whatsapp&quot;</span><span class="p">]</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">mime_type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">file_size</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">sha256</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="BusinessProfile"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.BusinessProfile">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">BusinessProfile</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Business profile object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    messaging_product: :class:`str`</span>
+<span class="sd">        The value is always &quot;whatsapp&quot;.</span>
+
+<span class="sd">    address: :class:`str`</span>
+<span class="sd">        The address of the business.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The maximum character limit for the string is 256.</span>
+
+<span class="sd">    description: :class:`str`</span>
+<span class="sd">        Description of the business.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The maximum character limit for the string is 256.</span>
+
+<span class="sd">    about: Optional[:class:`str`]</span>
+<span class="sd">        The text to display in business profile&#39;s About section.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The max length for the string is 139 characters.</span>
+
+<span class="sd">    email: Optional[:class:`str`]</span>
+<span class="sd">        The contact email address (in valid email format) of the business.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            The maximum character limit for the string is 128 characters.</span>
+
+<span class="sd">    profile_picture_url: Optional[:class:`str`]</span>
+<span class="sd">        The handle of the profile picture generated from a call.</span>
+<span class="sd">    vertical: Optional[:class:`str`]</span>
+<span class="sd">        The industry type of the business.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            This can be one of the accepted values:</span>
+<span class="sd">                UNDEFINED, OTHER, AUTO, BEAUTY, APPAREL, EDU, ENTERTAIN, EVENT_PLAN,</span>
+<span class="sd">                FINANCE, GROCERY, GOVT, HOTEL, HEALTH, NONPROFIT, PROF_SERVICES, RETAIL,</span>
+<span class="sd">                TRAVEL, RESTAURANT, or NOT_A_BIZ.</span>
+
+<span class="sd">    websites: Optional[List[:class:`str`]]</span>
+<span class="sd">        The URLs associated with the business. For instance, a website, Facebook Page, or Instagram.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            There is a maximum of 2 websites with a maximum of 256 characters each.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">messaging_product</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;whatsapp&quot;</span><span class="p">]</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">about</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">email</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">profile_picture_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">vertical</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">websites</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></div>
+
+
+<div class="viewcode-block" id="Data"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Data">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Data</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Information about a business profile.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    business_profile: List[:class:`.BusinessProfile`]</span>
+<span class="sd">        The value is always &quot;whatsapp&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">business_profile</span><span class="p">:</span> <span class="n">BusinessProfile</span></div>
+
+
+<div class="viewcode-block" id="Profile"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Profile">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Profile</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Profile response object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: List[:class:`.Data`]</span>
+<span class="sd">        The value is always &quot;whatsapp&quot;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Data</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="ErrorData"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.ErrorData">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ErrorData</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Error details data object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    messaging_product: :class:`str`</span>
+<span class="sd">        The value is always &quot;whatsapp&quot;.</span>
+<span class="sd">    details: :class:`str`</span>
+<span class="sd">        Describes the detailed error messages to help you debug the error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">messaging_product</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;whatsapp&quot;</span><span class="p">]</span>
+    <span class="n">details</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Error">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Error</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Error object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    code: :class:`int`</span>
+<span class="sd">        Error code.</span>
+
+<span class="sd">        .. note::</span>
+
+<span class="sd">            For more information, refer to: https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes</span>
+
+<span class="sd">    error_subcode: :class:`int`</span>
+<span class="sd">        The subcode of the error.</span>
+<span class="sd">    fbtrace_id: :class:`str`</span>
+<span class="sd">        For Facebook Support.</span>
+<span class="sd">    message: :class:`str`</span>
+<span class="sd">        The title of this error.</span>
+<span class="sd">    type: :class:`str`</span>
+<span class="sd">        The type of error.</span>
+<span class="sd">    error_data: Optional[:class:`.ErrorData`]</span>
+<span class="sd">        Error details data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">code</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">error_subcode</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">fbtrace_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">error_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ErrorData</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="ResponseError"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.ResponseError">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ResponseError</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Error response object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    error: :class:`.Error`</span>
+<span class="sd">        Error object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">error</span><span class="p">:</span> <span class="n">Error</span></div>
+
+
+<div class="viewcode-block" id="Contact"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Contact">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Contact</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Contact object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input: :class:`str`</span>
+<span class="sd">        Contact phone number.</span>
+<span class="sd">    wa_id: :class:`str`</span>
+<span class="sd">        WhatsApp ID.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">wa_id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Message"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Message">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Message</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Message object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    id: :class:`str`</span>
+<span class="sd">        The ID for the message that was sent by the business</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Response"><a class="viewcode-back" href="../../../wabc.classes.html#wabc.classes.responses.Response">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Response</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Message response object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    messaging_product: :class:`str`</span>
+<span class="sd">        The value is always &quot;whatsapp&quot;.</span>
+<span class="sd">    contacts: List[:class:`.Contact`]</span>
+<span class="sd">        A list of contact object.</span>
+<span class="sd">    messages: List[:class:`.Message`]</span>
+<span class="sd">        Information about a message sent by the business</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">messaging_product</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;whatsapp&quot;</span><span class="p">]</span>
+    <span class="n">contacts</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Contact</span><span class="p">]</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Message</span><span class="p">]</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">wabc</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">WABC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">wabc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../authors.html">Credits</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Leandro César Cassimiro.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
