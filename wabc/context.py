@@ -154,98 +154,162 @@ class Ctx:
     def unreact(self) -> Optional[responses.Response]:
         return self.react("")
 
-    def send(
-        self,
-        message: Optional[messages.Message] = None,
-        *,
-        text: Optional[str] = None,
-        audio_id: Optional[str] = None,
-        audio_url: Optional[str] = None,
-        contacts_data: List[Dict[str, Any]] = None,
-        document_id: Optional[str] = None,
-        document_url: Optional[str] = None,
-        image_id: Optional[str] = None,
-        image_url: Optional[str] = None,
-        interactive_data: Dict[str, Any] = None,
-        latitude: Optional[float] = None,
-        longitude: Optional[float] = None,
-        address: Optional[str] = None,
-        name: Optional[str] = None,
-        options: Optional[List[Dict[str, Any]]] = None,
-        quick_replies: Optional[List[Dict[str, Any]]] = None,
-        sticker_id: Optional[str] = None,
-        sticker_url: Optional[str] = None,
-        video_id: Optional[str] = None,
-        video_url: Optional[str] = None,
-        caption: Optional[str] = None,
-        filename: Optional[str] = None,
-        button: Optional[str] = None,
-        title: Optional[str] = None,
-        header_text: Optional[str] = None,
-        footer_text: Optional[str] = None,
-        reply_to: Optional[str] = None,
-    ) -> Optional[responses.Response]:
-        if not self.recipient_id:
-            return None
-        if message and isinstance(message, messages.Message):
-            pass
-        elif text and not quick_replies and not options:
-            message = messages.Message(to=self.recipient_id, text=messages.Text(body=text), type=enums.MessageType.text)
-        elif text and quick_replies:
-            message = messages.Message(
-                to=self.recipient_id,
-                interactive=messages.Interactive(
-                    action=messages.Action(
-                        buttons=[messages.Button(reply=messages.Reply(**quick_reply)) for quick_reply in quick_replies]
-                    ),
-                    body=messages.Body(text=text),
-                    type=enums.InteractiveType.button,
-                ),
-                type=enums.MessageType.interactive,
-            )
-        elif text and options:
-            message = messages.Message(
-                to=self.recipient_id,
-                interactive=messages.Interactive(
-                    action=messages.Action(
-                        button=button,
-                        sections=[messages.Section(rows=[messages.Row(**option) for option in options], title=title)],
-                    ),
-                    body=messages.Body(text=text),
-                    header=messages.Header(type=enums.HeaderType.text, text=messages.Text(body=header_text)) if header_text else None,
-                    footer=messages.Footer(text=footer_text) if footer_text else None,
-                    type=enums.InteractiveType.list,
-                ),
-                type=enums.MessageType.interactive
-            )
-        elif audio_id or audio_url:
-            message = messages.Message(to=self.recipient_id, audio=messages.Audio(id=audio_id, link=audio_url), type=enums.MessageType.audio)
-        elif contacts_data:
-            message = messages.Message(to=self.recipient_id, contacts=[messages.Contact(**contact) for contact in contacts_data], type=enums.MessageType.contacts)
-        elif document_id or document_url:
-            message = messages.Message(to=self.recipient_id, document=messages.Document(id=document_id, link=document_url, caption=caption, filename=filename), type=enums.MessageType.document)
-        elif image_id or image_url:
-            message = messages.Message(to=self.recipient_id, image=messages.Image(id=image_id, link=image_url, caption=caption), type=enums.MessageType.image)
-        elif interactive_data:
-            message = messages.Message(to=self.recipient_id, interactive=messages.Interactive(**interactive_data), type=enums.MessageType.interactive)
-        elif latitude and longitude:
-            message = messages.Message(to=self.recipient_id, location=messages.Location(latitude=latitude, longitude=longitude, address=address, name=name), type=enums.MessageType.location)
-        elif sticker_id or sticker_url:
-            message = messages.Message(to=self.recipient_id, sticker=messages.Sticker(id=sticker_id, link=sticker_url), type=enums.MessageType.sticker)
-        elif video_id or video_url:
-            message = messages.Message(to=self.recipient_id, video=messages.Video(id=video_id, link=video_url, caption=caption), type=enums.MessageType.video)
-        else:
-            raise Exception()  # TODO
-
-        if reply_to:
-            message.context = messages.Context(message_id=reply_to)
-
+    def send(self, message: messages.Message, *, mention: bool = False) -> responses.Response:
+        if mention and self.message:
+            message.context = messages.Context(message_id=self.message.id)
         response = self.send_message(message)
         self._replies.append(message)
         self._replies_ids.append(response.messages[0].id)
         return response
 
-    def reply(self, **kwargs) -> Optional[responses.Response]:
-        if not self.message:
+    def send_audio(
+        self,
+        audio_id: Optional[str] = None,
+        audio_url: Optional[str] = None,
+        *,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
             return None
-        return self.send(reply_to=self.message.id, **kwargs)
+        message = messages.Message(to=self.recipient_id, audio=messages.Audio(id=audio_id, link=audio_url), type=enums.MessageType.audio)
+        return self.send(message, mention=mention)
+
+    def send_contacts(self, contacts_data: List[Dict[str, Any]], *, mention: bool = False) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, contacts=[messages.Contact(**contact) for contact in contacts_data], type=enums.MessageType.contacts)
+        return self.send(message, mention=mention)
+
+    def send_document(
+        self,
+        document_id: Optional[str] = None,
+        document_url: Optional[str] = None,
+        *,
+        caption: Optional[str] = None,
+        filename: Optional[str] = None,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, document=messages.Document(id=document_id, link=document_url, caption=caption, filename=filename), type=enums.MessageType.document)
+        return self.send(message, mention=mention)
+
+    def send_image(
+        self,
+        image_url: Optional[str] = None,
+        image_id: Optional[str] = None,
+        *,
+        caption: Optional[str] = None,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, image=messages.Image(id=image_id, link=image_url, caption=caption), type=enums.MessageType.image)
+        return self.send(message, mention=mention)
+
+    def send_interactive(
+        self,
+        *,
+        interactive_data: Dict[str, Any],
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, interactive=messages.Interactive(**interactive_data), type=enums.MessageType.interactive)
+        return self.send(message, mention=mention)
+
+    def send_location(
+        self,
+        latitude: float,
+        longitude: float,
+        *,
+        name: Optional[str] = None,
+        address: Optional[str] = None,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, location=messages.Location(latitude=latitude, longitude=longitude, address=address, name=name), type=enums.MessageType.location)
+        return self.send(message, mention=mention)
+
+    def send_options(
+        self,
+        text: str,
+        options: List[Dict[str, Any]],
+        *,
+        button: str,
+        title: str,
+        header_text: Optional[str] = None,
+        footer_text: Optional[str] = None,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(
+            to=self.recipient_id,
+            interactive=messages.Interactive(
+                action=messages.Action(
+                    button=button,
+                    sections=[messages.Section(rows=[messages.Row(**option) for option in options], title=title)],
+                ),
+                body=messages.Body(text=text),
+                header=messages.Header(type=enums.HeaderType.text, text=messages.Text(body=header_text)) if header_text else None,
+                footer=messages.Footer(text=footer_text) if footer_text else None,
+                type=enums.InteractiveType.list,
+            ),
+            type=enums.MessageType.interactive
+        )
+        return self.send(message, mention=mention)
+
+    def send_quick_replies(
+        self,
+        text: str,
+        quick_replies: List[Dict[str, Any]],
+        *,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(
+            to=self.recipient_id,
+            interactive=messages.Interactive(
+                action=messages.Action(
+                    buttons=[messages.Button(reply=messages.Reply(**quick_reply)) for quick_reply in quick_replies]
+                ),
+                body=messages.Body(text=text),
+                type=enums.InteractiveType.button,
+            ),
+            type=enums.MessageType.interactive,
+        )
+        return self.send(message, mention=mention)
+
+    def send_sticker(
+        self,
+        sticker_id: Optional[str] = None,
+        sticker_url: Optional[str] = None,
+        *,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, sticker=messages.Sticker(id=sticker_id, link=sticker_url), type=enums.MessageType.sticker)
+        return self.send(message, mention=mention)
+
+    def send_text(self, content: str, *, mention: bool = False) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, text=messages.Text(body=content), type=enums.MessageType.text)
+        return self.send(message, mention=mention)
+
+    def send_video(
+        self,
+        video_id: Optional[str] = None,
+        video_url: Optional[str] = None,
+        *,
+        caption: Optional[str] = None,
+        mention: bool = False,
+    ) -> Optional[responses.Response]:
+        if not self.recipient_id:
+            return None
+        message = messages.Message(to=self.recipient_id, video=messages.Video(id=video_id, link=video_url, caption=caption), type=enums.MessageType.video)
+        return self.send(message, mention=mention)
