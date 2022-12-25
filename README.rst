@@ -20,9 +20,10 @@ whatsapp-py
 .. raw:: html
 
    <h1 align="center">
-   <a href="https://leandcesar.github.io/whatsapp/"><img src="docs/logo.png" width="200px" alt="whatsapp-py"></a>
+     <a href="https://leandcesar.github.io/whatsapp">
+       <img src="https://github.com/leandcesar/whatsapp/blob/master/docs/logo.png?raw=true"  width="200px" alt="whatsapp-py"/>
+     </a>
    </h1>
-   
 
 A modern, easy to use, feature-rich ready API wrapper for `WhatsApp Business Cloud`_ written in Python.
 
@@ -42,17 +43,42 @@ Features
 Installing
 ----------
 
+Stable release
+~~~~~~~~~~~~~~
+
 To install whatsapp-py, run this command in your terminal:
 
 .. code-block:: console
 
     $ pip install whatsapp
 
-This is the preferred method to install whatsapp-py, as it will always install
-the most recent stable release.
+This is the preferred method to install whatsapp-py, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
+
+From sources
+~~~~~~~~~~~~
+
+The sources for whatsapp-py can be downloaded from the `Github repo`_.
+
+You can either clone the public repository:
+
+.. code-block:: console
+
+    $ git clone git://github.com/leandcesar/whatsapp
+
+Or download the `tarball`_:
+
+.. code-block:: console
+
+    $ curl -OJL https://github.com/leandcesar/whatsapp/tarball/master
+
+Once you have a copy of the source, you can install it with:
+
+.. code-block:: console
+
+    $ python setup.py install
 
 Quick Example
 -------------
@@ -72,10 +98,16 @@ Mirror Bot
             ctx.send(audio_id=ctx.message.audio.id)
 
         def on_event_message_document(self, ctx: Ctx):
-            ctx.send(document_id=ctx.message.document.id, caption=ctx.message.document.caption)
+            ctx.send(
+                document_id=ctx.message.document.id,
+                caption=ctx.message.document.caption,
+            )
 
         def on_event_message_image(self, ctx: Ctx):
-            ctx.send(image_id=ctx.message.image.id, caption=ctx.message.image.caption)
+            ctx.send(
+                image_id=ctx.message.image.id,
+                caption=ctx.message.image.caption,
+            )
 
         def on_event_message_sticker(self, ctx: Ctx):
             ctx.send(sticker_id=ctx.message.sticker.id)
@@ -84,10 +116,13 @@ Mirror Bot
             ctx.send(text=ctx.message.text.body)
 
         def on_event_message_video(self, ctx: Ctx):
-            ctx.send(video_id=ctx.message.video.id, caption=ctx.message.video.caption)
+            ctx.send(
+                video_id=ctx.message.video.id,
+                caption=ctx.message.video.caption,
+            )
 
 Run using Flask
-~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 .. code:: py
 
@@ -96,11 +131,11 @@ Run using Flask
 
     app = Flask(__name__)
     bot = Bot()
-    bot.start(phone_id="YOUR_PHONE_ID", token="YOUR_ACCESS_TOKEN")
+    bot.start(phone_id="PHONE_ID", token="ACCESS_TOKEN")
 
     @app.get("/")
     async def ping():
-        if request.args.get("hub.verify_token") == "YOUR_VERIFY_TOKEN":
+        if request.args.get("hub.verify_token") == "VERIFY_TOKEN":
             return request.args.get("hub.challenge")
         return "Invalid verify token"
 
@@ -111,7 +146,7 @@ Run using Flask
         return "Success"
 
 Run using Fast API
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 .. code:: py
 
@@ -120,7 +155,7 @@ Run using Fast API
 
     app = FastAPI()
     bot = Bot()
-    bot.start(phone_id="YOUR_PHONE_ID", token="YOUR_ACCESS_TOKEN")
+    bot.start(phone_id="PHONE_ID", token="ACCESS_TOKEN")
 
     @app.get("/")
     async def ping(
@@ -153,6 +188,8 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 .. _Webhook Notification: https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks/components
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
+.. _Github repo: https://github.com/leandcesar/whatsapp
+.. _tarball: https://github.com/leandcesar/whatsapp/tarball/master
 .. _Get Started with the WhatsApp Business Cloud API: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _audreyr/cookiecutter-pypackage: https://github.com/audreyr/cookiecutter-pypackage
