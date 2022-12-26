@@ -1,12 +1,12 @@
-=========================
-WhatsApp Messenger Python
-=========================
+==================
+WhatsApp Messenger
+==================
 
 .. raw:: html
 
    <h1 align="center">
      <a href="https://leandcesar.github.io/wa_me">
-       <img src="https://github.com/leandcesar/wa_me/blob/master/docs/logo.png?raw=true"  width="200px" alt="wa_me Logo"/>
+       <img src="https://github.com/leandcesar/wa_me/blob/main/docs/logo.png?raw=true"  width="200px" alt="wa_me Logo"/>
      </a>
    </h1>
 
@@ -57,7 +57,7 @@ Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/leandcesar/wa_me/tarball/master
+    $ curl -OJL https://github.com/leandcesar/wa_me/tarball/main
 
 Once you have a copy of the source, you can install it with:
 
@@ -182,7 +182,7 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 .. _`pip`: https://pip.pypa.io
 .. _`Python installation guide`: http://docs.python-guide.org/en/latest/starting/installation/
 .. _`Github repo`: https://github.com/leandcesar/wa_me
-.. _`tarball`: https://github.com/leandcesar/wa_me/tarball/master
+.. _`tarball`: https://github.com/leandcesar/wa_me/tarball/main
 .. _`Get Started with the WhatsApp Business Cloud API`: https://developers.facebook.com/docs/whatsapp/cloud-api/get-started
 .. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
