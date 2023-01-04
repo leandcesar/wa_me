@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional, Union
 import requests
 
 __all__ = (
-    "WhatsappException",
+    "WaMeException",
     "ValidationError",
     "HTTPException",
     "BadRequest",
@@ -16,15 +16,15 @@ __all__ = (
 )
 
 
-class WhatsappException(Exception):
+class WaMeException(Exception):
     """Base exception class for wa_me."""
 
 
-class ValidationError(WhatsappException):
+class ValidationError(WaMeException):
     """An Exception that is raised when there is a Validation Error."""
 
 
-class HTTPException(WhatsappException):
+class HTTPException(WaMeException):
     """Exception that's raised when an HTTP request operation fails.
 
     Parameters

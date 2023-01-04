@@ -6,7 +6,7 @@ from datetime import datetime
 
 from .classes import enums, events, messages, responses
 from .core.client import Client
-from .core.converter import as_dict, from_dict
+from .utils.converter import as_dict, from_dict
 
 __all__ = ("Ctx",)
 
