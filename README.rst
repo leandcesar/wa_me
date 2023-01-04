@@ -22,7 +22,13 @@ A modern, easy to use, feature-rich ready API wrapper for `WhatsApp Business Clo
 Features
 --------
 
-* Full `Send Messages`_ Support (text, audio, contacts, documents, images, interactive, location, sticker, and videos)
+* Full `Send Messages`_ Support:
+  * text
+  * media (audio, documents, images, sticker, and videos)
+  * contacts
+  * interactive (buttons, list, and products)
+  * location
+  * templates
 * Full `Webhook Notification`_ Parsing Support
 
 Installing

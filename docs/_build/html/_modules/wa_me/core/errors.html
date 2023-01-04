@@ -40,7 +40,7 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s2">&quot;WhatsappException&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;WaMeException&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ValidationError&quot;</span><span class="p">,</span>
     <span class="s2">&quot;HTTPException&quot;</span><span class="p">,</span>
     <span class="s2">&quot;BadRequest&quot;</span><span class="p">,</span>
@@ -51,15 +51,15 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="WhatsappException"><a class="viewcode-back" href="../../../wa_me.core.html#wa_me.core.errors.WhatsappException">[docs]</a><span class="k">class</span> <span class="nc">WhatsappException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="WaMeException"><a class="viewcode-back" href="../../../wa_me.core.html#wa_me.core.errors.WaMeException">[docs]</a><span class="k">class</span> <span class="nc">WaMeException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base exception class for wa_me.&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="ValidationError"><a class="viewcode-back" href="../../../wa_me.core.html#wa_me.core.errors.ValidationError">[docs]</a><span class="k">class</span> <span class="nc">ValidationError</span><span class="p">(</span><span class="n">WhatsappException</span><span class="p">):</span>
+<div class="viewcode-block" id="ValidationError"><a class="viewcode-back" href="../../../wa_me.core.html#wa_me.core.errors.ValidationError">[docs]</a><span class="k">class</span> <span class="nc">ValidationError</span><span class="p">(</span><span class="n">WaMeException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;An Exception that is raised when there is a Validation Error.&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="HTTPException"><a class="viewcode-back" href="../../../wa_me.core.html#wa_me.core.errors.HTTPException">[docs]</a><span class="k">class</span> <span class="nc">HTTPException</span><span class="p">(</span><span class="n">WhatsappException</span><span class="p">):</span>
+<div class="viewcode-block" id="HTTPException"><a class="viewcode-back" href="../../../wa_me.core.html#wa_me.core.errors.HTTPException">[docs]</a><span class="k">class</span> <span class="nc">HTTPException</span><span class="p">(</span><span class="n">WaMeException</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Exception that&#39;s raised when an HTTP request operation fails.</span>
 
 <span class="sd">    Parameters</span>

@@ -22,7 +22,7 @@ class HistoryBot(Bot):
             self.chats[ctx.recipient_id][reply_id] = reply
 
     def on_event_message_text(self, ctx: Ctx) -> None:
-        ctx.send(text=ctx.message.text.body)
+        ctx.send_text(content=ctx.message.text.body)
 
     @routine(seconds=60)
     def show_chats(self) -> None:

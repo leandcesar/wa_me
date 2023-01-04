@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from wa_me import Bot, Ctx
 
 __all__ = ("MirrorBot",)
@@ -11,7 +9,7 @@ class MirrorBot(Bot):
         ctx.read()
 
     def on_event_message_audio(self, ctx: Ctx) -> None:
-        ctx.send_audio(ctx.message.audio.id)
+        ctx.send_audio(audio_id=ctx.message.audio.id)
 
     def on_event_message_contacts(self, ctx: Ctx) -> None:
         contacts_data = [
@@ -31,13 +29,13 @@ class MirrorBot(Bot):
             }
             for contact in ctx.message.contacts
         ]
-        ctx.send_contacts(contacts_data)
+        ctx.send_contacts(contacts_data=contacts_data)
 
     def on_event_message_document(self, ctx: Ctx) -> None:
-        ctx.send_document(ctx.message.document.id, caption=ctx.message.document.caption, filename=ctx.message.document.filename)
+        ctx.send_document(document_id=ctx.message.document.id, caption=ctx.message.document.caption, filename=ctx.message.document.filename)
 
     def on_event_message_image(self, ctx: Ctx) -> None:
-        ctx.send_image(ctx.message.image.id, caption=ctx.message.image.caption)
+        ctx.send_image(image_id=ctx.message.image.id, caption=ctx.message.image.caption)
 
     def on_event_message_location(self, ctx: Ctx) -> None:
         ctx.send_location(
@@ -48,10 +46,10 @@ class MirrorBot(Bot):
         )
 
     def on_event_message_sticker(self, ctx: Ctx) -> None:
-        ctx.send_sticker(ctx.message.sticker.id)
+        ctx.send_sticker(sticker_id=ctx.message.sticker.id)
 
     def on_event_message_text(self, ctx: Ctx) -> None:
-        ctx.send_text(ctx.message.text.body)
+        ctx.send_text(content=ctx.message.text.body)
 
     def on_event_message_video(self, ctx: Ctx) -> None:
-        ctx.send_video(ctx.message.video.id, caption=ctx.message.video.caption)
+        ctx.send_video(video_id=ctx.message.video.id, caption=ctx.message.video.caption)
