@@ -4,7 +4,6 @@ __all__ = ("MirrorBot",)
 
 
 class MirrorBot(Bot):
-
     def before_event_message(self, ctx: Ctx) -> None:
         ctx.read()
 
@@ -32,7 +31,11 @@ class MirrorBot(Bot):
         ctx.send_contacts(contacts_data=contacts_data)
 
     def on_event_message_document(self, ctx: Ctx) -> None:
-        ctx.send_document(document_id=ctx.message.document.id, caption=ctx.message.document.caption, filename=ctx.message.document.filename)
+        ctx.send_document(
+            document_id=ctx.message.document.id,
+            caption=ctx.message.document.caption,
+            filename=ctx.message.document.filename,
+        )
 
     def on_event_message_image(self, ctx: Ctx) -> None:
         ctx.send_image(image_id=ctx.message.image.id, caption=ctx.message.image.caption)

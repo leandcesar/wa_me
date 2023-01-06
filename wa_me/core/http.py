@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-import json
 import logging
-import sys
-from typing import Any, Dict, Optional, Sequence, Union
+from typing import Any, Dict, Optional, Union
 from urllib.parse import quote as _uriquote
 
 import requests
@@ -49,7 +47,7 @@ class Route:
 
 
 class HTTPClient:
-    """Represents an HTTP client sending HTTP requests to the WhatsApp Business Cloud API."""
+    """Represents an HTTP client sending HTTP requests to the WhatsApp API."""
 
     def __init__(
         self,
@@ -72,7 +70,9 @@ class HTTPClient:
         except HTTPException as e:
             self.phone_id = last_phone_id
             self.token = last_token
-            raise HTTPException(e.response, "Improper phone_id and/or token has been passed.")
+            raise HTTPException(
+                e.response, "Improper phone_id and/or token has been passed."
+            )
         return data
 
     def restart(self) -> None:
@@ -85,15 +85,10 @@ class HTTPClient:
     def request(self, route: Route, **kwargs) -> Any:
         method = route.method
         url = route.url
-        headers: dict[str, str] = {}
-        if self.token is not None:
-            headers["Authorization"] = f"Bearer {self.token}"
-        if "json" in kwargs:
-            headers["Content-Type"] = "application/json"
-            if not isinstance(kwargs.get("json"), dict):
-                kwargs["json"] = json.dumps(kwargs.pop("json"), separators=(",", ":"), ensure_ascii=True)
-        kwargs["headers"] = headers
-
+        kwargs["headers"] = {
+            "Authorization": f"Bearer {self.token}",
+            "Content-Type": "application/json",
+        }
         if self.proxy is not None:
             kwargs["proxy"] = self.proxy
         if self.proxy_auth is not None:
@@ -108,7 +103,7 @@ class HTTPClient:
                     data = response.json()
                 except requests.exceptions.JSONDecodeError:
                     data = response.text
-                _log.debug(f"{method} {url} with {data!r} has returned {response.status_code}")
+                _log.debug(f"{method} {url} with {data!r} returns {response}")
                 if 200 <= response.status_code < 300:
                     return data
                 elif response.status_code == 400:
@@ -127,15 +122,16 @@ class HTTPClient:
                     raise HTTPException(response, data)
         except OSError as e:
             raise e
-
         if response is not None:
-            if response.status_code >= 500:
-                raise WhatsappServerError(response, data)
             raise HTTPException(response, data)
         raise RuntimeError("Unreachable code in HTTP handling")
 
     def fetch_business_profile(self) -> Dict[str, Any]:
-        route = Route("GET", "/{phone_id}/whatsapp_business_profile", phone_id=self.phone_id)
+        route = Route(
+            "GET",
+            "/{phone_id}/whatsapp_business_profile",
+            phone_id=self.phone_id,
+        )
         return self.request(route)
 
     def send_message(self, payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -144,7 +140,11 @@ class HTTPClient:
 
     def read_message(self, message_id: str) -> Dict[str, Any]:
         route = Route("POST", "/{phone_id}/messages", phone_id=self.phone_id)
-        payload = {"messaging_product": "whatsapp", "status": "read", "message_id": message_id}
+        payload = {
+            "messaging_product": "whatsapp",
+            "status": "read",
+            "message_id": message_id,
+        }
         return self.request(route, json=payload)
 
     def fetch_media_url(self, media_id: str) -> Dict[str, Any]:

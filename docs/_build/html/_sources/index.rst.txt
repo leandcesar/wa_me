@@ -3,7 +3,6 @@ Welcome to wa_me's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    readme
    modules

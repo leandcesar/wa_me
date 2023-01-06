@@ -2,6 +2,14 @@
 History
 =======
 
+0.2.0 (2023-01-06)
+------------------
+
+* Format and lint.
+* Remove utils.
+* Improve docstrings.
+
+
 0.1.0 (2022-12-25)
 ------------------
 

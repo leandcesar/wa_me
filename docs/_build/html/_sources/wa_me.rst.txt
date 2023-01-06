@@ -9,7 +9,6 @@ Subpackages
 
    wa_me.classes
    wa_me.core
-   wa_me.utils
 
 Submodules
 ----------

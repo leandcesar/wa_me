@@ -3,8 +3,6 @@
 from dataclasses import dataclass
 from typing import Literal, List, Optional
 
-from .enums import *  # NOQA
-
 __all__ = (
     "Readed",
     "Media",
@@ -106,16 +104,17 @@ class BusinessProfile:
         .. note::
 
             This can be one of the accepted values:
-                UNDEFINED, OTHER, AUTO, BEAUTY, APPAREL, EDU, ENTERTAIN, EVENT_PLAN,
-                FINANCE, GROCERY, GOVT, HOTEL, HEALTH, NONPROFIT, PROF_SERVICES, RETAIL,
-                TRAVEL, RESTAURANT, or NOT_A_BIZ.
+                UNDEFINED, OTHER, AUTO, BEAUTY, APPAREL, EDU, ENTERTAIN,
+                EVENT_PLAN, FINANCE, GROCERY, GOVT, HOTEL, HEALTH, NONPROFIT,
+                PROF_SERVICES, RETAIL, TRAVEL, RESTAURANT, or NOT_A_BIZ.
 
     websites: Optional[List[:class:`str`]]
-        The URLs associated with the business. For instance, a website, Facebook Page, or Instagram.
+        The URLs associated with the business. For instance, a website,
+        Facebook Page, or Instagram.
 
         .. note::
 
-            There is a maximum of 2 websites with a maximum of 256 characters each.
+            There is a maximum of 2 websites with a max of 256 characters each.
     """
 
     messaging_product: Literal["whatsapp"]
@@ -181,7 +180,8 @@ class Error:
 
         .. note::
 
-            For more information, refer to: https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes
+            For more information, refer to:
+            https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes
 
     error_subcode: :class:`int`
         The subcode of the error.

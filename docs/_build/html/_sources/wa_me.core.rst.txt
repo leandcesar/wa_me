@@ -12,10 +12,10 @@ wa\_me.core.client module
    :undoc-members:
    :show-inheritance:
 
-wa\_me.utils.converter module
+wa\_me.core.converter module
 ----------------------------
 
-.. automodule:: wa_me.utils.converter
+.. automodule:: wa_me.core.converter
    :members:
    :undoc-members:
    :show-inheritance:

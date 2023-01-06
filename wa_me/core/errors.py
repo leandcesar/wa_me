@@ -30,7 +30,8 @@ class HTTPException(WaMeException):
     Parameters
     ----------
     response: :class:`requests.Response`
-        The response of the failed HTTP request. This is an instance of :class:`requests.Response`.
+        The response of the failed HTTP request. This is an instance of
+        :class:`requests.Response`.
     content: Optional[Union[:class:`str`, Dict[:class:`str`, Any]]]
         The content response of the failed HTTP request.
 
@@ -48,7 +49,11 @@ class HTTPException(WaMeException):
         The type of the error. Could be an empty string.
     """
 
-    def __init__(self, response: requests.Response, content: Optional[Union[str, Dict[str, Any]]]) -> None:
+    def __init__(
+        self,
+        response: requests.Response,
+        content: Optional[Union[str, Dict[str, Any]]],
+    ) -> None:
         self.response: requests.Response = response
         self.status: int = response.status_code
         self.code: Optional[int]

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wa_me.classes.events &#8212; wa_me 0.1.0 documentation</title>
+    <title>wa_me.classes.events &#8212; wa_me 0.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
@@ -38,7 +38,18 @@
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">.enums</span> <span class="kn">import</span> <span class="o">*</span>  <span class="c1"># NOQA</span>
+<span class="kn">from</span> <span class="nn">.enums</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">InfoType</span><span class="p">,</span>
+    <span class="n">InteractiveType</span><span class="p">,</span>
+    <span class="n">MediaType</span><span class="p">,</span>
+    <span class="n">MessageType</span><span class="p">,</span>
+    <span class="n">OriginType</span><span class="p">,</span>
+    <span class="n">PhoneType</span><span class="p">,</span>
+    <span class="n">PricingType</span><span class="p">,</span>
+    <span class="n">SourceType</span><span class="p">,</span>
+    <span class="n">StatusType</span><span class="p">,</span>
+    <span class="n">SystemUpdateType</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s2">&quot;Text&quot;</span><span class="p">,</span>
@@ -106,7 +117,8 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    payload: :class:`str`</span>
-<span class="sd">        The payload for a button set up by the business that a customer clicked as part of an interactive message.</span>
+<span class="sd">        The payload for a button set up by the business that a customer</span>
+<span class="sd">        clicked as part of an interactive message.</span>
 <span class="sd">    text: :class:`str`</span>
 <span class="sd">        Button text.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -219,7 +231,8 @@
 <span class="sd">    emoji: :class:`str`</span>
 <span class="sd">        The emoji used for the reaction.</span>
 <span class="sd">    message_id: :class:`str`</span>
-<span class="sd">        The WhatsApp Business Account ID of the message received that contained the reaction.</span>
+<span class="sd">        The WhatsApp Business Account ID of the message received that</span>
+<span class="sd">        contained the reaction.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -430,13 +443,13 @@
 <div class="viewcode-block" id="Pricing"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.events.Pricing">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Pricing</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Pricing object.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    category: Optional[:class:`.OriginType`]</span>
 <span class="sd">        Indicates the conversation pricing category.</span>
 <span class="sd">    pricing_model: Optional[:class:`.PricingType`]</span>
-<span class="sd">        Type of pricing model used by the business. Current supported value is CBP.</span>
+<span class="sd">        Type of pricing model used by the business.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OriginType</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -446,38 +459,44 @@
 <div class="viewcode-block" id="Origin"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.events.Origin">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Origin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Origin object.</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    type: :class:`.OriginType`</span>
-<span class="sd">        Indicates where a conversation has started. This can also be referred to as a conversation entry point.</span>
+<span class="sd">        Indicates where a conversation has started. This can also be referred</span>
+<span class="sd">        to as a conversation entry point.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    
+
     <span class="nb">type</span><span class="p">:</span> <span class="n">OriginType</span></div>
 
 
 <div class="viewcode-block" id="Conversation"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.events.Conversation">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Conversation</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Conversation object.</span>
-<span class="sd">    </span>
+
 <span class="sd">    .. note:</span>
 
-<span class="sd">        WhatsApp defines a conversation as a 24-hour session of messaging between a person and a business.</span>
-<span class="sd">        There is no limit on the number of messages that can be exchanged in the fixed 24-hour window.</span>
+<span class="sd">        WhatsApp defines a conversation as a 24-hour session of messaging</span>
+<span class="sd">        between a person and a business.</span>
+<span class="sd">        There is no limit on the number of messages that can be exchanged in</span>
+<span class="sd">        the fixed 24-hour window.</span>
 <span class="sd">        The 24-hour conversation session begins when:</span>
 <span class="sd">            - A business-initiated message is delivered to a customer</span>
 <span class="sd">            - A business reply to a customer message is delivered</span>
-<span class="sd">        The 24-hour conversation session is different from the 24-hour customer support window.</span>
-<span class="sd">        The customer support window is a rolling window that is refreshed when a customer-initiated</span>
-<span class="sd">        message is delivered to a business.</span>
-<span class="sd">        Within the customer support window businesses can send free-form messages.</span>
-<span class="sd">        Any business-initiated message sent more than 24 hours after the last customer message must be</span>
-<span class="sd">        a template message.</span>
+<span class="sd">        The 24-hour conversation session is different from the 24-hour</span>
+<span class="sd">        customer support window.</span>
+<span class="sd">        The customer support window is a rolling window that is refreshed when</span>
+<span class="sd">        a customer-initiated message is delivered to a business.</span>
+<span class="sd">        Within the customer support window businesses can send free-form</span>
+<span class="sd">        messages.</span>
+<span class="sd">        Any business-initiated message sent more than 24 hours after the last</span>
+<span class="sd">        customer message must be a template message.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    id: :class:`str`</span>
-<span class="sd">        Represents the ID of the conversation the given status notification belongs to.</span>
+<span class="sd">        Represents the ID of the conversation the given status notification</span>
+<span class="sd">        belongs to.</span>
 <span class="sd">    origin: :class:`.Origin`</span>
 <span class="sd">        Indicates who initiated the conversation.</span>
 <span class="sd">    expiration_timestamp: Optional[:class:`int`]</span>
@@ -485,7 +504,7 @@
 
 <span class="sd">        .. note:</span>
 
-<span class="sd">            This field is only present for messages with a status set to &quot;sent&quot;.</span>
+<span class="sd">            This field is only present for messages with a &quot;sent&quot; status.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
@@ -496,13 +515,16 @@
 <div class="viewcode-block" id="Status"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.events.Status">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Status</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Status object.</span>
-<span class="sd">    </span>
+
 <span class="sd">    id: :class:`str`</span>
-<span class="sd">        The ID for the message that the business that is subscribed to the webhooks sent to a customer.</span>
+<span class="sd">        The ID for the message that the business that is subscribed to the</span>
+<span class="sd">        webhooks sent to a customer.</span>
 <span class="sd">    recipient_id: :class:`str`</span>
-<span class="sd">        The WhatsApp ID for the customer that the business, that is subscribed to the webhooks, sent to the customer.</span>
+<span class="sd">        The WhatsApp ID for the customer that the business, that is subscribed</span>
+<span class="sd">        to the webhooks, sent to the customer.</span>
 <span class="sd">    status: :class:`.StatusType`</span>
-<span class="sd">        A webhook is triggered when a message received by a business has been status updated.</span>
+<span class="sd">        A webhook is triggered when a message received by a business has been</span>
+<span class="sd">        status updated.</span>
 <span class="sd">    timestamp: :class:`int`</span>
 <span class="sd">        Date for the status message.</span>
 <span class="sd">    conversation: Optional[:class:`.Conversation`]</span>
@@ -596,6 +618,7 @@
 
     <span class="n">description</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
+
 <div class="viewcode-block" id="Interactive"><a class="viewcode-back" href="../../../wa_me.classes.html#wa_me.classes.events.Interactive">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Interactive</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Interactive object.</span>
@@ -662,7 +685,8 @@
 <span class="sd">    source_type: :class:`.SourceType`</span>
 <span class="sd">        The type of the ad’s source.</span>
 <span class="sd">    source_url: :class:`str`</span>
-<span class="sd">        A customer clicked an ad that redirects them to WhatsApp, this object is included in the messages object.</span>
+<span class="sd">        A customer clicked an ad that redirects them to WhatsApp, this object</span>
+<span class="sd">        is included in the messages object.</span>
 <span class="sd">    thumbnail_url: Optional[:class:`.str`]</span>
 <span class="sd">        URL for the thumbnail, when media_type is a &quot;video&quot;.</span>
 <span class="sd">    video_url: Optional[:class:`.str`]</span>
@@ -687,11 +711,12 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    acknowledged: :class:`bool`</span>
-<span class="sd">        State of acknowledgment for the messages system &quot;customer_identity_changed&quot;.</span>
+<span class="sd">        State of acknowledgment for the messages system.</span>
 <span class="sd">    created_timestamp: :class:`int`</span>
-<span class="sd">        The time when the WhatsApp Business Management API detected the customer may have changed their profile information.</span>
+<span class="sd">        The time when the WhatsApp Business Management API detected the</span>
+<span class="sd">        customer may have changed their profile information.</span>
 <span class="sd">    hash: :class:`str`</span>
-<span class="sd">        The ID for the messages system &quot;customer_identity_changed&quot;.</span>
+<span class="sd">        The ID for the messages system.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">acknowledged</span><span class="p">:</span> <span class="nb">bool</span>
@@ -706,9 +731,9 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    catalog_id: :class:`str`</span>
-<span class="sd">        Unique identifier of the Meta catalog linked to the WhatsApp Business Account.</span>
+<span class="sd">        Unique ID of the Meta catalog linked to the WhatsApp Business Account.</span>
 <span class="sd">    product_retailer_id: :class:`str`</span>
-<span class="sd">        Unique identifier of the product in a catalog.</span>
+<span class="sd">        Unique ID of the product in a catalog.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">catalog_id</span><span class="p">:</span> <span class="nb">str</span>
@@ -726,7 +751,8 @@
 <span class="sd">    forwarded: Optional[:class:`bool`]</span>
 <span class="sd">        Set to true if the message received by the business has been forwarded.</span>
 <span class="sd">    frequently_forwarded: Optional[:class:`bool`]</span>
-<span class="sd">        Set to true if the message received by the business has been forwarded more than 5 times.</span>
+<span class="sd">        Set to true if the message received by the business has been forwarded</span>
+<span class="sd">        more than 5 times.</span>
 <span class="sd">    referred_product: Optional[:class:`.ReferredProduct`]</span>
 <span class="sd">        The product the user is requesting information about.</span>
 
@@ -758,41 +784,59 @@
 <span class="sd">    timestamp: :class:`int`</span>
 <span class="sd">        The time when the customer sent the message to the business.</span>
 <span class="sd">    type: :class:`.MessageType`</span>
-<span class="sd">        The type of message that has been received by the business that has subscribed to Webhooks.</span>
+<span class="sd">        The type of message that has been received by the business that has</span>
+<span class="sd">        subscribed to Webhooks.</span>
 <span class="sd">    audio: Optional[:class:`.Audio`]</span>
-<span class="sd">        When the messages type is set to audio, including voice messages, this object is included in the messages object.</span>
+<span class="sd">        When the messages type is set to audio, including voice messages, this</span>
+<span class="sd">        object is included in the messages object.</span>
 <span class="sd">    button: Optional[:class:`.Button`]</span>
-<span class="sd">        When the messages type field is set to button, this object is included in the messages object.</span>
+<span class="sd">        When the messages type field is set to button, this object is included</span>
+<span class="sd">        in the messages object.</span>
 <span class="sd">    contacts: Optional[List[:class:`.Contact`]]</span>
-<span class="sd">        When messages type is set to contacts, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to contacts, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    context: Optional[:class:`.Context`]</span>
-<span class="sd">        The context for a message that was forwarded or in an inbound reply from the customer.</span>
+<span class="sd">        The context for a message that was forwarded or in an inbound reply</span>
+<span class="sd">        from the customer.</span>
 <span class="sd">    document: Optional[:class:`.Document`]</span>
-<span class="sd">        When messages type is set to document, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to document, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    errors: Optional[List[:class:`.Error`]]</span>
-<span class="sd">        The message that a business received from a customer is not a supported type.</span>
+<span class="sd">        The message that a business received from a customer is not a</span>
+<span class="sd">        supported type.</span>
 <span class="sd">    identity: Optional[:class:`.Identity`]</span>
-<span class="sd">        A webhook is triggered when a customer&#39;s phone number or profile information has been updated.</span>
+<span class="sd">        A webhook is triggered when a customer&#39;s phone number or profile</span>
+<span class="sd">        information has been updated.</span>
 <span class="sd">    image: Optional[:class:`.Image`]</span>
-<span class="sd">        When messages type is set to image, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to image, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    interactive: Optional[:class:`.Interactive`]</span>
-<span class="sd">        When a customer selected a button or list reply, this object is included in the messages object.</span>
+<span class="sd">        When a customer selected a button or list reply, this object is</span>
+<span class="sd">        included in the messages object.</span>
 <span class="sd">    location: Optional[:class:`.Location`]</span>
-<span class="sd">        When messages type is set to location, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to location, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    order: Optional[:class:`.Order`]</span>
 <span class="sd">        Included in the messages object when a customer has placed an order.</span>
 <span class="sd">    reaction: Optional[:class:`.Reaction`]</span>
-<span class="sd">        When messages type is set to reaction, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to reaction, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    referral: Optional[:class:`.Referral`]</span>
-<span class="sd">        A customer clicked an ad that redirects them to WhatsApp, this object is included in the messages object.</span>
+<span class="sd">        A customer clicked an ad that redirects them to WhatsApp, this object</span>
+<span class="sd">        is included in the messages object.</span>
 <span class="sd">    sticker: Optional[:class:`.Sticker`]</span>
-<span class="sd">        When messages type is set to sticker, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to sticker, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    system: Optional[:class:`.System`]</span>
-<span class="sd">        When messages type is set to system, a customer has updated their phone number or profile information, this object is included in the messages object.</span>
+<span class="sd">        When messages type is set to system, a customer has updated their</span>
+<span class="sd">        phone number or profile information, this object is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    text: Optional[:class:`.Text`]</span>
-<span class="sd">        When messages type is set to text, the body of text is included in the messages object.</span>
+<span class="sd">        When messages type is set to text, the body of text is included in the</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    video: Optional[:class:`.Video`]</span>
-<span class="sd">        When messages type is set to video, this object is included in messages object.</span>
+<span class="sd">        When messages type is set to video, this object is included in</span>
+<span class="sd">        messages object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
@@ -840,7 +884,8 @@
 <span class="sd">    profile: :class:`.Profile`</span>
 <span class="sd">        An object containing customer profile information</span>
 <span class="sd">    wa_id: :class:`str`</span>
-<span class="sd">        The customer&#39;s WhatsApp ID. A business can respond to a message using this ID.</span>
+<span class="sd">        The customer&#39;s WhatsApp ID. A business can respond to a message using</span>
+<span class="sd">        this ID.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">profile</span><span class="p">:</span> <span class="n">Profile</span>
@@ -856,7 +901,8 @@
 <span class="sd">    display_phone_number: :class:`str`</span>
 <span class="sd">        The phone number that is displayed for a business.</span>
 <span class="sd">    phone_number_id: :class:`str`</span>
-<span class="sd">        ID for the phone number. A business can respond to a message using this ID.</span>
+<span class="sd">        ID for the phone number. A business can respond to a message using</span>
+<span class="sd">        this ID.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">display_phone_number</span><span class="p">:</span> <span class="nb">str</span>
@@ -874,9 +920,11 @@
 <span class="sd">    metadata: :class:`.Metadata`</span>
 <span class="sd">        Metadata for the business.</span>
 <span class="sd">    contacts: Optional[List[:class:`.Customer`]]</span>
-<span class="sd">        A list of contacts objects with information for the customer who sent a message to the business.</span>
+<span class="sd">        A list of contacts objects with information for the customer who sent</span>
+<span class="sd">        a message to the business.</span>
 <span class="sd">    errors: Optional[List[:class:`.Error`]]</span>
-<span class="sd">        A list of error objects with information received when a message failed.</span>
+<span class="sd">        A list of error objects with information received when a message</span>
+<span class="sd">        failed.</span>
 <span class="sd">    messages: Optional[List[:class:`.Message`]]</span>
 <span class="sd">        Information about a message received by the business</span>
 <span class="sd">    statuses: Optional[List[:class:`.Status`]]</span>
@@ -920,7 +968,8 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    id: :class:`str`</span>
-<span class="sd">        The WhatsApp Business Account ID for the business that is subscribed to the webhook.</span>
+<span class="sd">        The WhatsApp Business Account ID for the business that is subscribed</span>
+<span class="sd">        to the webhook.</span>
 <span class="sd">    changes: List[:class:`.Change`]</span>
 <span class="sd">        A list of change object that triggered the webhook.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -939,7 +988,8 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    object: :class:`str`</span>
-<span class="sd">        The specific webhook a business is subscribed to. The webhook is &quot;whatsapp_business_account&quot;.</span>
+<span class="sd">        The specific webhook a business is subscribed to. The webhook is</span>
+<span class="sd">        &quot;whatsapp_business_account&quot;.</span>
 <span class="sd">    entry: List[:class:`.Entry`]</span>
 <span class="sd">        A list of entry object.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -964,7 +1014,6 @@
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../readme.html">WhatsApp Messenger</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">wa_me</a></li>

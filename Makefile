@@ -51,8 +51,10 @@ lint/flake8: ## check style with flake8
 	flake8 wa_me tests
 lint/black: ## check style with black
 	black --check wa_me tests
+lint/interrogate: ## check docstring with interrogate
+	interrogate wa_me tests
 
-lint: lint/flake8 lint/black ## check style
+lint: lint/flake8 lint/black lint/interrogate ## check style and doctring
 
 test: ## run tests quickly with the default Python
 	pytest

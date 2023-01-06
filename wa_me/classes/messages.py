@@ -3,7 +3,17 @@
 from dataclasses import dataclass
 from typing import Literal, List, Optional
 
-from .enums import *  # NOQA
+from .enums import (
+    ComponentType,
+    ComponentSubType,
+    HeaderType,
+    InfoType,
+    InteractiveType,
+    MessageType,
+    ParameterType,
+    PhoneType,
+    StatusType,
+)
 
 __all__ = (
     "Text",
@@ -50,19 +60,22 @@ class Text:
     Parameters
     ----------
     body: :class:`str`
-        The text of the text message that can contain URLs and supports formatting. Max: 4096 chars.
+        The text of the text message that can contain URLs and supports
+        formatting. Max: 4096 chars.
     preview_url: Optional[:class:`bool`]
         By default, WhatsApp recognizes URLs and makes them clickable,
-        but you can also include a preview box with more information about the link.
-        Set this field to true if you want to include a URL preview box.
+        but you can also include a preview box with more information about the
+        link. Set this field to true if you want to include a URL preview box.
 
-        The majority of the time when you send a URL, whether with a preview or not,
-        the receiver of the message will see a URL that they can click on.
+        The majority of the time when you send a URL, whether with a preview
+        or not, the receiver of the message will see a URL that they can click
+        on.
 
         URL previews are only rendered after one of the following has occurred:
             - The business has sent a message template to the user.
             - The user initiates a conversation with a "click to chat" link.
-            - The user adds the business phone number to their address book and initiates a conversation.
+            - The user adds the business phone number to their address book
+            and initiates a conversation.
     """
 
     body: str
@@ -78,7 +91,8 @@ class Media:
     id: Optional[:class:`str`]
         The media object ID. Required when you are not using a link.
     link: Optional[:class:`str`]
-        The protocol and URL of the media to be sent. Required when you are not using an uploaded media ID.
+        The protocol and URL of the media to be sent. Required when you are
+        not using an uploaded media ID.
     """
 
     id: Optional[str] = None
@@ -138,7 +152,8 @@ class Reaction:
     Parameters
     ----------
     emoji: :class:`str`
-        The emoji used for the reaction. Set this value to "" (empty string) to remove the reaction.
+        The emoji used for the reaction. Set this value to "" (empty string)
+        to remove the reaction.
     message_id: :class:`str`
         The WhatsApp Business Account ID that this reaction is being sent to.
     """
@@ -158,7 +173,8 @@ class Location:
     latitude: :class:`float`
         The latitude of the location.
     address: Optional[:class:`str`]
-        The address of the location. This field is only displayed if `name` is present.
+        The address of the location. This field is only displayed if `name` is
+        present.
     name: Optional[:class:`str`]
         The name of the location.
     """
@@ -222,7 +238,8 @@ class Name:
 
     .. note::
 
-        At least one of the optional parameters needs to be included along with the `formatted_name` parameter.
+        At least one of the optional parameters needs to be included along
+        with the `formatted_name` parameter.
 
     Parameters
     ----------
@@ -274,7 +291,8 @@ class Phone:
     Parameters
     ----------
     phone: Optional[:class:`str`]
-        Automatically populated with the `wa_id` value as a formatted phone number.
+        Automatically populated with the `wa_id` value as a formatted phone
+        number.
     type: Optional[:class:`.PhoneType`]
         Phone type.
     wa_id: Optional[:class:`str`]
@@ -405,7 +423,8 @@ class Reply:
     Parameters
     ----------
     id: :class`str`:
-        Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.
+        Unique identifier button. This ID is returned in the webhook when the
+        button is clicked by the user. Min: 1 char. Max: 256 chars.
     title: :class`str`:
         Button title.
 
@@ -426,7 +445,8 @@ class Button:
     Parameters
     ----------
     id: :class`str`:
-        Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.
+        Unique identifier button. This ID is returned in the webhook when the
+        button is clicked by the user. Min: 1 char. Max: 256 chars.
     title: :class`str`:
         Button title.
 
@@ -436,7 +456,8 @@ class Button:
             Emojis are supported, markdown is not.
 
     type: :class`str`:
-        Button type. The only supported option is "reply". Min: 1 char. Max: 20 chars.
+        Button type. The only supported option is "reply".
+        Min: 1 char. Max: 20 chars.
     """
 
     reply: Reply
@@ -466,25 +487,29 @@ class Action:
             Required for :class:`.InteractiveType.button_reply`.
 
     catalog_id: Optional[:class:`str`]
-        Unique identifier of the Facebook catalog linked to your WhatsApp Business Account.
+        Unique identifier of the Facebook catalog linked to your WhatsApp
+        Business Account.
 
         .. note::
 
-            Required for :class:`.InteractiveType.product` and  :class:`.InteractiveType.product_list`.
+            Required for :class:`.InteractiveType.product` and
+            :class:`.InteractiveType.product_list`.
 
     product_retailer_id: Optional[:class:`str`]
         The unique identifier of the product in the catalog.
 
         .. note::
 
-            Required for :class:`.InteractiveType.product` and  :class:`.InteractiveType.product_list`.
+            Required for :class:`.InteractiveType.product` and
+            :class:`.InteractiveType.product_list`.
 
     sections: Optional[List[:class:`.Section`]]
         A list of section object. Min: 1 item. Max: 10 items.
 
         .. note::
 
-            Required for :class:`.InteractiveType.list` and  :class:`.InteractiveType.product_list`.
+            Required for :class:`.InteractiveType.list` and
+            :class:`.InteractiveType.product_list`.
     """
 
     button: Optional[str] = None
@@ -501,7 +526,8 @@ class Body:
     Parameters
     ----------
     text: :class:`str`
-        The text field for the body object, supports Emojis and markdown. Max: 1024 chars.
+        The text field for the body object, supports Emojis and markdown.
+        Max: 1024 chars.
     """
 
     text: str
@@ -514,7 +540,8 @@ class Footer:
     Parameters
     ----------
     text: :class:`str`
-        The text field for the footer object, supports Emojis and markdown. Max: 60 chars.
+        The text field for the footer object, supports Emojis and markdown.
+        Max: 60 chars.
     """
 
     text: str
@@ -529,13 +556,17 @@ class Header:
     type: :class:`.HeaderType`
         The header type.
     document: Optional[:class:`.Document`]
-        A media object containing a document. Required if type is set to :class:`.HeaderType.document`
+        A media object containing a document. Required if type is set to
+        :class:`.HeaderType.document`
     image: Optional[:class:`.Image`]
-        A media object containing a image. Required if type is set to :class:`.HeaderType.image`
+        A media object containing a image. Required if type is set to
+        :class:`.HeaderType.image`
     text: Optional[:class:`.Text`]
-        A media object containing a text. Required if type is set to :class:`.HeaderType.text`
+        A media object containing a text. Required if type is set to
+        :class:`.HeaderType.text`
     video: Optional[:class:`.Video`]
-        A media object containing a video. Required if type is set to :class:`.HeaderType.video`
+        A media object containing a video. Required if type is set to
+        :class:`.HeaderType.video`
     """
 
     type: HeaderType
@@ -572,7 +603,8 @@ class Interactive:
 
             Required for type :class:`.InteractiveType.product_list`.
             Optional for other types.
-            You cannot set a header if your interactive object is type :class:`.InteractiveType.product`.
+            You cannot set a header if your interactive object is type
+            :class:`.InteractiveType.product`.
     """
 
     type: InteractiveType
@@ -595,6 +627,7 @@ class Currency:
     fallback_value: :class:`str`
         Default text if localization fails.
     """
+
     amount_1000: int
     code: str
     fallback_value: str
@@ -609,6 +642,7 @@ class DateTime:
     fallback_value: :class:`str`
         Default text.
     """
+
     fallback_value: str
 
 
@@ -644,7 +678,8 @@ class Parameter:
 
         .. note:
 
-            Character limit varies based on the following included component type.
+            Character limit varies based on the following included component
+            type.
 
             For the "header" component type: 60 characters
             For the "body" component type:
@@ -658,6 +693,7 @@ class Parameter:
 
             Captions not supported when used in a media template.
     """
+
     type: ParameterType
     currency: Optional[Currency] = None
     date_time: Optional[DateTime] = None
@@ -715,7 +751,8 @@ class Language:
 
         .. note::
 
-            This field accepts both `language` (for example, "en") and `language_locale` (for example, "en_US") formats.
+            This field accepts both `language` (for example, "en") and
+            `language_locale` (for example, "en_US") formats.
 
     policy: :class:`str`
         Language policy option.
@@ -738,11 +775,13 @@ class Template:
     name: :class:`str`
         The name of the template.
     language: :class:`.Language`
-        Specifies a language object. Specifies the language the template may be rendered in.
+        Specifies a language object. Specifies the language the template may
+        be rendered in.
 
         .. note::
 
-            Only the `deterministic` language policy works with media template messages.
+            Only the `deterministic` language policy works with media template
+            messages.
 
     components: Optional[:class:`.Component`]
         A list of component object.
@@ -773,11 +812,11 @@ class Message:
     Parameters
     ----------
     to: :class:`str`
-        WhatsApp ID or phone number for the person you want to send a message to.
+        WhatsApp ID or phone number for the person you want to send a message.
     messaging_product: :class:`str`
         Sender service used for the request. Always use "whatsapp".
     recipient_type: :class:`str`
-        Currently, you can only send messages to individuals. Set this value to "individual".
+        Set this value to "individual".
     context: Optional[:class:`.Context`]
         Used to mention a specific message you are replying to.
     type: Optional[:class:`.MessageType`]
@@ -805,7 +844,8 @@ class Message:
     video: :class:`.Video`
         A media object containing a video.
     message_id: :class:`str`
-        The WhatsApp Business Account ID for the message you want to mark as read.
+        The WhatsApp Business Account ID for the message you want to mark as
+        read.
     status: :class:`.StatusType`
         Status message. Set this value to "read".
     """

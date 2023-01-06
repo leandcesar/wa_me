@@ -30,7 +30,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    description="A modern, easy to use, feature-rich ready API wrapper for WhatsApp Business Cloud written in Python",
+    description="A modern, easy to use, feature-rich ready API wrapper for WhatsApp Business Cloud written in Python",  # NOQA
     install_requires=requirements,
     license="MIT license",
     long_description=readme + "\n\n" + history,
@@ -41,6 +41,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/leandcesar/wa_me",
-    version="0.1.0",
+    version="0.2.0",
     zip_safe=False,
 )

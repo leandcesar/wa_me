@@ -1,5 +1,4 @@
 from os import environ
-from typing import Dict, Optional
 
 from flask import Flask, request
 

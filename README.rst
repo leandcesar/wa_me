@@ -23,12 +23,14 @@ Features
 --------
 
 * Full `Send Messages`_ Support:
+
   * text
   * media (audio, documents, images, sticker, and videos)
   * contacts
   * interactive (buttons, list, and products)
   * location
   * templates
+
 * Full `Webhook Notification`_ Parsing Support
 
 Installing

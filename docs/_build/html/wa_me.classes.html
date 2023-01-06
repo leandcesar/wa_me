@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>wa_me.classes package &#8212; wa_me 0.1.0 documentation</title>
+    <title>wa_me.classes package &#8212; wa_me 0.2.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -275,19 +275,16 @@
 <p class="admonition-title">Note</p>
 <p>Indicates where a conversation has started.</p>
 <ul class="simple">
-<li><p>“business_initiated”: Indicates that the conversation started by a business</p></li>
+<li><p><cite>business_initiated</cite>: Indicates that the conversation started by a</p></li>
 </ul>
-<p>sending the first message to a customer. This applies any time it has been
-more than 24 hours since the last customer message.</p>
-<ul class="simple">
-<li><p>“customer_initiated”: Indicates that the conversation started by a business</p></li>
-</ul>
-<p>replying to a customer message. This applies only when the business reply is
-within 24 hours of the last customer message.</p>
-<ul class="simple">
-<li><p>“referral_conversion”: Indicates that the conversation originated from</p></li>
-</ul>
-<p>a free entry point. These conversations are always customer-initiated.</p>
+<p>business sending the first message to a customer. This applies any
+time it has been more than 24 hours since the last customer message.
+- <cite>customer_initiated</cite>: Indicates that the conversation started by a
+business replying to a customer message. This applies only when the
+business reply is within 24 hours of the last customer message.
+- <cite>referral_conversion</cite>: Indicates that the conversation originated
+from a free entry point. These conversations are always
+customer-initiated.</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="wa_me.classes.enums.OriginType.business_initiated">
@@ -549,7 +546,8 @@ within 24 hours of the last customer message.</p>
 <section id="id1">
 <h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>payload: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The payload for a button set up by the business that a customer clicked as part of an interactive message.</p>
+<dt>payload: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The payload for a button set up by the business that a customer
+clicked as part of an interactive message.</p>
 </dd>
 <dt>text: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Button text.</p>
 </dd>
@@ -685,7 +683,8 @@ or the status for a message a business sends a customer changes.</p>
 </dd>
 <dt>forwarded: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]</dt><dd><p>Set to true if the message received by the business has been forwarded.</p>
 </dd>
-<dt>frequently_forwarded: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]</dt><dd><p>Set to true if the message received by the business has been forwarded more than 5 times.</p>
+<dt>frequently_forwarded: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]</dt><dd><p>Set to true if the message received by the business has been forwarded
+more than 5 times.</p>
 </dd>
 <dt>referred_product: Optional[<a class="reference internal" href="#wa_me.classes.events.ReferredProduct" title="wa_me.classes.events.ReferredProduct"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReferredProduct</span></code></a>]</dt><dd><p>The product the user is requesting information about.</p>
 <div class="admonition note">
@@ -732,7 +731,8 @@ or the status for a message a business sends a customer changes.</p>
 <section id="id5">
 <h3>Parameters<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Represents the ID of the conversation the given status notification belongs to.</p>
+<dt>id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Represents the ID of the conversation the given status notification
+belongs to.</p>
 </dd>
 <dt>origin: <a class="reference internal" href="#wa_me.classes.events.Origin" title="wa_me.classes.events.Origin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Origin</span></code></a></dt><dd><p>Indicates who initiated the conversation.</p>
 </dd>
@@ -767,7 +767,8 @@ or the status for a message a business sends a customer changes.</p>
 <dl class="simple">
 <dt>profile: <a class="reference internal" href="#wa_me.classes.events.Profile" title="wa_me.classes.events.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a></dt><dd><p>An object containing customer profile information</p>
 </dd>
-<dt>wa_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The customer’s WhatsApp ID. A business can respond to a message using this ID.</p>
+<dt>wa_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The customer’s WhatsApp ID. A business can respond to a message using
+this ID.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -845,7 +846,8 @@ or the status for a message a business sends a customer changes.</p>
 <section id="id9">
 <h3>Parameters<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID for the business that is subscribed to the webhook.</p>
+<dt>id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID for the business that is subscribed
+to the webhook.</p>
 </dd>
 <dt>changes: List[<a class="reference internal" href="#wa_me.classes.events.Change" title="wa_me.classes.events.Change"><code class="xref py py-class docutils literal notranslate"><span class="pre">Change</span></code></a>]</dt><dd><p>A list of change object that triggered the webhook.</p>
 </dd>
@@ -906,7 +908,8 @@ or the status for a message a business sends a customer changes.</p>
 <section id="id11">
 <h3>Parameters<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>object: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The specific webhook a business is subscribed to. The webhook is “whatsapp_business_account”.</p>
+<dt>object: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The specific webhook a business is subscribed to. The webhook is
+“whatsapp_business_account”.</p>
 </dd>
 <dt>entry: List[<a class="reference internal" href="#wa_me.classes.events.Entry" title="wa_me.classes.events.Entry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entry</span></code></a>]</dt><dd><p>A list of entry object.</p>
 </dd>
@@ -932,11 +935,12 @@ or the status for a message a business sends a customer changes.</p>
 <section id="id12">
 <h3>Parameters<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>acknowledged: <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></dt><dd><p>State of acknowledgment for the messages system “customer_identity_changed”.</p>
+<dt>acknowledged: <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></dt><dd><p>State of acknowledgment for the messages system.</p>
 </dd>
-<dt>created_timestamp: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>The time when the WhatsApp Business Management API detected the customer may have changed their profile information.</p>
+<dt>created_timestamp: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>The time when the WhatsApp Business Management API detected the
+customer may have changed their profile information.</p>
 </dd>
-<dt>hash: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The ID for the messages system “customer_identity_changed”.</p>
+<dt>hash: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The ID for the messages system.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1127,41 +1131,59 @@ or the status for a message a business sends a customer changes.</p>
 </dd>
 <dt>timestamp: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>The time when the customer sent the message to the business.</p>
 </dd>
-<dt>type: <a class="reference internal" href="#wa_me.classes.enums.MessageType" title="wa_me.classes.enums.MessageType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageType</span></code></a></dt><dd><p>The type of message that has been received by the business that has subscribed to Webhooks.</p>
+<dt>type: <a class="reference internal" href="#wa_me.classes.enums.MessageType" title="wa_me.classes.enums.MessageType"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageType</span></code></a></dt><dd><p>The type of message that has been received by the business that has
+subscribed to Webhooks.</p>
 </dd>
-<dt>audio: Optional[<a class="reference internal" href="#wa_me.classes.events.Audio" title="wa_me.classes.events.Audio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Audio</span></code></a>]</dt><dd><p>When the messages type is set to audio, including voice messages, this object is included in the messages object.</p>
+<dt>audio: Optional[<a class="reference internal" href="#wa_me.classes.events.Audio" title="wa_me.classes.events.Audio"><code class="xref py py-class docutils literal notranslate"><span class="pre">Audio</span></code></a>]</dt><dd><p>When the messages type is set to audio, including voice messages, this
+object is included in the messages object.</p>
 </dd>
-<dt>button: Optional[<a class="reference internal" href="#wa_me.classes.events.Button" title="wa_me.classes.events.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a>]</dt><dd><p>When the messages type field is set to button, this object is included in the messages object.</p>
+<dt>button: Optional[<a class="reference internal" href="#wa_me.classes.events.Button" title="wa_me.classes.events.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a>]</dt><dd><p>When the messages type field is set to button, this object is included
+in the messages object.</p>
 </dd>
-<dt>contacts: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Contact" title="wa_me.classes.events.Contact"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contact</span></code></a>]]</dt><dd><p>When messages type is set to contacts, this object is included in the messages object.</p>
+<dt>contacts: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Contact" title="wa_me.classes.events.Contact"><code class="xref py py-class docutils literal notranslate"><span class="pre">Contact</span></code></a>]]</dt><dd><p>When messages type is set to contacts, this object is included in the
+messages object.</p>
 </dd>
-<dt>context: Optional[<a class="reference internal" href="#wa_me.classes.events.Context" title="wa_me.classes.events.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>]</dt><dd><p>The context for a message that was forwarded or in an inbound reply from the customer.</p>
+<dt>context: Optional[<a class="reference internal" href="#wa_me.classes.events.Context" title="wa_me.classes.events.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>]</dt><dd><p>The context for a message that was forwarded or in an inbound reply
+from the customer.</p>
 </dd>
-<dt>document: Optional[<a class="reference internal" href="#wa_me.classes.events.Document" title="wa_me.classes.events.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>]</dt><dd><p>When messages type is set to document, this object is included in the messages object.</p>
+<dt>document: Optional[<a class="reference internal" href="#wa_me.classes.events.Document" title="wa_me.classes.events.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>]</dt><dd><p>When messages type is set to document, this object is included in the
+messages object.</p>
 </dd>
-<dt>errors: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Error" title="wa_me.classes.events.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</dt><dd><p>The message that a business received from a customer is not a supported type.</p>
+<dt>errors: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Error" title="wa_me.classes.events.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</dt><dd><p>The message that a business received from a customer is not a
+supported type.</p>
 </dd>
-<dt>identity: Optional[<a class="reference internal" href="#wa_me.classes.events.Identity" title="wa_me.classes.events.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a>]</dt><dd><p>A webhook is triggered when a customer’s phone number or profile information has been updated.</p>
+<dt>identity: Optional[<a class="reference internal" href="#wa_me.classes.events.Identity" title="wa_me.classes.events.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a>]</dt><dd><p>A webhook is triggered when a customer’s phone number or profile
+information has been updated.</p>
 </dd>
-<dt>image: Optional[<a class="reference internal" href="#wa_me.classes.events.Image" title="wa_me.classes.events.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>]</dt><dd><p>When messages type is set to image, this object is included in the messages object.</p>
+<dt>image: Optional[<a class="reference internal" href="#wa_me.classes.events.Image" title="wa_me.classes.events.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>]</dt><dd><p>When messages type is set to image, this object is included in the
+messages object.</p>
 </dd>
-<dt>interactive: Optional[<a class="reference internal" href="#wa_me.classes.events.Interactive" title="wa_me.classes.events.Interactive"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interactive</span></code></a>]</dt><dd><p>When a customer selected a button or list reply, this object is included in the messages object.</p>
+<dt>interactive: Optional[<a class="reference internal" href="#wa_me.classes.events.Interactive" title="wa_me.classes.events.Interactive"><code class="xref py py-class docutils literal notranslate"><span class="pre">Interactive</span></code></a>]</dt><dd><p>When a customer selected a button or list reply, this object is
+included in the messages object.</p>
 </dd>
-<dt>location: Optional[<a class="reference internal" href="#wa_me.classes.events.Location" title="wa_me.classes.events.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a>]</dt><dd><p>When messages type is set to location, this object is included in the messages object.</p>
+<dt>location: Optional[<a class="reference internal" href="#wa_me.classes.events.Location" title="wa_me.classes.events.Location"><code class="xref py py-class docutils literal notranslate"><span class="pre">Location</span></code></a>]</dt><dd><p>When messages type is set to location, this object is included in the
+messages object.</p>
 </dd>
 <dt>order: Optional[<a class="reference internal" href="#wa_me.classes.events.Order" title="wa_me.classes.events.Order"><code class="xref py py-class docutils literal notranslate"><span class="pre">Order</span></code></a>]</dt><dd><p>Included in the messages object when a customer has placed an order.</p>
 </dd>
-<dt>reaction: Optional[<a class="reference internal" href="#wa_me.classes.events.Reaction" title="wa_me.classes.events.Reaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Reaction</span></code></a>]</dt><dd><p>When messages type is set to reaction, this object is included in the messages object.</p>
+<dt>reaction: Optional[<a class="reference internal" href="#wa_me.classes.events.Reaction" title="wa_me.classes.events.Reaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Reaction</span></code></a>]</dt><dd><p>When messages type is set to reaction, this object is included in the
+messages object.</p>
 </dd>
-<dt>referral: Optional[<a class="reference internal" href="#wa_me.classes.events.Referral" title="wa_me.classes.events.Referral"><code class="xref py py-class docutils literal notranslate"><span class="pre">Referral</span></code></a>]</dt><dd><p>A customer clicked an ad that redirects them to WhatsApp, this object is included in the messages object.</p>
+<dt>referral: Optional[<a class="reference internal" href="#wa_me.classes.events.Referral" title="wa_me.classes.events.Referral"><code class="xref py py-class docutils literal notranslate"><span class="pre">Referral</span></code></a>]</dt><dd><p>A customer clicked an ad that redirects them to WhatsApp, this object
+is included in the messages object.</p>
 </dd>
-<dt>sticker: Optional[<a class="reference internal" href="#wa_me.classes.events.Sticker" title="wa_me.classes.events.Sticker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sticker</span></code></a>]</dt><dd><p>When messages type is set to sticker, this object is included in the messages object.</p>
+<dt>sticker: Optional[<a class="reference internal" href="#wa_me.classes.events.Sticker" title="wa_me.classes.events.Sticker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sticker</span></code></a>]</dt><dd><p>When messages type is set to sticker, this object is included in the
+messages object.</p>
 </dd>
-<dt>system: Optional[<a class="reference internal" href="#wa_me.classes.events.System" title="wa_me.classes.events.System"><code class="xref py py-class docutils literal notranslate"><span class="pre">System</span></code></a>]</dt><dd><p>When messages type is set to system, a customer has updated their phone number or profile information, this object is included in the messages object.</p>
+<dt>system: Optional[<a class="reference internal" href="#wa_me.classes.events.System" title="wa_me.classes.events.System"><code class="xref py py-class docutils literal notranslate"><span class="pre">System</span></code></a>]</dt><dd><p>When messages type is set to system, a customer has updated their
+phone number or profile information, this object is included in the
+messages object.</p>
 </dd>
-<dt>text: Optional[<a class="reference internal" href="#wa_me.classes.events.Text" title="wa_me.classes.events.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">Text</span></code></a>]</dt><dd><p>When messages type is set to text, the body of text is included in the messages object.</p>
+<dt>text: Optional[<a class="reference internal" href="#wa_me.classes.events.Text" title="wa_me.classes.events.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">Text</span></code></a>]</dt><dd><p>When messages type is set to text, the body of text is included in the
+messages object.</p>
 </dd>
-<dt>video: Optional[<a class="reference internal" href="#wa_me.classes.events.Video" title="wa_me.classes.events.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a>]</dt><dd><p>When messages type is set to video, this object is included in messages object.</p>
+<dt>video: Optional[<a class="reference internal" href="#wa_me.classes.events.Video" title="wa_me.classes.events.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a>]</dt><dd><p>When messages type is set to video, this object is included in
+messages object.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1282,7 +1304,8 @@ or the status for a message a business sends a customer changes.</p>
 <dl class="simple">
 <dt>display_phone_number: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The phone number that is displayed for a business.</p>
 </dd>
-<dt>phone_number_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>ID for the phone number. A business can respond to a message using this ID.</p>
+<dt>phone_number_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>ID for the phone number. A business can respond to a message using
+this ID.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1426,7 +1449,8 @@ or the status for a message a business sends a customer changes.</p>
 <section id="id24">
 <h3>Parameters<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>type: <a class="reference internal" href="#wa_me.classes.enums.OriginType" title="wa_me.classes.enums.OriginType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OriginType</span></code></a></dt><dd><p>Indicates where a conversation has started. This can also be referred to as a conversation entry point.</p>
+<dt>type: <a class="reference internal" href="#wa_me.classes.enums.OriginType" title="wa_me.classes.enums.OriginType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OriginType</span></code></a></dt><dd><p>Indicates where a conversation has started. This can also be referred
+to as a conversation entry point.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1480,7 +1504,7 @@ or the status for a message a business sends a customer changes.</p>
 <dl class="simple">
 <dt>category: Optional[<a class="reference internal" href="#wa_me.classes.enums.OriginType" title="wa_me.classes.enums.OriginType"><code class="xref py py-class docutils literal notranslate"><span class="pre">OriginType</span></code></a>]</dt><dd><p>Indicates the conversation pricing category.</p>
 </dd>
-<dt>pricing_model: Optional[<a class="reference internal" href="#wa_me.classes.enums.PricingType" title="wa_me.classes.enums.PricingType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PricingType</span></code></a>]</dt><dd><p>Type of pricing model used by the business. Current supported value is CBP.</p>
+<dt>pricing_model: Optional[<a class="reference internal" href="#wa_me.classes.enums.PricingType" title="wa_me.classes.enums.PricingType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PricingType</span></code></a>]</dt><dd><p>Type of pricing model used by the business.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1565,7 +1589,8 @@ or the status for a message a business sends a customer changes.</p>
 <dl class="simple">
 <dt>emoji: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The emoji used for the reaction.</p>
 </dd>
-<dt>message_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID of the message received that contained the reaction.</p>
+<dt>message_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID of the message received that
+contained the reaction.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1601,7 +1626,8 @@ or the status for a message a business sends a customer changes.</p>
 </dd>
 <dt>source_type: <a class="reference internal" href="#wa_me.classes.enums.SourceType" title="wa_me.classes.enums.SourceType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SourceType</span></code></a></dt><dd><p>The type of the ad’s source.</p>
 </dd>
-<dt>source_url: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>A customer clicked an ad that redirects them to WhatsApp, this object is included in the messages object.</p>
+<dt>source_url: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>A customer clicked an ad that redirects them to WhatsApp, this object
+is included in the messages object.</p>
 </dd>
 <dt>thumbnail_url: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>URL for the thumbnail, when media_type is a “video”.</p>
 </dd>
@@ -1664,9 +1690,9 @@ or the status for a message a business sends a customer changes.</p>
 <section id="id31">
 <h3>Parameters<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>catalog_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Unique identifier of the Meta catalog linked to the WhatsApp Business Account.</p>
+<dt>catalog_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Unique ID of the Meta catalog linked to the WhatsApp Business Account.</p>
 </dd>
-<dt>product_retailer_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Unique identifier of the product in a catalog.</p>
+<dt>product_retailer_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Unique ID of the product in a catalog.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -1714,11 +1740,14 @@ or the status for a message a business sends a customer changes.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Status object.</p>
 <dl class="simple">
-<dt>id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The ID for the message that the business that is subscribed to the webhooks sent to a customer.</p>
+<dt>id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The ID for the message that the business that is subscribed to the
+webhooks sent to a customer.</p>
 </dd>
-<dt>recipient_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp ID for the customer that the business, that is subscribed to the webhooks, sent to the customer.</p>
+<dt>recipient_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp ID for the customer that the business, that is subscribed
+to the webhooks, sent to the customer.</p>
 </dd>
-<dt>status: <a class="reference internal" href="#wa_me.classes.enums.StatusType" title="wa_me.classes.enums.StatusType"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatusType</span></code></a></dt><dd><p>A webhook is triggered when a message received by a business has been status updated.</p>
+<dt>status: <a class="reference internal" href="#wa_me.classes.enums.StatusType" title="wa_me.classes.enums.StatusType"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatusType</span></code></a></dt><dd><p>A webhook is triggered when a message received by a business has been
+status updated.</p>
 </dd>
 <dt>timestamp: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>Date for the status message.</p>
 </dd>
@@ -1903,9 +1932,11 @@ or the status for a message a business sends a customer changes.</p>
 </dd>
 <dt>metadata: <a class="reference internal" href="#wa_me.classes.events.Metadata" title="wa_me.classes.events.Metadata"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metadata</span></code></a></dt><dd><p>Metadata for the business.</p>
 </dd>
-<dt>contacts: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Customer" title="wa_me.classes.events.Customer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Customer</span></code></a>]]</dt><dd><p>A list of contacts objects with information for the customer who sent a message to the business.</p>
+<dt>contacts: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Customer" title="wa_me.classes.events.Customer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Customer</span></code></a>]]</dt><dd><p>A list of contacts objects with information for the customer who sent
+a message to the business.</p>
 </dd>
-<dt>errors: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Error" title="wa_me.classes.events.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</dt><dd><p>A list of error objects with information received when a message failed.</p>
+<dt>errors: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Error" title="wa_me.classes.events.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a>]]</dt><dd><p>A list of error objects with information received when a message
+failed.</p>
 </dd>
 <dt>messages: Optional[List[<a class="reference internal" href="#wa_me.classes.events.Message" title="wa_me.classes.events.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></a>]]</dt><dd><p>Information about a message received by the business</p>
 </dd>
@@ -1996,22 +2027,26 @@ Does not allow emojis or markdown.</p>
 <p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.button_reply</span></code>.</p>
 </div>
 </dd>
-<dt>catalog_id: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>Unique identifier of the Facebook catalog linked to your WhatsApp Business Account.</p>
+<dt>catalog_id: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>Unique identifier of the Facebook catalog linked to your WhatsApp
+Business Account.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product</span></code> and  <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.</p>
+<p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.</p>
 </div>
 </dd>
 <dt>product_retailer_id: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The unique identifier of the product in the catalog.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product</span></code> and  <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.</p>
+<p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.</p>
 </div>
 </dd>
 <dt>sections: Optional[List[<a class="reference internal" href="#wa_me.classes.messages.Section" title="wa_me.classes.messages.Section"><code class="xref py py-class docutils literal notranslate"><span class="pre">Section</span></code></a>]]</dt><dd><p>A list of section object. Min: 1 item. Max: 10 items.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.list</span></code> and  <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.</p>
+<p>Required for <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.list</span></code> and
+<code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.</p>
 </div>
 </dd>
 </dl>
@@ -2119,7 +2154,8 @@ Does not allow emojis or markdown.</p>
 <section id="id41">
 <h3>Parameters<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>text: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The text field for the body object, supports Emojis and markdown. Max: 1024 chars.</p>
+<dt>text: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The text field for the body object, supports Emojis and markdown.
+Max: 1024 chars.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -2138,7 +2174,8 @@ Does not allow emojis or markdown.</p>
 <section id="id42">
 <h3>Parameters<a class="headerlink" href="#id42" title="Permalink to this heading">¶</a></h3>
 <dl>
-<dt>id: :class`str`:</dt><dd><p>Unique identifier button. This ID is returned in the webhook when the button is clicked by the user. Min: 1 char. Max: 256 chars.</p>
+<dt>id: :class`str`:</dt><dd><p>Unique identifier button. This ID is returned in the webhook when the
+button is clicked by the user. Min: 1 char. Max: 256 chars.</p>
 </dd>
 <dt>title: :class`str`:</dt><dd><p>Button title.</p>
 <div class="admonition note">
@@ -2147,7 +2184,8 @@ Does not allow emojis or markdown.</p>
 Emojis are supported, markdown is not.</p>
 </div>
 </dd>
-<dt>type: :class`str`:</dt><dd><p>Button type. The only supported option is “reply”. Min: 1 char. Max: 20 chars.</p>
+<dt>type: :class`str`:</dt><dd><p>Button type. The only supported option is “reply”.
+Min: 1 char. Max: 20 chars.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -2401,7 +2439,8 @@ You can have up to 3 buttons using index values of 0 to 2.</p>
 <section id="id50">
 <h3>Parameters<a class="headerlink" href="#id50" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>text: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The text field for the footer object, supports Emojis and markdown. Max: 60 chars.</p>
+<dt>text: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The text field for the footer object, supports Emojis and markdown.
+Max: 60 chars.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -2422,13 +2461,17 @@ You can have up to 3 buttons using index values of 0 to 2.</p>
 <dl class="simple">
 <dt>type: <a class="reference internal" href="#wa_me.classes.enums.HeaderType" title="wa_me.classes.enums.HeaderType"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType</span></code></a></dt><dd><p>The header type.</p>
 </dd>
-<dt>document: Optional[<a class="reference internal" href="#wa_me.classes.messages.Document" title="wa_me.classes.messages.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>]</dt><dd><p>A media object containing a document. Required if type is set to <code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.document</span></code></p>
+<dt>document: Optional[<a class="reference internal" href="#wa_me.classes.messages.Document" title="wa_me.classes.messages.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">Document</span></code></a>]</dt><dd><p>A media object containing a document. Required if type is set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.document</span></code></p>
 </dd>
-<dt>image: Optional[<a class="reference internal" href="#wa_me.classes.messages.Image" title="wa_me.classes.messages.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>]</dt><dd><p>A media object containing a image. Required if type is set to <code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.image</span></code></p>
+<dt>image: Optional[<a class="reference internal" href="#wa_me.classes.messages.Image" title="wa_me.classes.messages.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>]</dt><dd><p>A media object containing a image. Required if type is set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.image</span></code></p>
 </dd>
-<dt>text: Optional[<a class="reference internal" href="#wa_me.classes.messages.Text" title="wa_me.classes.messages.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">Text</span></code></a>]</dt><dd><p>A media object containing a text. Required if type is set to <code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.text</span></code></p>
+<dt>text: Optional[<a class="reference internal" href="#wa_me.classes.messages.Text" title="wa_me.classes.messages.Text"><code class="xref py py-class docutils literal notranslate"><span class="pre">Text</span></code></a>]</dt><dd><p>A media object containing a text. Required if type is set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.text</span></code></p>
 </dd>
-<dt>video: Optional[<a class="reference internal" href="#wa_me.classes.messages.Video" title="wa_me.classes.messages.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a>]</dt><dd><p>A media object containing a video. Required if type is set to <code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.video</span></code></p>
+<dt>video: Optional[<a class="reference internal" href="#wa_me.classes.messages.Video" title="wa_me.classes.messages.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a>]</dt><dd><p>A media object containing a video. Required if type is set to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderType.video</span></code></p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -2492,7 +2535,8 @@ Required for all other message types.</p>
 <p class="admonition-title">Note</p>
 <p>Required for type <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product_list</span></code>.
 Optional for other types.
-You cannot set a header if your interactive object is type <code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product</span></code>.</p>
+You cannot set a header if your interactive object is type
+<code class="xref py py-class docutils literal notranslate"><span class="pre">InteractiveType.product</span></code>.</p>
 </div>
 </dd>
 </dl>
@@ -2535,7 +2579,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <dt>code: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The code of the language or locale to use.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This field accepts both <cite>language</cite> (for example, “en”) and <cite>language_locale</cite> (for example, “en_US”) formats.</p>
+<p>This field accepts both <cite>language</cite> (for example, “en”) and
+<cite>language_locale</cite> (for example, “en_US”) formats.</p>
 </div>
 </dd>
 <dt>policy: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Language policy option.</p>
@@ -2570,7 +2615,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 </dd>
 <dt>latitude: <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></dt><dd><p>The latitude of the location.</p>
 </dd>
-<dt>address: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The address of the location. This field is only displayed if <cite>name</cite> is present.</p>
+<dt>address: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The address of the location. This field is only displayed if <cite>name</cite> is
+present.</p>
 </dd>
 <dt>name: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The name of the location.</p>
 </dd>
@@ -2608,7 +2654,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <dl class="simple">
 <dt>id: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The media object ID. Required when you are not using a link.</p>
 </dd>
-<dt>link: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The protocol and URL of the media to be sent. Required when you are not using an uploaded media ID.</p>
+<dt>link: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>The protocol and URL of the media to be sent. Required when you are
+not using an uploaded media ID.</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -2651,11 +2698,11 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <section id="id57">
 <h3>Parameters<a class="headerlink" href="#id57" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>to: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>WhatsApp ID or phone number for the person you want to send a message to.</p>
+<dt>to: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>WhatsApp ID or phone number for the person you want to send a message.</p>
 </dd>
 <dt>messaging_product: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Sender service used for the request. Always use “whatsapp”.</p>
 </dd>
-<dt>recipient_type: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Currently, you can only send messages to individuals. Set this value to “individual”.</p>
+<dt>recipient_type: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>Set this value to “individual”.</p>
 </dd>
 <dt>context: Optional[<a class="reference internal" href="#wa_me.classes.messages.Context" title="wa_me.classes.messages.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a>]</dt><dd><p>Used to mention a specific message you are replying to.</p>
 </dd>
@@ -2683,7 +2730,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 </dd>
 <dt>video: <a class="reference internal" href="#wa_me.classes.messages.Video" title="wa_me.classes.messages.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a></dt><dd><p>A media object containing a video.</p>
 </dd>
-<dt>message_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID for the message you want to mark as read.</p>
+<dt>message_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID for the message you want to mark as
+read.</p>
 </dd>
 <dt>status: <a class="reference internal" href="#wa_me.classes.enums.StatusType" title="wa_me.classes.enums.StatusType"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatusType</span></code></a></dt><dd><p>Status message. Set this value to “read”.</p>
 </dd>
@@ -2788,7 +2836,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <p>Name object.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>At least one of the optional parameters needs to be included along with the <cite>formatted_name</cite> parameter.</p>
+<p>At least one of the optional parameters needs to be included along
+with the <cite>formatted_name</cite> parameter.</p>
 </div>
 <section id="id58">
 <h3>Parameters<a class="headerlink" href="#id58" title="Permalink to this heading">¶</a></h3>
@@ -2941,7 +2990,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <section id="id61">
 <h3>Parameters<a class="headerlink" href="#id61" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>phone: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>Automatically populated with the <cite>wa_id</cite> value as a formatted phone number.</p>
+<dt>phone: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</dt><dd><p>Automatically populated with the <cite>wa_id</cite> value as a formatted phone
+number.</p>
 </dd>
 <dt>type: Optional[<a class="reference internal" href="#wa_me.classes.enums.PhoneType" title="wa_me.classes.enums.PhoneType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhoneType</span></code></a>]</dt><dd><p>Phone type.</p>
 </dd>
@@ -2993,7 +3043,8 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <section id="id63">
 <h3>Parameters<a class="headerlink" href="#id63" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>emoji: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The emoji used for the reaction. Set this value to “” (empty string) to remove the reaction.</p>
+<dt>emoji: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The emoji used for the reaction. Set this value to “” (empty string)
+to remove the reaction.</p>
 </dd>
 <dt>message_id: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The WhatsApp Business Account ID that this reaction is being sent to.</p>
 </dd>
@@ -3106,10 +3157,12 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <dl>
 <dt>name: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The name of the template.</p>
 </dd>
-<dt>language: <a class="reference internal" href="#wa_me.classes.messages.Language" title="wa_me.classes.messages.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a></dt><dd><p>Specifies a language object. Specifies the language the template may be rendered in.</p>
+<dt>language: <a class="reference internal" href="#wa_me.classes.messages.Language" title="wa_me.classes.messages.Language"><code class="xref py py-class docutils literal notranslate"><span class="pre">Language</span></code></a></dt><dd><p>Specifies a language object. Specifies the language the template may
+be rendered in.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Only the <cite>deterministic</cite> language policy works with media template messages.</p>
+<p>Only the <cite>deterministic</cite> language policy works with media template
+messages.</p>
 </div>
 </dd>
 <dt>components: Optional[<a class="reference internal" href="#wa_me.classes.messages.Component" title="wa_me.classes.messages.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>]</dt><dd><p>A list of component object.</p>
@@ -3141,19 +3194,22 @@ You cannot set a header if your interactive object is type <code class="xref py 
 <section id="id67">
 <h3>Parameters<a class="headerlink" href="#id67" title="Permalink to this heading">¶</a></h3>
 <dl>
-<dt>body: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The text of the text message that can contain URLs and supports formatting. Max: 4096 chars.</p>
+<dt>body: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></dt><dd><p>The text of the text message that can contain URLs and supports
+formatting. Max: 4096 chars.</p>
 </dd>
 <dt>preview_url: Optional[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]</dt><dd><p>By default, WhatsApp recognizes URLs and makes them clickable,
-but you can also include a preview box with more information about the link.
-Set this field to true if you want to include a URL preview box.</p>
-<p>The majority of the time when you send a URL, whether with a preview or not,
-the receiver of the message will see a URL that they can click on.</p>
-<dl class="simple">
+but you can also include a preview box with more information about the
+link. Set this field to true if you want to include a URL preview box.</p>
+<p>The majority of the time when you send a URL, whether with a preview
+or not, the receiver of the message will see a URL that they can click
+on.</p>
+<dl>
 <dt>URL previews are only rendered after one of the following has occurred:</dt><dd><ul class="simple">
 <li><p>The business has sent a message template to the user.</p></li>
 <li><p>The user initiates a conversation with a “click to chat” link.</p></li>
-<li><p>The user adds the business phone number to their address book and initiates a conversation.</p></li>
+<li><p>The user adds the business phone number to their address book</p></li>
 </ul>
+<p>and initiates a conversation.</p>
 </dd>
 </dl>
 </dd>
@@ -3247,17 +3303,18 @@ the receiver of the message will see a URL that they can click on.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <dl class="simple">
-<dt>This can be one of the accepted values:</dt><dd><p>UNDEFINED, OTHER, AUTO, BEAUTY, APPAREL, EDU, ENTERTAIN, EVENT_PLAN,
-FINANCE, GROCERY, GOVT, HOTEL, HEALTH, NONPROFIT, PROF_SERVICES, RETAIL,
-TRAVEL, RESTAURANT, or NOT_A_BIZ.</p>
+<dt>This can be one of the accepted values:</dt><dd><p>UNDEFINED, OTHER, AUTO, BEAUTY, APPAREL, EDU, ENTERTAIN,
+EVENT_PLAN, FINANCE, GROCERY, GOVT, HOTEL, HEALTH, NONPROFIT,
+PROF_SERVICES, RETAIL, TRAVEL, RESTAURANT, or NOT_A_BIZ.</p>
 </dd>
 </dl>
 </div>
 </dd>
-<dt>websites: Optional[List[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</dt><dd><p>The URLs associated with the business. For instance, a website, Facebook Page, or Instagram.</p>
+<dt>websites: Optional[List[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</dt><dd><p>The URLs associated with the business. For instance, a website,
+Facebook Page, or Instagram.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>There is a maximum of 2 websites with a maximum of 256 characters each.</p>
+<p>There is a maximum of 2 websites with a max of 256 characters each.</p>
 </div>
 </dd>
 </dl>
@@ -3360,7 +3417,8 @@ TRAVEL, RESTAURANT, or NOT_A_BIZ.</p>
 <dt>code: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>Error code.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For more information, refer to: <a class="reference external" href="https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes">https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes</a></p>
+<p>For more information, refer to:
+<a class="reference external" href="https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes">https://developers.facebook.com/docs/whatsapp/cloud-api/support/error-codes#error-codes</a></p>
 </div>
 </dd>
 <dt>error_subcode: <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></dt><dd><p>The subcode of the error.</p>
@@ -3619,7 +3677,6 @@ TRAVEL, RESTAURANT, or NOT_A_BIZ.</p>
 
 
 <h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="readme.html">WhatsApp Messenger</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">wa_me</a><ul class="current">

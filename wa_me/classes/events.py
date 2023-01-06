@@ -3,7 +3,18 @@
 from dataclasses import dataclass
 from typing import Literal, List, Optional
 
-from .enums import *  # NOQA
+from .enums import (
+    InfoType,
+    InteractiveType,
+    MediaType,
+    MessageType,
+    OriginType,
+    PhoneType,
+    PricingType,
+    SourceType,
+    StatusType,
+    SystemUpdateType,
+)
 
 __all__ = (
     "Text",
@@ -71,7 +82,8 @@ class Button:
     Parameters
     ----------
     payload: :class:`str`
-        The payload for a button set up by the business that a customer clicked as part of an interactive message.
+        The payload for a button set up by the business that a customer
+        clicked as part of an interactive message.
     text: :class:`str`
         Button text.
     """
@@ -184,7 +196,8 @@ class Reaction:
     emoji: :class:`str`
         The emoji used for the reaction.
     message_id: :class:`str`
-        The WhatsApp Business Account ID of the message received that contained the reaction.
+        The WhatsApp Business Account ID of the message received that
+        contained the reaction.
     """
 
     message_id: str
@@ -395,13 +408,13 @@ class Error:
 @dataclass
 class Pricing:
     """Pricing object.
-    
+
     Parameters
     ----------
     category: Optional[:class:`.OriginType`]
         Indicates the conversation pricing category.
     pricing_model: Optional[:class:`.PricingType`]
-        Type of pricing model used by the business. Current supported value is CBP.
+        Type of pricing model used by the business.
     """
 
     category: Optional[OriginType] = None
@@ -411,38 +424,44 @@ class Pricing:
 @dataclass
 class Origin:
     """Origin object.
-    
+
     Parameters
     ----------
     type: :class:`.OriginType`
-        Indicates where a conversation has started. This can also be referred to as a conversation entry point.
+        Indicates where a conversation has started. This can also be referred
+        to as a conversation entry point.
     """
-    
+
     type: OriginType
 
 
 @dataclass
 class Conversation:
     """Conversation object.
-    
+
     .. note:
 
-        WhatsApp defines a conversation as a 24-hour session of messaging between a person and a business.
-        There is no limit on the number of messages that can be exchanged in the fixed 24-hour window.
+        WhatsApp defines a conversation as a 24-hour session of messaging
+        between a person and a business.
+        There is no limit on the number of messages that can be exchanged in
+        the fixed 24-hour window.
         The 24-hour conversation session begins when:
             - A business-initiated message is delivered to a customer
             - A business reply to a customer message is delivered
-        The 24-hour conversation session is different from the 24-hour customer support window.
-        The customer support window is a rolling window that is refreshed when a customer-initiated
-        message is delivered to a business.
-        Within the customer support window businesses can send free-form messages.
-        Any business-initiated message sent more than 24 hours after the last customer message must be
-        a template message.
+        The 24-hour conversation session is different from the 24-hour
+        customer support window.
+        The customer support window is a rolling window that is refreshed when
+        a customer-initiated message is delivered to a business.
+        Within the customer support window businesses can send free-form
+        messages.
+        Any business-initiated message sent more than 24 hours after the last
+        customer message must be a template message.
 
     Parameters
     ----------
     id: :class:`str`
-        Represents the ID of the conversation the given status notification belongs to.
+        Represents the ID of the conversation the given status notification
+        belongs to.
     origin: :class:`.Origin`
         Indicates who initiated the conversation.
     expiration_timestamp: Optional[:class:`int`]
@@ -450,7 +469,7 @@ class Conversation:
 
         .. note:
 
-            This field is only present for messages with a status set to "sent".
+            This field is only present for messages with a "sent" status.
     """
 
     id: str
@@ -461,13 +480,16 @@ class Conversation:
 @dataclass
 class Status:
     """Status object.
-    
+
     id: :class:`str`
-        The ID for the message that the business that is subscribed to the webhooks sent to a customer.
+        The ID for the message that the business that is subscribed to the
+        webhooks sent to a customer.
     recipient_id: :class:`str`
-        The WhatsApp ID for the customer that the business, that is subscribed to the webhooks, sent to the customer.
+        The WhatsApp ID for the customer that the business, that is subscribed
+        to the webhooks, sent to the customer.
     status: :class:`.StatusType`
-        A webhook is triggered when a message received by a business has been status updated.
+        A webhook is triggered when a message received by a business has been
+        status updated.
     timestamp: :class:`int`
         Date for the status message.
     conversation: Optional[:class:`.Conversation`]
@@ -561,6 +583,7 @@ class ListReply(Reply):
 
     description: Optional[str] = None
 
+
 @dataclass
 class Interactive:
     """Interactive object.
@@ -627,7 +650,8 @@ class Referral:
     source_type: :class:`.SourceType`
         The type of the ad’s source.
     source_url: :class:`str`
-        A customer clicked an ad that redirects them to WhatsApp, this object is included in the messages object.
+        A customer clicked an ad that redirects them to WhatsApp, this object
+        is included in the messages object.
     thumbnail_url: Optional[:class:`.str`]
         URL for the thumbnail, when media_type is a "video".
     video_url: Optional[:class:`.str`]
@@ -652,11 +676,12 @@ class Identity:
     Parameters
     ----------
     acknowledged: :class:`bool`
-        State of acknowledgment for the messages system "customer_identity_changed".
+        State of acknowledgment for the messages system.
     created_timestamp: :class:`int`
-        The time when the WhatsApp Business Management API detected the customer may have changed their profile information.
+        The time when the WhatsApp Business Management API detected the
+        customer may have changed their profile information.
     hash: :class:`str`
-        The ID for the messages system "customer_identity_changed".
+        The ID for the messages system.
     """
 
     acknowledged: bool
@@ -671,9 +696,9 @@ class ReferredProduct:
     Parameters
     ----------
     catalog_id: :class:`str`
-        Unique identifier of the Meta catalog linked to the WhatsApp Business Account.
+        Unique ID of the Meta catalog linked to the WhatsApp Business Account.
     product_retailer_id: :class:`str`
-        Unique identifier of the product in a catalog.
+        Unique ID of the product in a catalog.
     """
 
     catalog_id: str
@@ -691,7 +716,8 @@ class Context:
     forwarded: Optional[:class:`bool`]
         Set to true if the message received by the business has been forwarded.
     frequently_forwarded: Optional[:class:`bool`]
-        Set to true if the message received by the business has been forwarded more than 5 times.
+        Set to true if the message received by the business has been forwarded
+        more than 5 times.
     referred_product: Optional[:class:`.ReferredProduct`]
         The product the user is requesting information about.
 
@@ -723,41 +749,59 @@ class Message:
     timestamp: :class:`int`
         The time when the customer sent the message to the business.
     type: :class:`.MessageType`
-        The type of message that has been received by the business that has subscribed to Webhooks.
+        The type of message that has been received by the business that has
+        subscribed to Webhooks.
     audio: Optional[:class:`.Audio`]
-        When the messages type is set to audio, including voice messages, this object is included in the messages object.
+        When the messages type is set to audio, including voice messages, this
+        object is included in the messages object.
     button: Optional[:class:`.Button`]
-        When the messages type field is set to button, this object is included in the messages object.
+        When the messages type field is set to button, this object is included
+        in the messages object.
     contacts: Optional[List[:class:`.Contact`]]
-        When messages type is set to contacts, this object is included in the messages object.
+        When messages type is set to contacts, this object is included in the
+        messages object.
     context: Optional[:class:`.Context`]
-        The context for a message that was forwarded or in an inbound reply from the customer.
+        The context for a message that was forwarded or in an inbound reply
+        from the customer.
     document: Optional[:class:`.Document`]
-        When messages type is set to document, this object is included in the messages object.
+        When messages type is set to document, this object is included in the
+        messages object.
     errors: Optional[List[:class:`.Error`]]
-        The message that a business received from a customer is not a supported type.
+        The message that a business received from a customer is not a
+        supported type.
     identity: Optional[:class:`.Identity`]
-        A webhook is triggered when a customer's phone number or profile information has been updated.
+        A webhook is triggered when a customer's phone number or profile
+        information has been updated.
     image: Optional[:class:`.Image`]
-        When messages type is set to image, this object is included in the messages object.
+        When messages type is set to image, this object is included in the
+        messages object.
     interactive: Optional[:class:`.Interactive`]
-        When a customer selected a button or list reply, this object is included in the messages object.
+        When a customer selected a button or list reply, this object is
+        included in the messages object.
     location: Optional[:class:`.Location`]
-        When messages type is set to location, this object is included in the messages object.
+        When messages type is set to location, this object is included in the
+        messages object.
     order: Optional[:class:`.Order`]
         Included in the messages object when a customer has placed an order.
     reaction: Optional[:class:`.Reaction`]
-        When messages type is set to reaction, this object is included in the messages object.
+        When messages type is set to reaction, this object is included in the
+        messages object.
     referral: Optional[:class:`.Referral`]
-        A customer clicked an ad that redirects them to WhatsApp, this object is included in the messages object.
+        A customer clicked an ad that redirects them to WhatsApp, this object
+        is included in the messages object.
     sticker: Optional[:class:`.Sticker`]
-        When messages type is set to sticker, this object is included in the messages object.
+        When messages type is set to sticker, this object is included in the
+        messages object.
     system: Optional[:class:`.System`]
-        When messages type is set to system, a customer has updated their phone number or profile information, this object is included in the messages object.
+        When messages type is set to system, a customer has updated their
+        phone number or profile information, this object is included in the
+        messages object.
     text: Optional[:class:`.Text`]
-        When messages type is set to text, the body of text is included in the messages object.
+        When messages type is set to text, the body of text is included in the
+        messages object.
     video: Optional[:class:`.Video`]
-        When messages type is set to video, this object is included in messages object.
+        When messages type is set to video, this object is included in
+        messages object.
     """
 
     id: str
@@ -805,7 +849,8 @@ class Customer:
     profile: :class:`.Profile`
         An object containing customer profile information
     wa_id: :class:`str`
-        The customer's WhatsApp ID. A business can respond to a message using this ID.
+        The customer's WhatsApp ID. A business can respond to a message using
+        this ID.
     """
 
     profile: Profile
@@ -821,7 +866,8 @@ class Metadata:
     display_phone_number: :class:`str`
         The phone number that is displayed for a business.
     phone_number_id: :class:`str`
-        ID for the phone number. A business can respond to a message using this ID.
+        ID for the phone number. A business can respond to a message using
+        this ID.
     """
 
     display_phone_number: str
@@ -839,9 +885,11 @@ class Value:
     metadata: :class:`.Metadata`
         Metadata for the business.
     contacts: Optional[List[:class:`.Customer`]]
-        A list of contacts objects with information for the customer who sent a message to the business.
+        A list of contacts objects with information for the customer who sent
+        a message to the business.
     errors: Optional[List[:class:`.Error`]]
-        A list of error objects with information received when a message failed.
+        A list of error objects with information received when a message
+        failed.
     messages: Optional[List[:class:`.Message`]]
         Information about a message received by the business
     statuses: Optional[List[:class:`.Status`]]
@@ -885,7 +933,8 @@ class Entry:
     Parameters
     ----------
     id: :class:`str`
-        The WhatsApp Business Account ID for the business that is subscribed to the webhook.
+        The WhatsApp Business Account ID for the business that is subscribed
+        to the webhook.
     changes: List[:class:`.Change`]
         A list of change object that triggered the webhook.
     """
@@ -904,7 +953,8 @@ class Event:
     Parameters
     ----------
     object: :class:`str`
-        The specific webhook a business is subscribed to. The webhook is "whatsapp_business_account".
+        The specific webhook a business is subscribed to. The webhook is
+        "whatsapp_business_account".
     entry: List[:class:`.Entry`]
         A list of entry object.
     """

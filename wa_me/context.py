@@ -6,7 +6,7 @@ from datetime import datetime
 
 from .classes import enums, events, messages, responses
 from .core.client import Client
-from .utils.converter import as_dict, from_dict
+from .core.converter import as_dict, from_dict
 
 __all__ = ("Ctx",)
 
@@ -143,7 +143,11 @@ class Ctx:
             return None
         message_id = self.message.id
         reaction = messages.Reaction(emoji=emoji, message_id=message_id)
-        message = messages.Message(to=self.recipient_id, reaction=reaction, type=enums.MessageType.reaction)
+        message = messages.Message(
+            to=self.recipient_id,
+            reaction=reaction,
+            type=enums.MessageType.reaction,
+        )
         response = self.send_message(message)
         if emoji:
             self._reactions.append(emoji)
@@ -154,7 +158,9 @@ class Ctx:
     def unreact(self) -> Optional[responses.Response]:
         return self.react("")
 
-    def send(self, message: messages.Message, *, mention: bool = False) -> responses.Response:
+    def send(
+        self, message: messages.Message, *, mention: bool = False
+    ) -> responses.Response:
         if mention and self.message:
             message.context = messages.Context(message_id=self.message.id)
         response = self.send_message(message)
@@ -171,13 +177,23 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, audio=messages.Audio(id=audio_id, link=audio_url), type=enums.MessageType.audio)
+        message = messages.Message(
+            to=self.recipient_id,
+            audio=messages.Audio(id=audio_id, link=audio_url),
+            type=enums.MessageType.audio,
+        )
         return self.send(message, mention=mention)
 
-    def send_contacts(self, contacts_data: List[Dict[str, Any]], *, mention: bool = False) -> Optional[responses.Response]:
+    def send_contacts(
+        self, contacts_data: List[Dict[str, Any]], *, mention: bool = False
+    ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, contacts=[messages.Contact(**contact) for contact in contacts_data], type=enums.MessageType.contacts)
+        message = messages.Message(
+            to=self.recipient_id,
+            contacts=[messages.Contact(**contact) for contact in contacts_data],
+            type=enums.MessageType.contacts,
+        )
         return self.send(message, mention=mention)
 
     def send_document(
@@ -191,7 +207,16 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, document=messages.Document(id=document_id, link=document_url, caption=caption, filename=filename), type=enums.MessageType.document)
+        message = messages.Message(
+            to=self.recipient_id,
+            document=messages.Document(
+                id=document_id,
+                link=document_url,
+                caption=caption,
+                filename=filename,
+            ),
+            type=enums.MessageType.document,
+        )
         return self.send(message, mention=mention)
 
     def send_image(
@@ -204,7 +229,11 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, image=messages.Image(id=image_id, link=image_url, caption=caption), type=enums.MessageType.image)
+        message = messages.Message(
+            to=self.recipient_id,
+            image=messages.Image(id=image_id, link=image_url, caption=caption),
+            type=enums.MessageType.image,
+        )
         return self.send(message, mention=mention)
 
     def send_interactive(
@@ -215,7 +244,11 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, interactive=messages.Interactive(**interactive_data), type=enums.MessageType.interactive)
+        message = messages.Message(
+            to=self.recipient_id,
+            interactive=messages.Interactive(**interactive_data),
+            type=enums.MessageType.interactive,
+        )
         return self.send(message, mention=mention)
 
     def send_location(
@@ -229,7 +262,16 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, location=messages.Location(latitude=latitude, longitude=longitude, address=address, name=name), type=enums.MessageType.location)
+        message = messages.Message(
+            to=self.recipient_id,
+            location=messages.Location(
+                latitude=latitude,
+                longitude=longitude,
+                address=address,
+                name=name,
+            ),
+            type=enums.MessageType.location,
+        )
         return self.send(message, mention=mention)
 
     def send_options(
@@ -250,14 +292,24 @@ class Ctx:
             interactive=messages.Interactive(
                 action=messages.Action(
                     button=button,
-                    sections=[messages.Section(rows=[messages.Row(**option) for option in options], title=title)],
+                    sections=[
+                        messages.Section(
+                            rows=[messages.Row(**option) for option in options],
+                            title=title,
+                        )
+                    ],
                 ),
                 body=messages.Body(text=text),
-                header=messages.Header(type=enums.HeaderType.text, text=messages.Text(body=header_text)) if header_text else None,
+                header=messages.Header(
+                    type=enums.HeaderType.text,
+                    text=messages.Text(body=header_text),
+                )
+                if header_text
+                else None,
                 footer=messages.Footer(text=footer_text) if footer_text else None,
                 type=enums.InteractiveType.list,
             ),
-            type=enums.MessageType.interactive
+            type=enums.MessageType.interactive,
         )
         return self.send(message, mention=mention)
 
@@ -274,7 +326,10 @@ class Ctx:
             to=self.recipient_id,
             interactive=messages.Interactive(
                 action=messages.Action(
-                    buttons=[messages.Button(reply=messages.Reply(**quick_reply)) for quick_reply in quick_replies]
+                    buttons=[
+                        messages.Button(reply=messages.Reply(**quick_reply))
+                        for quick_reply in quick_replies
+                    ]
                 ),
                 body=messages.Body(text=text),
                 type=enums.InteractiveType.button,
@@ -292,13 +347,23 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, sticker=messages.Sticker(id=sticker_id, link=sticker_url), type=enums.MessageType.sticker)
+        message = messages.Message(
+            to=self.recipient_id,
+            sticker=messages.Sticker(id=sticker_id, link=sticker_url),
+            type=enums.MessageType.sticker,
+        )
         return self.send(message, mention=mention)
 
-    def send_text(self, content: str, *, mention: bool = False) -> Optional[responses.Response]:
+    def send_text(
+        self, content: str, *, mention: bool = False
+    ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, text=messages.Text(body=content), type=enums.MessageType.text)
+        message = messages.Message(
+            to=self.recipient_id,
+            text=messages.Text(body=content),
+            type=enums.MessageType.text,
+        )
         return self.send(message, mention=mention)
 
     def send_video(
@@ -311,5 +376,9 @@ class Ctx:
     ) -> Optional[responses.Response]:
         if not self.recipient_id:
             return None
-        message = messages.Message(to=self.recipient_id, video=messages.Video(id=video_id, link=video_url, caption=caption), type=enums.MessageType.video)
+        message = messages.Message(
+            to=self.recipient_id,
+            video=messages.Video(id=video_id, link=video_url, caption=caption),
+            type=enums.MessageType.video,
+        )
         return self.send(message, mention=mention)
