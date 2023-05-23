@@ -10,7 +10,7 @@ with open("HISTORY.rst") as history_file:
 
 requirements = [
     "dacite==1.6.0",
-    "requests==2.28.1",
+    "requests==2.31.0",
 ]
 
 test_requirements = [
